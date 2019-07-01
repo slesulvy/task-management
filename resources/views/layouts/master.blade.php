@@ -7,7 +7,7 @@
 
 
 @yield('content')
-
+sfsfsdfdfdsfdfsfdsf
 
 
 @include('layouts.footer')
