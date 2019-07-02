@@ -9,7 +9,6 @@
 @yield('content')
 fhfghhfhg
 
-
 @include('layouts.footer')
 
 @include('layouts.addboardmodal')
