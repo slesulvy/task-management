@@ -30,6 +30,8 @@ Route::post('authenticate',[ 'as' => 'authenticate','uses' =>'LoginController@au
 Route::get('logout',[ 'as' => 'logout','uses' =>'LoginController@logout']);
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
+Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
+
 Route::group(['middleware'=>'auth'], function () {
     
     Route::get('board','HomeController@index');
