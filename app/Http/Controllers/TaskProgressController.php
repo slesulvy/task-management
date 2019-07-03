@@ -25,7 +25,11 @@ class TaskProgressController extends Controller
                 return response()->json($task);
             }
         }else{
-            return response()->json(['error' => 'The progress is not valid!'], 404);
+            if( $request->progress < 0 ){
+                return response()->json(['error' => 'Did you mess up badly make your progress less than 0%?'], 404);
+            }else{
+                return response()->json(['error' => 'You think task can be done over 100%?'], 404);
+            }
 
         }
     }

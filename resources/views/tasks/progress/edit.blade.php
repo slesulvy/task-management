@@ -22,7 +22,7 @@
                     <span id="footer_action_button" class="glyphicon"></span>
                 </button>
                 <button type="button" class="btn btn-warning" data-dismiss="modal">
-                    <span class="glyphicon glyphicon"></span>close
+                    <i class="fa fa-close"></i> close
                 </button>
             </div>
         </div>

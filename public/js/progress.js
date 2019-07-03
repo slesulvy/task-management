@@ -1,7 +1,7 @@
 // function Edit POST
 $(document).on('click', '.progress-modal', function() {
-    $('#footer_action_button').text(" Set Progress");
-    $('#footer_action_button').addClass('fa fa-chevron-up');
+    $('#footer_action_button').text(" Save");
+    $('#footer_action_button').addClass('fa fa-check-square-o');
     $('.actionBtn').addClass('btn-success');
     $('.actionBtn').addClass('set-progress');
     $('.modal-title').text('Set Progress : '.concat($(this).data('title')));
@@ -27,22 +27,21 @@ $('.modal-footer').on('click', '.set-progress', function() {
                 'aria-valuenow': data.progress,
                 'style': 'width:' + data.progress + '%'
             });
-            Swal.fire({
+            swal({
                 type: 'success',
                 title: 'The task has been set progress to ' + data.progress + '%',
                 showConfirmButton: false,
                 timer: 2000
-            })
+            });
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            Swal.fire({
+            swal({
                     type: 'error',
                     title: xhr.responseJSON.error,
                     showConfirmButton: false,
                     timer: 2000
-                }
-            )
+                });
         }
     });
 });

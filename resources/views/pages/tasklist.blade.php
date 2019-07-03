@@ -127,7 +127,6 @@
 
 @section('customJs')
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/dataTables/datatables.min.js')}}"></script>
     <script src="{{asset('js/progress.js')}}"></script>
