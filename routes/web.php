@@ -90,4 +90,7 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
 
+    Route::get('task/progress/{task}/edit','TaskProgressController@edit');
+    Route::post('task/progress','TaskProgressController@set');
+
 });
