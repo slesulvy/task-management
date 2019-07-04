@@ -30,8 +30,6 @@ Route::post('authenticate',[ 'as' => 'authenticate','uses' =>'LoginController@au
 Route::get('logout',[ 'as' => 'logout','uses' =>'LoginController@logout']);
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-
-
 Route::group(['middleware'=>'auth'], function () {
     
     Route::get('board','HomeController@index');
@@ -70,6 +68,10 @@ Route::group(['middleware'=>'auth'], function () {
     
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
 
+    Route::post('addlist',[ 'as' => 'addlist','uses' => 'HomeController@addlist']);
+    Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'HomeController@remove_list']);
+    //remove_list($id)
+
     Route::get('category',[ 'as' => 'category','uses' => 'CategoryController@index']);
     Route::get('addcategory',[ 'as' => 'addcategory','uses' => 'CategoryController@store']);
     Route::get('category/close/{id}',[ 'as' => 'category/close/{id}','uses' => 'CategoryController@closecategory']);
@@ -92,9 +94,5 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
 
-    // sent notification to telegram
-    Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
-    Route::get('api/updateDescription', 'BotController@updateDescriptionTask');
-    Route::get('api/moveTask', '\App\Http\Controllers\BotController@updateDescriptionTask');
 
 });
