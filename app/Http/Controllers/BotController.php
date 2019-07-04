@@ -19,11 +19,32 @@ class BotController extends Controller
          dd($activity);
      }
 
-     function sentMessageToTelegram() {
-             Telegram::sendMessage([
-            'chat_id' => '-393170007',
-            'text' => 'Dynamic message'
-        ]);
+     function sentMessageToTelegram($message) {
+         try {
+            Telegram::sendMessage([
+                'chat_id' => env('TELEGRAM_CHAT_ID', 'CHAT_ID'),
+                'text' => $message
+            ]);
+         } catch (\Throwable $th) {
+            dd('sentMessageToTelegram error' . $th);
+         }
+             
+     }
+
+     function moveTask($user, $taskName, $from, $to) {
+        $this->sentMessageToTelegram($user . ' Move' . $taskName . ' from' . $from . ' To ' . $to);
+     }
+
+     function updateDescriptionTask(Request $request) {
+        $this->sentMessageToTelegram($request->user . ' Added description to ' . $request->taskName);
+     }
+
+     function addAttectToTask($user, $taskName) {
+        $this->sentMessageToTelegram($user . 'Added attectment to ' . $taskName);
+     }
+
+     function addMemberToTask($assignBy, $taskName, $assignTo) {
+        $this->sentMessageToTelegram($assignBy . 'added ' . $assignTo . ' To ' . $taskName);
      }
 
 

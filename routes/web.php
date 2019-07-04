@@ -30,7 +30,7 @@ Route::post('authenticate',[ 'as' => 'authenticate','uses' =>'LoginController@au
 Route::get('logout',[ 'as' => 'logout','uses' =>'LoginController@logout']);
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
+
 
 Route::group(['middleware'=>'auth'], function () {
     
@@ -91,5 +91,10 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('users_select_opt','HomeController@users_select_opt');
 
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
+
+    // sent notification to telegram
+    Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
+    Route::get('api/updateDescription', 'BotController@updateDescriptionTask');
+    Route::get('api/moveTask', '\App\Http\Controllers\BotController@updateDescriptionTask');
 
 });
