@@ -621,7 +621,7 @@
                     $('#e_task_description').css('display','none');
                     $('#avatar_description').html($('#e_task_description').val());
                     $('#avatar_description').css('display','inline');
-                    
+                    updatedDescMsg(data.user, data.taskname);
                 }
             });
 
@@ -662,6 +662,22 @@
             });
 
         });
+
+        function updatedDescMsg(user, msgStr)
+        {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/updateDescription')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskName' :msgStr
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
 
         function addtask()
         {
