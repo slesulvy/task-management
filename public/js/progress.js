@@ -1,4 +1,41 @@
 // function Edit POST
+var basic_slider = document.getElementById('basic_slider');
+
+noUiSlider.create(basic_slider, {
+    start: 0,
+    step: 1,
+    behaviour: 'tap',
+    connect: 'lower',
+    tooltips: true,
+    range: {
+        'min':  0,
+        'max':  100
+    },
+    format: {
+        to: function (value) {
+            return value;
+        },
+        from: function (value) {
+            return (value);
+        }
+    }
+});
+
+var taskProgress = document.getElementById('task-progress');
+
+basic_slider.noUiSlider.on('update', function (values, handle) {
+
+    var value = values[handle];
+
+    taskProgress.value = value;
+
+});
+
+taskProgress.addEventListener('change', function () {
+    basic_slider.noUiSlider.set([null, this.value]);
+});
+
+
 $(document).on('click', '.progress-modal', function() {
     $('#footer_action_button').text(" Save");
     $('#footer_action_button').addClass('fa fa-check-square-o');
@@ -8,6 +45,7 @@ $(document).on('click', '.progress-modal', function() {
     $('.form-horizontal').show();
     $('#task-id').val($(this).data('id'));
     $('#task-progress').val($(this).attr('data-progress'));
+    basic_slider.noUiSlider.set($(this).attr('data-progress'));
     $('#progressModal').modal('show');
 });
 

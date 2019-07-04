@@ -6,6 +6,7 @@
 <link href="{{ asset('css/plugins/dataTables/datatables.min.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
+<link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
 <link href="{{asset('css/progress.css')}}" rel="stylesheet">
 
 @endsection
@@ -129,6 +130,7 @@
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/dataTables/datatables.min.js')}}"></script>
+    <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
     <script src="{{asset('js/progress.js')}}"></script>
     <script>
         $('.dataTables-example').DataTable({

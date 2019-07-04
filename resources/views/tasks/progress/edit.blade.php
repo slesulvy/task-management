@@ -3,18 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"></h4>
+                <h4><span class="modal-title"></span></h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="modal">
                     {{ csrf_field() }}
                     <input type="hidden" class="form-control" id="task-id" disabled>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2"for="body">Progress</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" id="task-progress">
-                        </div>
-                    </div>
+                    <input type="hidden" class="form-control" id="task-progress">
+                    <div id="basic_slider"></div>
                 </form>
             </div>
             <div class="modal-footer">
