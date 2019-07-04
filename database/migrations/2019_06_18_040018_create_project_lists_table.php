@@ -21,7 +21,7 @@ class CreateProjectListsTable extends Migration
             $table->bigInteger('modified_by');
             $table->bigInteger('deleted_by');
             $table->datetime('deleted_at');
-            $table->smallInteger('status')->default(0);
+            $table->smallInteger('status')->default(1);
             $table->timestamps();
         });
     }

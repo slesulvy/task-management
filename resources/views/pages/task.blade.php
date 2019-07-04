@@ -621,7 +621,8 @@
                     $('#e_task_description').css('display','none');
                     $('#avatar_description').html($('#e_task_description').val());
                     $('#avatar_description').css('display','inline');
-                    updatedDescMsg(data.user, data.taskname);
+                    var jsonData = JSON.parse(data);
+                    updatedDescMsg(jsonData.user, jsonData.taskname);
                 }
             });
 
