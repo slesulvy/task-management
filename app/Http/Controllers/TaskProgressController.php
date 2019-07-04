@@ -16,13 +16,13 @@ class TaskProgressController extends Controller
 
     public function set(request $request){
         $task = Task::find ($request->id);
-        if( $request->progress > 0 && $request->progress < 100){
+        if( $request->progress >= 0 && $request->progress <= 100){
             if($request->progress < $task->progress){
                 return response()->json(['error' => 'You can not lower your task progress!'], 404);
             }else{
                 $task->progress = $request->progress;
                 $task->save();
-                return response()->json($task);
+                return response()->json(['project_progress'=> $task->board->getProgress(), 'task' => $task]);
             }
         }else{
             if( $request->progress < 0 ){

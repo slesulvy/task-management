@@ -22,14 +22,20 @@ $('.modal-footer').on('click', '.set-progress', function() {
         },
 
         success: function(data) {
-            $('tr.task-' + data.id + ' .progress-modal').attr('data-progress', data.progress);
-            $('tr.task-' + data.id + ' div.progress div.progress-bar').attr({
-                'aria-valuenow': data.progress,
-                'style': 'width:' + data.progress + '%'
+            console.log(data['task'].progress);
+            console.log(data['project_progress']);
+            $('tr.task-' + data['task'].id + ' .progress-modal').attr('data-progress', data['task'].progress);
+            $('tr.task-' + data['task'].id + ' div.progress div.task-progress').attr({
+                'aria-valuenow': data['task'].progress,
+                'style': 'width:' + data['task'].progress + '%'
+            });
+            $('div.project-progress').attr({
+                'aria-valuenow': data['project_progress'],
+                'style': 'width:' + data['project_progress'] + '%'
             });
             swal({
                 type: 'success',
-                title: 'The task has been set progress to ' + data.progress + '%',
+                title: 'The task has been set progress to ' + data['task'].progress + '%',
                 showConfirmButton: false,
                 timer: 2000
             });
