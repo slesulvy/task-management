@@ -29,6 +29,7 @@ class AlterProjectListsTable extends Migration
             $table->integer('created_by')->nullable()->change();
             $table->integer('deleted_by')->nullable()->change();
             $table->integer('modified_by')->nullable()->change();
+            $table->integer('deleted_at')->nullable()->change();
         });
     }
 
