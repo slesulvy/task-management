@@ -6,6 +6,7 @@
     <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <link href="{{asset('css/interface.css')}}" rel="stylesheet">
 
 
     <style>
@@ -116,47 +117,13 @@
                         </div>
 
                         <ul class="sortable-list connectList agile-list ibox-content-ul-first" id="todo">
-                            
+
                             @foreach ($tasktodo as $item)
-                            @if($item->step==1)
-                            <li task_id="{{$item->id}}" class="default-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-                                <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                                <?php $j=3;?>
-                                @for ($i = 1; $i <= $item->priority; $i++)
-                                    <i class="fa fa-star"></i>&nbsp;
-                                <?php $j--;?>
-                                @endfor
-                                @for ($j; $j >= 1; $j--)
-                                    <i class="fa fa-star-o"></i>&nbsp;
-                                @endfor
-                                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
-                                </div>
-                                {{$item->taskname}}
-                                <div class="agile-detail">   
-                                    
-                                <span title="Due Date" class=""><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
-                                    <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                                        <?php $inc_member=0;?>
-                                        @foreach ($item->handler as $val)
-                                            @if($inc_member<5)
-                                            <img title="{{$val->getUser->name}}" src="<?php echo asset("img/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
-                                            @endif
-                                        <?php $inc_member++;?>
-                                        @endforeach
-                                        @if($inc_member>=5)
-                                            {{$inc_member}}+
-                                        @endif
-                                    </a>    
-                                       <!--<img src="" width="17px;" class="img img-circle">
-                                        <img src="" width="17px;" class="img img-circle">&nbsp;<?php //echo(count($item->handler)>=1)?'&nbsp;'.count($item->handler).'+':'&nbsp;'?></a>-->
-                                
-                                    <!--<a href="javascript:void(0);"  class="btn btn-xs btn-white btn-update-task">&nbsp;<i class="fa fa-tasks"></i>&nbsp;</a>-->
-                                </div>
-                                
-                            </li>
-                            @endif
+                                @if($item->step==1)
+                                    @include('partial._tasklist_dashboard')
+                                @endif
                             @endforeach
-                                
+
                         </ul>
                     </div>
                 </div>
@@ -170,43 +137,9 @@
                         <h3>In Progress</h3>
                         <ul class="sortable-list connectList agile-list ibox-content-ul" id="inprogress">
                             @foreach ($tasktodo as $item)
-                            @if($item->step==2)
-                            <li progres_id="{{$item->id}}" class="default-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-                                <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                                <?php $j=3;?>
-                                @for ($i = 1; $i <= $item->priority; $i++)
-                                    <i class="fa fa-star"></i>&nbsp;
-                                <?php $j--;?>
-                                @endfor
-                                @for ($j; $j >= 1; $j--)
-                                    <i class="fa fa-star-o"></i>&nbsp;
-                                @endfor
-                                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
-                                </div>
-                                {{$item->taskname}}
-                                <div class="agile-detail">   
-                                    
-                                <span title="Due Date" class=""><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
-                                    <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                                        <?php $inc_member=0;?>
-                                        @foreach ($item->handler as $val)
-                                            @if($inc_member<5)
-                                            <img title="{{$val->getUser->name}}" src="<?php echo asset("img/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
-                                            @endif
-                                        <?php $inc_member++;?>
-                                        @endforeach
-                                        @if($inc_member>=5)
-                                            {{$inc_member}}+
-                                        @endif
-                                    </a>    
-                                        <!--<img src="" width="17px;" class="img img-circle">
-                                        <img src="" width="17px;" class="img img-circle">&nbsp;<?php //echo(count($item->handler)>=1)?'&nbsp;'.count($item->handler).'+':'&nbsp;'?></a>-->
-                                
-                                    <!--<a href="javascript:void(0);"  class="btn btn-xs btn-white btn-update-task">&nbsp;<i class="fa fa-tasks"></i>&nbsp;</a>-->
-                                </div>
-                                
-                            </li>
-                            @endif
+                                @if($item->step==2)
+                                    @include('partial._tasklist_dashboard')
+                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -222,45 +155,11 @@
                         
                         <ul class="sortable-list connectList agile-list ibox-content-ul" id="completed">
                             @foreach ($tasktodo as $item)
-                            @if($item->step==3)
-                            <li progres_id="{{$item->id}}" class="default-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-                                <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                                <?php $j=3;?>
-                                @for ($i = 1; $i <= $item->priority; $i++)
-                                    <i class="fa fa-star"></i>&nbsp;
-                                <?php $j--;?>
-                                @endfor
-                                @for ($j; $j >= 1; $j--)
-                                    <i class="fa fa-star-o"></i>&nbsp;
-                                @endfor
-                                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
-                                </div>
-                                {{$item->taskname}}
-                                <div class="agile-detail">   
-                                    
-                                <span title="Due Date" class=""><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
-                                    <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                                        <?php $inc_member=0;?>
-                                        @foreach ($item->handler as $val)
-                                            @if($inc_member<5)
-                                            <img title="{{$val->getUser->name}}" src="<?php echo asset("img/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
-                                            @endif
-                                        <?php $inc_member++;?>
-                                        @endforeach
-                                        @if($inc_member>=5)
-                                            {{$inc_member}}+
-                                        @endif
-                                    </a>    
-                                        <!--<img src="" width="17px;" class="img img-circle">
-                                        <img src="" width="17px;" class="img img-circle">&nbsp;<?php //echo(count($item->handler)>=1)?'&nbsp;'.count($item->handler).'+':'&nbsp;'?></a>-->
-                                
-                                    <!--<a href="javascript:void(0);"  class="btn btn-xs btn-white btn-update-task">&nbsp;<i class="fa fa-tasks"></i>&nbsp;</a>-->
-                                </div>
-                                
-                            </li>
-                            @endif
+                                @if($item->step==3)
+                                    @include('partial._tasklist_dashboard')
+                                @endif
                             @endforeach
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -279,41 +178,11 @@
                         
                         <ul class="sortable-list connectList agile-list ibox-content-ul" id="box_{{$li->list_id}}">
                             @foreach ($tasktodo as $item)
-                            @if($item->step==$li->list_id)
-                            <li class="default-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-                                <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                                <?php $j=3;?>
-                                @for ($i = 1; $i <= $item->priority; $i++)
-                                    <i class="fa fa-star"></i>&nbsp;
-                                <?php $j--;?>
-                                @endfor
-                                @for ($j; $j >= 1; $j--)
-                                    <i class="fa fa-star-o"></i>&nbsp;
-                                @endfor
-                                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
-                                </div>
-                                {{$item->taskname}}
-                                <div class="agile-detail">   
-                                    
-                                <span title="Due Date" class=""><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
-                                    <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                                        <?php $inc_member=0;?>
-                                        @foreach ($item->handler as $val)
-                                            @if($inc_member<5)
-                                            <img title="{{$val->getUser->name}}" src="<?php echo asset("img/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
-                                            @endif
-                                        <?php $inc_member++;?>
-                                        @endforeach
-                                        @if($inc_member>=5)
-                                            {{$inc_member}}+
-                                        @endif
-                                    </a>    
-                                </div>
-                                
-                            </li>
-                            @endif
+                                @if($item->step==$li->list_id)
+                                    @include('partial._tasklist_dashboard')
+                                @endif
                             @endforeach
-                            
+
                         </ul>
                     </div>
                 </div>

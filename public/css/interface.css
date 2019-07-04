@@ -1,0 +1,9 @@
+li.priority-level1{
+    border-left: 2px solid #8BC34A;
+}
+li.priority-level2{
+    border-left: 2px solid #03A9F4;
+}
+li.priority-level3{
+    border-left: 2px solid #F44336;
+}

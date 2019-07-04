@@ -14,7 +14,7 @@ class CreateProjectListsTable extends Migration
     public function up()
     {
         Schema::create('project_lists', function (Blueprint $table) {
-            $table->bigIncrements('list_id');
+            $table->bigIncrements('list_id')->start_from(4);
             $table->bigInteger('project_id');
             $table->string('list_title');
             $table->bigInteger('created_by');
@@ -24,6 +24,8 @@ class CreateProjectListsTable extends Migration
             $table->smallInteger('status')->default(1);
             $table->timestamps();
         });
+
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE project_lists AUTO_INCREMENT = 4;");
     }
 
     /**
