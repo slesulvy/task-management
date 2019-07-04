@@ -190,7 +190,7 @@ class HomeController extends Controller
                             ->join('projects','projects.project_id','=','project_lists.project_id')
                             ->where([['projects.project_id',$id],['project_lists.status',1]])->get();
 
-        if(count($board)<1) 
+        if(count($board)<1)
         {
             return redirect('board');
         }   
@@ -306,10 +306,12 @@ class HomeController extends Controller
     {
         $task = Task::where('id','=', $id)
                         ->first();
-        if(count($task) == 1){
+        //if(count($task) == 1){
             $task->description = $request->description;
             $task->save();
-        }
+        //}
+        echo json_encode(array('user'=>Auth::user()->name,'taskname'=>$task->taskname));
+
     }
 
     function update_duedate(Request $request, $id)
@@ -358,20 +360,29 @@ class HomeController extends Controller
 
     function update_step(Request $request)
     {
-       
+
         DB::beginTransaction();
         
         DB::table('tasks')
             ->whereIn('id',explode(',',$request->step_a))
-            ->update(['step'=>1]);
+            ->update([
+                ['step'=>1],
+                ['progress' => 0]
+            ]);
 
         DB::table('tasks')
             ->whereIn('id',explode(',',$request->step_b))
-            ->update(['step'=>2]);
+            ->update([
+                ['step'=>2],
+                ['progress' => 10]
+            ]);
 
         DB::table('tasks')
             ->whereIn('id',explode(',',$request->step_c))
-            ->update(['step'=>3]);
+            ->update([
+                ['step'=>3],
+                ['progress'=> 100]
+            ]);
 
         $list = DB::table('project_lists')
                         ->join('projects','projects.project_id','=','project_lists.project_id')
@@ -386,7 +397,7 @@ class HomeController extends Controller
             DB::commit();
             //echo $item->list_id.' => '.$request->input('step_'.$item->list_id).'\n';
         }
-        
+
         DB::commit();
         //echo json_encode(DB::getQueryLog());
     }
@@ -456,7 +467,7 @@ class HomeController extends Controller
         DB::table('tasks')
             ->where('step', $id)
             ->update(['status' => 0]);
-        return back(); 
+        return back();
     }
 
 }
