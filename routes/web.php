@@ -91,15 +91,10 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('users_select_opt','HomeController@users_select_opt');
 
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
-
-<<<<<<< HEAD
     Route::get('task/progress/{task}/edit','TaskProgressController@edit');
     Route::post('task/progress','TaskProgressController@set');
-=======
     // sent notification to telegram
     Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
     Route::get('api/updateDescription', 'BotController@updateDescriptionTask');
     Route::get('api/moveTask', '\App\Http\Controllers\BotController@updateDescriptionTask');
->>>>>>> 76d8399d7951b23b9086b919f72c44d5679c896f
-
 });
