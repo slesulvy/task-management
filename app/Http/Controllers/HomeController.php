@@ -365,24 +365,15 @@ class HomeController extends Controller
         
         DB::table('tasks')
             ->whereIn('id',explode(',',$request->step_a))
-            ->update([
-                ['step'=>1],
-                ['progress' => 0]
-            ]);
+            ->update(['step'=>1]);
 
         DB::table('tasks')
             ->whereIn('id',explode(',',$request->step_b))
-            ->update([
-                ['step'=>2],
-                ['progress' => 10]
-            ]);
+            ->update(['step'=>2]);
 
         DB::table('tasks')
             ->whereIn('id',explode(',',$request->step_c))
-            ->update([
-                ['step'=>3],
-                ['progress'=> 100]
-            ]);
+            ->update(['step'=>3]);
 
         $list = DB::table('project_lists')
                         ->join('projects','projects.project_id','=','project_lists.project_id')
