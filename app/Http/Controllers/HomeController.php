@@ -239,6 +239,7 @@ class HomeController extends Controller
             $task->priority = $request->priority;
             $task->save();
         }
+        
     }
 
     public function gettask($id)
@@ -281,6 +282,7 @@ class HomeController extends Controller
 
         $member = TaskHandler::with('getUser')->where('task_id', $task_id)->orderBy('id', 'desc')->get();
         echo json_encode(array('handler'=>$member));
+        app('App\Http\Controllers\BotController')->updateDescriptionTask(Auth::user()->id,$task->tastname);
     }
 
     function gettaskmember($task_id)
@@ -305,10 +307,12 @@ class HomeController extends Controller
     {
         $task = Task::where('id','=', $id)
                         ->first();
-        if(count($task) == 1){
+        //if(count($task) == 1){
             $task->description = $request->description;
             $task->save();
-        }
+        //}
+        echo json_encode(array('user'=>Auth::user()->name,'taskname'=>$task->taskname));
+        //app('App\Http\Controllers\BotController')->updateDescriptionTask(Auth::user()->name,$task->taskname);
     }
 
     function update_duedate(Request $request, $id)

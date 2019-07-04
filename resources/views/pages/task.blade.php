@@ -467,7 +467,7 @@
             $.ajax({
                 type:"get",
                 url: "{{ url('setdescription')}}/"+task_id,
-                dataType:'text',
+                dataType:'json',
                 data:{
                     'description': $('#e_task_description').val()
                 },
@@ -476,11 +476,29 @@
                     $('#e_task_description').css('display','none');
                     $('#avatar_description').html($('#e_task_description').val());
                     $('#avatar_description').css('display','inline');
+                    //console.log(data.user);
+                    updatedDescMsg(data.user, data.taskname);
                 }
             });
 
             
         });
+
+        function updatedDescMsg(user, msgStr)
+        {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/updateDescription')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskName' :msgStr
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
         
         //--------------------------
         // Add task
