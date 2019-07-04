@@ -5,7 +5,8 @@
 
 <link href="{{ asset('css/plugins/dataTables/datatables.min.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
-    <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
+<link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
+<link href="{{asset('css/progress.css')}}" rel="stylesheet">
 
 @endsection
 
@@ -70,10 +71,19 @@
                                             <tbody>
 
                                             @foreach ($task as $item)
-                                                <tr class="gradeX">
+                                                <tr class="gradeX task-{{ $item->id }}">
                                                     <td align="center">{{$i}}</td>
-                                                    <td>{{$item->board->projectname}}</td>
-                                                    <td>{{substr($item->taskname,0,60)}}</td>
+                                                    <td>{{$item->board->projectname}}
+                                                        <div class="progress">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ $item->board->getProgress()  }}%" aria-valuenow="{{ $item->board->getProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {{substr($item->taskname,0,60)}}
+                                                        <div class="progress">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </td>
                                                     <td align="left">
                                                             {{substr($item->description,0,60)}}
                                                     </td>
@@ -81,8 +91,14 @@
                                                     <td align="center" class="center">
                                                                  
                                                         <!--<a onclick="edit_user({{$item->id}})" href="javascript:void(0)" data-toggle="modal" data-target="#edit_user" class="btn-sm btn-warning"><i class="fa fa-pencil"></i></a> | -->
+                                                        <a title="Progress" href="#" class="btn-sm btn-white progress-modal"
+                                                           data-id="{{ $item->id }}"
+                                                           data-progress="{{ $item->progress }}"
+                                                            data-title="{{ $item->taskname }}">
+                                                            <i class="fa fa-chevron-up"></i>
+                                                        </a> |
                                                         <a title="Restore" onclick="return confirm('Are you sure you to disable this user?')" href="{{ url('task/restore/'.$item->id)}}" class="btn-sm btn-white"><i class="fa fa-paper-plane"></i></a> |
-                                                        <a title="Archive" onclick="return confirm('Are you sure you to archive this board?')" href="{{ url('task/close/'.$item->id)}}" class="btn-sm btn-white"><i class="fa fa-trash"></i></a> 
+                                                        <a title="Archive" onclick="return confirm('Are you sure you to archive this board?')" href="{{ url('task/close/'.$item->id)}}" class="btn-sm btn-white"><i class="fa fa-trash"></i></a>
                                                     
                                                     </td>
                                                 </tr>
@@ -102,7 +118,7 @@
        
     </div>
 
-
+    @include('tasks.progress.edit')
     
     
 
@@ -113,6 +129,7 @@
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/dataTables/datatables.min.js')}}"></script>
+    <script src="{{asset('js/progress.js')}}"></script>
     <script>
         $('.dataTables-example').DataTable({
             pageLength: 25,

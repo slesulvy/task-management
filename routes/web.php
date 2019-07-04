@@ -95,4 +95,10 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
 
 
+    Route::get('task/progress/{task}/edit','TaskProgressController@edit');
+    Route::post('task/progress','TaskProgressController@set');
+    // sent notification to telegram
+    Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
+    Route::get('api/updateDescription', 'BotController@updateDescriptionTask');
+    Route::get('api/moveTask', '\App\Http\Controllers\BotController@updateDescriptionTask');
 });
