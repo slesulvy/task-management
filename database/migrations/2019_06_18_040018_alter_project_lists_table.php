@@ -26,9 +26,9 @@ class AlterProjectListsTable extends Migration
         });*/
 
         Schema::table('project_lists', function (Blueprint $table) {
-            $table->integer('created_by')->nullable();
-            $table->integer('deleted_by')->nullable();
-            $table->integer('modified_by')->nullable();
+            $table->integer('created_by')->nullable()->change();
+            $table->integer('deleted_by')->nullable()->change();
+            $table->integer('modified_by')->nullable()->change();
         });
     }
 
