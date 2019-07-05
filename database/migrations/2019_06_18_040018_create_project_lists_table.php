@@ -17,15 +17,13 @@ class CreateProjectListsTable extends Migration
             $table->bigIncrements('list_id')->start_from(4);
             $table->bigInteger('project_id');
             $table->string('list_title');
-            $table->bigInteger('created_by');
-            $table->bigInteger('modified_by');
-            $table->bigInteger('deleted_by');
-            $table->datetime('deleted_at');
-            $table->smallInteger('status')->default(1);
+            $table->bigInteger('created_by')->nullable();
+            $table->bigInteger('modified_by')->nullable();
+            $table->bigInteger('deleted_by')->nullable();
+            $table->datetime('deleted_at')->nullable();
+            $table->smallInteger('status')->default(0);
             $table->timestamps();
         });
-
-        \Illuminate\Support\Facades\DB::statement("ALTER TABLE project_lists AUTO_INCREMENT = 4;");
     }
 
     /**
