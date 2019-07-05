@@ -19,7 +19,7 @@
             z-index:3333;
             border-radius: 2px;
         }
-        .test:hover{
+          .test:hover{
             color: red;
         }
         .caretss {
@@ -35,7 +35,7 @@
         .ibox-content-ul-first{ max-height:60vh; overflow-y: auto; padding-right:5px; }
         .ibox-content-ul::-webkit-scrollbar, .ibox-content-ul-first::-webkit-scrollbar
         {
-            width: 4px;
+            width: 2px;
             height: 4px;
             background-color: #F5F5F5;
         }
@@ -65,7 +65,7 @@
         .custom-scroll::-webkit-scrollbar
         {
             width: 4px;
-            height: 4px;
+            height: 8px;
             background-color: #fff;
         }
 
@@ -102,9 +102,6 @@
                     
                 </li>
             </ol>
-        </div>
-        <div class="col-lg-2">
-              
         </div>
         
     </div>
@@ -176,7 +173,6 @@
                     </div>
                 </div>
             </div>
-        </div>       
 
             <!-- dynamic list -->
 
@@ -254,7 +250,6 @@
     
 
 <!-- task modal -->
-    
 <div class="modal in" id="taskmodal" tabindex="-1" role="dialog" style="border-radius: 0px; display: none;" aria-hidden="true">
         <div class="modal-dialog  modal-md" style="border-radius:0px; width: 768px;">
             <div class="modal-content animated bounceInDown">
@@ -420,7 +415,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     
 <!-- end task model -->
@@ -466,8 +460,6 @@
                 return $('.popper-content').html();
             }
         });
-        
- 
 
         /*$('#dashboard').delegate(".mention","change",function(){
             $('#mention').change(function(){
@@ -487,7 +479,6 @@
         $('#e_task_description').blur(function(){
             
             var task_id = $('#e_task_id').val();
-
             $.ajax({
                 type:"get",
                 url: "{{ url('setdescription')}}/"+task_id,
@@ -532,27 +523,17 @@
                     'due_date': $('#e_duedate').val(),
                     'priority': $("input[name='priority']:checked").val()
                 },
-                
                 success: function(data){
-                     
+                    swal({
+                        title: "Success!",
+                        text: "Task has been update!",
+                        type: "success"
+                    });        
                 }
             });
 
         });
 
-        $('#memarchive').click(function(){
-           $.ajax({
-                    type:"get",
-                    url: "{{ url('board/destroy')}}/"+$('#e_task_id').val(),
-                    success: function(result){
-                        swal({
-                        title: "Success!",
-                        text: "Archive Successfully",
-                        type: "success"
-                    });   
-                    }
-                });
-        });
         function updatedDescMsg(user, msgStr)
         {
             $.ajax({
@@ -568,6 +549,20 @@
                 }
             });
         }
+
+         $('#memarchive').click(function(){
+           $.ajax({
+                    type:"get",
+                    url: "{{ url('board/destroy')}}/"+$('#e_task_id').val(),
+                    success: function(result){
+                        swal({
+                        title: "Success!",
+                        text: "Archive Successfully",
+                        type: "success"
+                    });   
+                    }
+                });
+        });
 
         function addtask()
         {
@@ -767,29 +762,7 @@
         }
 
         //---------------------------
-        // Due Date 
-         $("#setduedates").datepicker({
-            dateFormat: 'dd-mm-yy',
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true
-        }).on("changeDate", function (e) {
-            var task_id = $('#e_task_id').val();
-            $.ajax({
-                type:"get",
-                url: "{{ url('setduedate')}}/"+task_id,
-                dataType:'text',
-                data:{
-                    'due_date': $(this).val()
-                },
-                success: function(data){
-                    
-                }
-            });
-        });
-
+        // Due Date
 
         $("#setduedate").datepicker({
             dateFormat: 'dd-mm-yy',

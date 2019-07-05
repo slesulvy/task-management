@@ -66,6 +66,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'HomeController@updatetask']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'HomeController@destroy']);
 
+
     
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
 

@@ -1,6 +1,6 @@
         <div class="footer">
             <div class="pull-right">
-                Copyright <strong>Tasks Manager &copy;</strong> 2019.
+                Copyright <strong>Task Manager &copy;</strong> 2019.
             </div>
             <!--<div>
                 <strong>Copyright</strong> Task Manager &copy; 2019

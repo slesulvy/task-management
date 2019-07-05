@@ -24,17 +24,11 @@ class HomeController extends Controller
             ->where([['projects.status',1],['project_member.user_id', Auth::user()->id],['project_member.status',1]])
             ->get();
 
-
         return view('pages.index', ['board'=>$board]);
     }
 
     function boards()
     {
-        $board = Board::where('created_by', Auth::user()->id)
-                        ->orderBy('project_id', 'desc')
-                        /*->take(10)*/
-                        ->get();
-
         $board = DB::table('projects')
             ->select('projects.*', 'project_member.user_id')
             ->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
@@ -81,11 +75,11 @@ class HomeController extends Controller
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-        //if(count($board) == 1){
+        if(count($board) == 1){
             $board->status = 0;
             $board->closed_by = Auth::user()->id;
             $board->save();
-        //}
+        }
         return back(); 
     }
 
@@ -98,8 +92,7 @@ class HomeController extends Controller
             $board->status = 1;
             $board->closed_by = Auth::user()->id;
             $board->save();
-        //}
-
+      //  }
         return back(); 
     }
 
@@ -113,7 +106,7 @@ class HomeController extends Controller
         //
     }
 
-    public function destroy($id)
+     public function destroy($id)
     {
           DB::table('tasks')
             ->where('id',$id)
@@ -194,39 +187,25 @@ class HomeController extends Controller
             ->where([['projects.status',1],['project_member.user_id', Auth::user()->id],['project_member.status',1],['project_member.project_id',$id]])
             ->get();
 
-       //echo json_encode($board);exit();
-
         $projectmember = DB::table('project_member')
                             ->join('users','users.id','=','project_member.user_id')
                             ->where('project_member.project_id',$id)->get();
-
-
-
-
-        if(count($board)<1) 
 
         $list = DB::table('project_lists')
                             ->join('projects','projects.project_id','=','project_lists.project_id')
                             ->where([['projects.project_id',$id],['project_lists.status',1]])->get();
 
         if(count($board)<1)
-
         {
             return redirect('board');
         }   
 
         $tasktodo = Task::with('handler')
-                ->where('project_id', $id)
-                ->where('status',1)
+                ->where([['project_id', $id],['status',1]])
                 ->orderBy('id', 'desc')
+                ->where('project_id', $id)
+                //->orderBy('id', 'desc')
                 ->get();
-     //   echo json_encode($tasktodo);exit();
-
-
-        $board = Board::where('project_id','=', $id)->first(); 
-
-
-        return view('pages.task',compact('tasktodo', 'board','projectmember'));
 
         $board = Board::where('project_id','=', $id)->first();            
         return view('pages.task',compact('tasktodo', 'board','projectmember','list'));
@@ -267,7 +246,7 @@ class HomeController extends Controller
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->priority = $request->priority;
             $task->save();
-        //}
+       // }
     }
 
     public function gettask($id)
@@ -277,12 +256,8 @@ class HomeController extends Controller
                 ->where('task_id', $id)
                 ->orderBy('id', 'desc')
                 ->first();
-        echo '<li task_id="'.$task->id.'" class="default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
+        echo '<li task_id="'.$task->id.'" class="'.$task->id.' priority-level'.$task->priority.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
                 <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                <i class="fa fa-star"></i>&nbsp;
-                <i class="fa fa-star-o"></i>&nbsp;
-                <i class="fa fa-star-o"></i>  
-                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
                 </div>
                 '.$task->taskname.'
                 <div class="agile-detail">    
@@ -317,7 +292,6 @@ class HomeController extends Controller
         $projectmember = DB::table('taskhandlers')
                             ->join('users','users.id','=','taskhandlers.user_id')
                             ->where('taskhandlers.task_id',$task_id)->get();
-
         return $projectmember;
     }
 
@@ -335,10 +309,6 @@ class HomeController extends Controller
     {
         $task = Task::where('id','=', $id)
                         ->first();
-        // if(count($task) == 1){
-            $task->description = $request->description;
-            $task->save();
-       // }
         //if(count($task) == 1){
             $task->description = $request->description;
             $task->save();
@@ -354,7 +324,7 @@ class HomeController extends Controller
         // if(count($task) == 1){
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->save();
-        //}
+      //  }
     }
 
     function comment(Request $request)
@@ -449,7 +419,7 @@ class HomeController extends Controller
         // if(count($task) == 1){
             $task->status = 0;
             $task->save();
-       // }
+      //  }
         return back(); 
     }
 
