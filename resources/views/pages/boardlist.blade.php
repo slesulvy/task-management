@@ -77,11 +77,10 @@
                                                     </td>
                                                     <td align="center" class="center"><?php echo ($item->status==1?'<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>')?></td>
                                                     <td align="center" class="center">
-                                                                 
-                                                        <!--<a onclick="edit_user({{$item->id}})" href="javascript:void(0)" data-toggle="modal" data-target="#edit_user" class="btn-sm btn-warning"><i class="fa fa-pencil"></i></a> | -->
+                                                        @if(Auth::user()->id==$item->created_by)         
                                                         <a title="Restore" onclick="return confirm('Are you sure you to disable this user?')" href="{{ url('board/restore/'.$item->project_id)}}" class="btn-sm btn-white"><i class="fa fa-paper-plane"></i></a> |
                                                         <a title="Archive" onclick="return confirm('Are you sure you to archive this board?')" href="{{ url('board/close/'.$item->project_id)}}" class="btn-sm btn-white"><i class="fa fa-trash"></i></a> 
-                                                    
+                                                        @endif
                                                     </td>
                                                 </tr>
 

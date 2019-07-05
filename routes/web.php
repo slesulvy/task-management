@@ -69,6 +69,10 @@ Route::group(['middleware'=>'auth'], function () {
     
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
 
+    Route::post('addlist',[ 'as' => 'addlist','uses' => 'HomeController@addlist']);
+    Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'HomeController@remove_list']);
+    //remove_list($id)
+
     Route::get('category',[ 'as' => 'category','uses' => 'CategoryController@index']);
     Route::get('addcategory',[ 'as' => 'addcategory','uses' => 'CategoryController@store']);
     Route::get('category/close/{id}',[ 'as' => 'category/close/{id}','uses' => 'CategoryController@closecategory']);
@@ -91,4 +95,11 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
 
+
+    Route::get('task/progress/{task}/edit','TaskProgressController@edit');
+    Route::post('task/progress','TaskProgressController@set');
+    // sent notification to telegram
+    Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
+    Route::get('api/updateDescription', 'BotController@updateDescriptionTask');
+    Route::get('api/moveTask', '\App\Http\Controllers\BotController@updateDescriptionTask');
 });

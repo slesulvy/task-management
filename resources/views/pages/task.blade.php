@@ -6,8 +6,15 @@
     <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <link href="{{asset('css/interface.css')}}" rel="stylesheet">
+
 
     <style>
+
+        .wrapper-content {
+            padding: 0px 0px 40px;
+        }
+
         .popover {
             z-index:3333;
             border-radius: 2px;
@@ -21,20 +28,63 @@
           width: 100%;
        
         }
+    
+        .ibox-content{width: 300px; max-height:70vh; overflow-y: hidden;}
+        
+        .ibox-content-ul{ max-height:62vh; overflow-y: auto; padding-right:5px; }
+        .ibox-content-ul-first{ max-height:60vh; overflow-y: auto; padding-right:5px; }
+        .ibox-content-ul::-webkit-scrollbar, .ibox-content-ul-first::-webkit-scrollbar
+        {
+            width: 4px;
+            height: 4px;
+            background-color: #F5F5F5;
+        }
+        .ibox-content-ul::-webkit-scrollbar-thumb
+        {
+            border-radius: 8px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: #eaeaea;
+        }
 
-        .chosen-container-multi .chosen-choices{border-radius: 0px; }
-        .no-scroll::-webkit-scrollbar {display:none;}
-        .no-scroll::-moz-scrollbar {display:none;}
-        .no-scroll::-o-scrollbar {display:none;}
-        .no-scroll::-google-ms-scrollbar {display:none;}
-        .no-scroll::-khtml-scrollbar {display:none;}
+        /* custom scroll bar */
+
+        .custom-scroll {
+            position: relative;
+            overflow-y: hidden;
+            overflow-x: auto;
+            padding-right:10px;
+            height:75vh;
+        }
+        .custom-scroll::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        .custom-scroll::-webkit-scrollbar
+        {
+            width: 4px;
+            height: 4px;
+            background-color: #fff;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb
+        {
+            border-radius: 8px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: #eee;
+        }
+
+        /* end custom scroll bar */
+
     </style>
 @endsection
 
 @section ('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <h2></h2>
             <ol class="breadcrumb">
                 <li>
@@ -46,26 +96,31 @@
                 <li class="active">
                 <strong>{{@$board->projectname}} </strong>
                 </li>
+                <li class="pull-right">
+                    
+                    <a class="btn btn-white btn-xs" data-toggle="modal" data-target="#addlist" style="margin:0;" href="javascript:void(0);"><strong><i class="fa fa-plus"></i>&nbsp;&nbsp;New List&nbsp;&nbsp;</strong>&nbsp;&nbsp;</a>
+                    
+                </li>
             </ol>
         </div>
         <div class="col-lg-2">
               
         </div>
+        
     </div>
 
 
-    <div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="wrapper wrapper-content animated fadeInRight ">
 
-        <div class="row" id="dashboard">
+        <div style="display: flex; min-width: 100%; overflow-x: auto;" id="dashboard" class="custom-scroll">
 
             <!-- task to do -->
 
-            <div class="col-lg-4">
+            <div class="col-lg-4" style="width: 320px; margin: 5px;padding: 5px;color: #34495e">
                 <div class="ibox">
                     <div class="ibox-content">
                         <h3>Things To-do</h3>
-                        <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
-
+                       
                         <div class="input-group">
                             <input type="text" id="taskname" placeholder="Add new task. " class="input input-sm form-control">
                             <span class="input-group-btn">
@@ -73,48 +128,14 @@
                             </span>
                         </div>
 
-                        <ul class="sortable-list connectList agile-list" id="todo">
-                            
+                        <ul class="sortable-list connectList agile-list ibox-content-ul-first" id="todo">
+
                             @foreach ($tasktodo as $item)
-                            @if($item->step==1)
-                            <li task_id="{{$item->id}}" class="warning-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-                                <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                                <?php $j=3;?>
-                                @for ($i = 1; $i <= $item->priority; $i++)
-                                    <i class="fa fa-star"></i>&nbsp;
-                                <?php $j--;?>
-                                @endfor
-                                @for ($j; $j >= 1; $j--)
-                                    <i class="fa fa-star-o"></i>&nbsp;
-                                @endfor
-                                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
-                                </div>
-                                {{$item->taskname}}
-                                <div class="agile-detail">   
-                                    
-                                <span title="Due Date" class="label label-warning"><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
-                                    <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                                        <?php $inc_member=0;?>
-                                        @foreach ($item->handler as $val)
-                                            @if($inc_member<5)
-                                            <img title="{{$val->getUser->name}}" src="<?php echo asset("img/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
-                                            @endif
-                                        <?php $inc_member++;?>
-                                        @endforeach
-                                        @if($inc_member>=5)
-                                            {{$inc_member}}+
-                                        @endif
-                                    </a>    
-                                       <!--<img src="" width="17px;" class="img img-circle">
-                                        <img src="" width="17px;" class="img img-circle">&nbsp;<?php //echo(count($item->handler)>=1)?'&nbsp;'.count($item->handler).'+':'&nbsp;'?></a>-->
-                                
-                                    <!--<a href="javascript:void(0);"  class="btn btn-xs btn-white btn-update-task">&nbsp;<i class="fa fa-tasks"></i>&nbsp;</a>-->
-                                </div>
-                                
-                            </li>
-                            @endif
+                                @if($item->step==1)
+                                    @include('partial._tasklist_dashboard')
+                                @endif
                             @endforeach
-                                
+
                         </ul>
                     </div>
                 </div>
@@ -122,50 +143,15 @@
 
             <!-- in progress -->
 
-            <div class="col-lg-4">
+            <div class="col-lg-4" style="width: 320px; margin: 5px;padding: 5px; color: #34495e">
                 <div class="ibox">
                     <div class="ibox-content">
                         <h3>In Progress</h3>
-                        <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
-                        <ul class="sortable-list connectList agile-list" id="inprogress">
+                        <ul class="sortable-list connectList agile-list ibox-content-ul" id="inprogress">
                             @foreach ($tasktodo as $item)
-                            @if($item->step==2)
-                            <li progres_id="{{$item->id}}" class="info-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-                                <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                                <?php $j=3;?>
-                                @for ($i = 1; $i <= $item->priority; $i++)
-                                    <i class="fa fa-star"></i>&nbsp;
-                                <?php $j--;?>
-                                @endfor
-                                @for ($j; $j >= 1; $j--)
-                                    <i class="fa fa-star-o"></i>&nbsp;
-                                @endfor
-                                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
-                                </div>
-                                {{$item->taskname}}
-                                <div class="agile-detail">   
-                                    
-                                <span title="Due Date" class="label label-success"><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
-                                    <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                                        <?php $inc_member=0;?>
-                                        @foreach ($item->handler as $val)
-                                            @if($inc_member<5)
-                                            <img title="{{$val->getUser->name}}" src="<?php echo asset("img/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
-                                            @endif
-                                        <?php $inc_member++;?>
-                                        @endforeach
-                                        @if($inc_member>=5)
-                                            {{$inc_member}}+
-                                        @endif
-                                    </a>    
-                                        <!--<img src="" width="17px;" class="img img-circle">
-                                        <img src="" width="17px;" class="img img-circle">&nbsp;<?php //echo(count($item->handler)>=1)?'&nbsp;'.count($item->handler).'+':'&nbsp;'?></a>-->
-                                
-                                    <!--<a href="javascript:void(0);"  class="btn btn-xs btn-white btn-update-task">&nbsp;<i class="fa fa-tasks"></i>&nbsp;</a>-->
-                                </div>
-                                
-                            </li>
-                            @endif
+                                @if($item->step==2)
+                                    @include('partial._tasklist_dashboard')
+                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -174,62 +160,98 @@
 
             <!-- completed or done -->
 
-            <div class="col-lg-4">
+            <div class="col-lg-4" style="width: 320px; margin: 5px; padding: 5px; color: #34495e">
                 <div class="ibox">
                     <div class="ibox-content">
                         <h3>Done</h3>
-                        <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
-                        <ul class="sortable-list connectList agile-list" id="completed">
+                        
+                        <ul class="sortable-list connectList agile-list ibox-content-ul" id="completed">
                             @foreach ($tasktodo as $item)
-                            @if($item->step==3)
-                            <li progres_id="{{$item->id}}" class="success-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-                                <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                                <?php $j=3;?>
-                                @for ($i = 1; $i <= $item->priority; $i++)
-                                    <i class="fa fa-star"></i>&nbsp;
-                                <?php $j--;?>
-                                @endfor
-                                @for ($j; $j >= 1; $j--)
-                                    <i class="fa fa-star-o"></i>&nbsp;
-                                @endfor
-                                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
-                                </div>
-                                {{$item->taskname}}
-                                <div class="agile-detail">   
-                                    
-                                <span title="Due Date" class="label label-primary"><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
-                                    <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                                        <?php $inc_member=0;?>
-                                        @foreach ($item->handler as $val)
-                                            @if($inc_member<5)
-                                            <img title="{{$val->getUser->name}}" src="<?php echo asset("img/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
-                                            @endif
-                                        <?php $inc_member++;?>
-                                        @endforeach
-                                        @if($inc_member>=5)
-                                            {{$inc_member}}+
-                                        @endif
-                                    </a>    
-                                        <!--<img src="" width="17px;" class="img img-circle">
-                                        <img src="" width="17px;" class="img img-circle">&nbsp;<?php //echo(count($item->handler)>=1)?'&nbsp;'.count($item->handler).'+':'&nbsp;'?></a>-->
-                                
-                                    <!--<a href="javascript:void(0);"  class="btn btn-xs btn-white btn-update-task">&nbsp;<i class="fa fa-tasks"></i>&nbsp;</a>-->
-                                </div>
-                                
-                            </li>
-                            @endif
+                                @if($item->step==3)
+                                    @include('partial._tasklist_dashboard')
+                                @endif
                             @endforeach
-                            
+
                         </ul>
                     </div>
                 </div>
             </div>
         </div>       
+
+            <!-- dynamic list -->
+
+            <?php $list_id = "";?>
+            @foreach($list as $li)
+
+            <div class="col-lg-4" style="width: 320px; margin: 5px; padding: 5px; color: #34495e">
+                <div class="ibox">
+                    <div class="ibox-content">
+                    <h3>{{$li->list_title}} <a href="{{url('removelist/'.$li->list_id)}}" onclick="return confirm('Are you sure want remove list?')" class="pull-right" style="right:-5px;"><i class="fa fa-times"></i></a></h3>
+                        <?php $list_id.=',#box_'.$li->list_id?>
+                        
+                        <ul class="sortable-list connectList agile-list ibox-content-ul" id="box_{{$li->list_id}}">
+                            @foreach ($tasktodo as $item)
+                                @if($item->step==$li->list_id)
+                                    @include('partial._tasklist_dashboard')
+                                @endif
+                            @endforeach
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            @endforeach
+            
+
+        </div>
+        
+       
     </div>
 
 
-    
+<!-- modal add list -->
 
+
+<div class="modal in" id="addlist" tabindex="-1" role="dialog" style="border-radius: 0px; display: none;" aria-hidden="true">
+    <div class="modal-dialog  modal-md" style="border-radius:0px;">
+        <div class="modal-content animated bounceInDown">
+        <form method="post" enctype="multipart/form-data" action="{{ route('addlist') }}">
+            @csrf
+                <div class="modal-header" style="padding:7px 14px 5px 14px; ">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h3 class=""><b>Add List</b></h3>
+                </div>
+                <div class="modal-body">
+                    <fieldset class="form-horizontal col-sm-12" style="padding:0 0px 0 0;">                                                    
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-12">List Name <span style="color:red">*</span> <small>max-length(30)</small></label>
+                                <div class="col-sm-12">
+                                    <input type="text" maxlength="30" name="list_title" id="list_title" class="form-control" required autocomplete="off">
+                                    <input type="hidden" value="{{Request::segment(2)}}" name="project_id" class="form-control" required autocomplete="off">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+                    
+                </div>
+                <div class="modal-footer" style="border:0px solid #000; padding-right:46px; margin-top:15px;">
+                    &nbsp;<br>
+                    <button type="reset" class="btn btn-white close_md" data-dismiss="modal" style="border-radius:0px;">Close</button>
+                    <button type="submit" class="btn btn-primary" style="border-radius:0px;">Save as</button>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- end modal add list -->
+    
 
 <!-- task modal -->
     
@@ -434,6 +456,7 @@
     <script>
 
        
+        
 
         $('.popper').popover({
             placement: 'right',
@@ -477,6 +500,8 @@
                     $('#e_task_description').css('display','none');
                     $('#avatar_description').html($('#e_task_description').val());
                     $('#avatar_description').css('display','inline');
+                    var jsonData = JSON.parse(data);
+                    updatedDescMsg(jsonData.user, jsonData.taskname);
                 }
             });
 
@@ -528,6 +553,21 @@
                     }
                 });
         });
+        function updatedDescMsg(user, msgStr)
+        {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/updateDescription')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskName' :msgStr
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
 
         function addtask()
         {
@@ -603,19 +643,34 @@
 
             var inc_update_drag = 0;
 
-            $("#todo, #inprogress, #completed").sortable({
+            $("#todo, #inprogress, #completed <?php echo $list_id?>").sortable({
                 connectWith: ".connectList",
                 update: function( event, ui ) {
                     var todo = $( "#todo" ).sortable( "toArray" );
                     var inprogress = $( "#inprogress" ).sortable( "toArray" );
                     var completed = $( "#completed" ).sortable( "toArray" );
+
+                    <?php foreach($list as $row){?>
+                        var box_<?php echo $row->list_id?> = $( "#box_<?php echo $row->list_id?>" ).sortable( "toArray" );
+                        var idbox_<?php echo $row->list_id?> ='';
+                    <?php }?>
+
+
+                    <?php foreach($list as $row){?>
+                          for(var i=0; i<box_<?php echo $row->list_id?>.length;i++){  
+                            idbox_<?php echo $row->list_id?>+=box_<?php echo $row->list_id?>[i].replace('_','');
+                            if(i<=box_<?php echo $row->list_id?>.length-2){
+                                idbox_<?php echo $row->list_id?>+=',';
+                            } 
+                          }
+                    <?php } ?>
     
                     inc_update_drag+=1;
                     var idtodo ='';
                     var idprog ='';
                     var iddone ='';
 
-                    //console.log(idtodo);
+                   
 
                     for(var i=0; i<todo.length;i++){
                         
@@ -642,16 +697,22 @@
 
                     if(inc_update_drag==2)
                     {
+                        
                         $.ajax({
                             type:"get",
                             url: "{{ url('movestep')}}",
                             data:{
+                                'project_id':<?php echo Request::segment(2)?>,
                                 'step_a': idtodo,
                                 'step_b': idprog,
                                 'step_c': iddone
+                                <?php foreach($list as $row){?>
+                                ,'step_<?php echo $row->list_id?>':idbox_<?php echo $row->list_id?>
+                                <?php }?>
                             },
                             success: function(data){
-                                //console.log(data);      
+                                inc_update_drag=0;  
+                                console.log(data);
                             }
                         });
                         

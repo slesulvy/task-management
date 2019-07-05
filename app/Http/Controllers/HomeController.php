@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Board;
+use App\Lists;
 use App\Task;
 use App\TaskHandler;
 use App\BoardMember;
@@ -16,19 +17,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        //DB::enableQueryLog();
-        /*$board = Board::with(['category',
-            'members' => function ($query) {
-                $query->where('user_id', '=', Auth::user()->id);
-            },    
-        ])->where('status',1)->get();*/
         $board = DB::table('projects')
             ->select('projects.*', 'category_name', 'project_member.user_id')
             ->join('category', 'projects.category_id', '=', 'category.category_id')
             ->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
             ->where([['projects.status',1],['project_member.user_id', Auth::user()->id],['project_member.status',1]])
             ->get();
-        //dd(DB::getQueryLog());
 
 
         return view('pages.index', ['board'=>$board]);
@@ -41,6 +35,13 @@ class HomeController extends Controller
                         /*->take(10)*/
                         ->get();
 
+        $board = DB::table('projects')
+            ->select('projects.*', 'project_member.user_id')
+            ->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
+            ->where([['project_member.user_id', Auth::user()->id],['project_member.status',1]])
+            ->get();
+        /*$board = Board::orderBy('project_id', 'desc')
+                        ->get();*/
         return view('pages.boardlist', ['board'=>$board]);
     }
 
@@ -201,7 +202,15 @@ class HomeController extends Controller
 
 
 
+
         if(count($board)<1) 
+
+        $list = DB::table('project_lists')
+                            ->join('projects','projects.project_id','=','project_lists.project_id')
+                            ->where([['projects.project_id',$id],['project_lists.status',1]])->get();
+
+        if(count($board)<1)
+
         {
             return redirect('board');
         }   
@@ -216,7 +225,11 @@ class HomeController extends Controller
 
         $board = Board::where('project_id','=', $id)->first(); 
 
+
         return view('pages.task',compact('tasktodo', 'board','projectmember'));
+
+        $board = Board::where('project_id','=', $id)->first();            
+        return view('pages.task',compact('tasktodo', 'board','projectmember','list'));
     }
 
     public function addtask(Request $request)
@@ -264,7 +277,7 @@ class HomeController extends Controller
                 ->where('task_id', $id)
                 ->orderBy('id', 'desc')
                 ->first();
-        echo '<li task_id="'.$task->id.'" class="warning-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
+        echo '<li task_id="'.$task->id.'" class="default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
                 <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
                 <i class="fa fa-star"></i>&nbsp;
                 <i class="fa fa-star-o"></i>&nbsp;
@@ -273,7 +286,7 @@ class HomeController extends Controller
                 </div>
                 '.$task->taskname.'
                 <div class="agile-detail">    
-                <span title="Due Date" class="label label-warning"><i class="fa fa-clock-o"></i>'.'</span>
+                <span title="Due Date" class=""><i class="fa fa-clock-o"></i>'.'</span>
                 <a href="#" class="btn btn-xs pull-right" style="border:none;">
                     <img src="'.asset('img/'.$member->getUser->img).'" width="17px;" class="img img-circle">   
                 </a> 
@@ -326,6 +339,12 @@ class HomeController extends Controller
             $task->description = $request->description;
             $task->save();
        // }
+        //if(count($task) == 1){
+            $task->description = $request->description;
+            $task->save();
+        //}
+        echo json_encode(array('user'=>Auth::user()->name,'taskname'=>$task->taskname));
+
     }
 
     function update_duedate(Request $request, $id)
@@ -374,7 +393,7 @@ class HomeController extends Controller
 
     function update_step(Request $request)
     {
-        DB::enableQueryLog();
+
         DB::beginTransaction();
         
         DB::table('tasks')
@@ -388,9 +407,23 @@ class HomeController extends Controller
         DB::table('tasks')
             ->whereIn('id',explode(',',$request->step_c))
             ->update(['step'=>3]);
-        
+
+        $list = DB::table('project_lists')
+                        ->join('projects','projects.project_id','=','project_lists.project_id')
+                        ->where([['projects.project_id',$request->project_id],['project_lists.status',1]])->get();
+
+        foreach($list as $item){
+            DB::enableQueryLog();
+            DB::table('tasks')
+            ->whereIn('id',explode(',',$request->input('step_'.$item->list_id)))
+            ->update(['step'=>$item->list_id]);
+            //echo json_encode(DB::getQueryLog());
+            DB::commit();
+            //echo $item->list_id.' => '.$request->input('step_'.$item->list_id).'\n';
+        }
+
         DB::commit();
-        echo json_encode(DB::getQueryLog());
+        //echo json_encode(DB::getQueryLog());
     }
 
 
@@ -430,6 +463,35 @@ class HomeController extends Controller
             $task->save();
        // }
         return back(); 
+    }
+
+    public function addlist(Request $request)
+    {
+        DB::beginTransaction();
+
+        $list = new Lists;
+        $list->project_id = $request->project_id;
+        $list->list_title = $request->list_title;
+        $list->created_by = Auth::user()->id;
+        $list->save();
+
+        DB::commit();
+
+        return back()->with('success', 'Your images has been successfully');
+    }
+
+    function remove_list($id)
+    {
+        $list = Lists::where('list_id','=', $id)
+                ->where('created_by','=',Auth::user()->id)
+                ->first();
+        $list->status = 0;
+        $list->save();
+
+        DB::table('tasks')
+            ->where('step', $id)
+            ->update(['status' => 0]);
+        return back();
     }
 
 }
