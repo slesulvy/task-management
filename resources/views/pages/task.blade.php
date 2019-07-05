@@ -26,7 +26,7 @@
         .ibox-content-ul-first{ max-height:60vh; overflow-y: auto; padding-right:5px; }
         .ibox-content-ul::-webkit-scrollbar, .ibox-content-ul-first::-webkit-scrollbar
         {
-            width: 4px;
+            width: 2px;
             height: 4px;
             background-color: #F5F5F5;
         }
@@ -56,7 +56,7 @@
         .custom-scroll::-webkit-scrollbar
         {
             width: 4px;
-            height: 4px;
+            height: 8px;
             background-color: #fff;
         }
 

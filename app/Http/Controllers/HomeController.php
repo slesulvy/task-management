@@ -196,7 +196,7 @@ class HomeController extends Controller
         }   
 
         $tasktodo = Task::with('handler')
-                ->where('project_id', $id)
+                ->where([['project_id', $id],['status',1]])
                 ->orderBy('id', 'desc')
                 ->get();
 
@@ -249,12 +249,8 @@ class HomeController extends Controller
                 ->where('task_id', $id)
                 ->orderBy('id', 'desc')
                 ->first();
-        echo '<li task_id="'.$task->id.'" class="default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
+        echo '<li task_id="'.$task->id.'" class="'.$task->id.' priority-level'.$task->priority.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
                 <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                <i class="fa fa-star"></i>&nbsp;
-                <i class="fa fa-star-o"></i>&nbsp;
-                <i class="fa fa-star-o"></i>  
-                <i class="fa fa-thumb-tack pull-right" aria-hidden="true"></i>
                 </div>
                 '.$task->taskname.'
                 <div class="agile-detail">    
