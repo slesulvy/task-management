@@ -12,6 +12,15 @@
             z-index:3333;
             border-radius: 2px;
         }
+        .test:hover{
+            color: red;
+        }
+        .caretss {
+          
+          box-shadow: 0 0 2000px #000000;
+          width: 100%;
+       
+        }
 
         .chosen-container-multi .chosen-choices{border-radius: 0px; }
         .no-scroll::-webkit-scrollbar {display:none;}
@@ -40,7 +49,7 @@
             </ol>
         </div>
         <div class="col-lg-2">
-            
+              
         </div>
     </div>
 
@@ -215,12 +224,7 @@
                     </div>
                 </div>
             </div>
-
-
-        </div>
-        
-
-       
+        </div>       
     </div>
 
 
@@ -230,50 +234,51 @@
 <!-- task modal -->
     
 <div class="modal in" id="taskmodal" tabindex="-1" role="dialog" style="border-radius: 0px; display: none;" aria-hidden="true">
-        <div class="modal-dialog  modal-md" style="border-radius:0px;">
+        <div class="modal-dialog  modal-md" style="border-radius:0px; width: 768px;">
             <div class="modal-content animated bounceInDown">
-                            
                     <div class="modal-body" style="padding:10px;">
+                        <a class="icon-lg fa fa-close dialog-close-button js-close-window" data-dismiss="modal"  id="hello" href="#"></a>
                         <div class="tabs-container">
-                            <ul class="nav nav-tabs">
-                                <!--<li class="active"><a data-toggle="tab" href="#general" aria-expanded="true"><b id="tasktitle" style="text-transform:uppercase;">Task Information</b></a></li>
-                                -->
-                            </ul>
                             <div class="tab-content">
-                                
                                 <div id="general" class="tab-pane active">
                                     <div class="panel-body">
-                                        
                                         <form method="post" enctype="multipart/form-data" action="">
                                             @csrf
                                             <fieldset class="form-horizontal col-sm-12" style="padding:0 0px 0 0;">                                                    
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-9">
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-12"><i class="fa fa-credit-card"></i>&nbsp;&nbsp;<b id="tasktitle" style="text-transform:uppercase;">Task Information</b></label>
-                                                        <span style="font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i id="im_where">in List Done</i></span>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="col-sm-3"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Due Date &nbsp;&nbsp;&nbsp;
+                                                        <label class="col-sm-12">
+                                                            <i class="fa fa-credit-card"></i>&nbsp;&nbsp;
+                                                            <b id="tasktitle" style="text-transform:uppercase;">Task Information</b>
                                                         </label>
-                                                        <div class="date col-sm-5" style="padding:0px; margin-top:-5px; margin-left:-30px;">
-                                                            <input type="text" id="setduedate" class="form-control input-sm" style="border:none; font-size:12px;" data-mask="99/99/9999" placeholder="mm/dd/yyyy">
-                                                        </div>
-                                                        
+                                                        <span style="font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                          
+                                                            <a href="#" style="font-size: 13px; color: #6b778c;" id="im_where" class="js-open-move-from-header">Done</a>
+                                                        </span>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-12" style="height:30px;">
-                                                            <div class="col-sm-3" style="padding-left:0px;padding-right:0px;">
+                                                            <div class="col-sm-4" style="padding-left:0px;padding-right:0px;">
                                                                 <i class="fa fa-user-o"></i>&nbsp;&nbsp;Members &nbsp;<span style="color:#555; border-radius:0px; margin-top:-5px;" class="pull-right btn btn-sm btn-white gray-bg btn_add_member" onclick="$('#member_add_area').toggle();">+</span> 
                                                             </div>
-                                                            <div class="col-sm-5" style="padding:0px; display:none; margin-top:-5px;" id="member_add_area">
+                                                            <div class="col-sm-3" style="padding:0px; display:none; margin-top:-5px;" id="member_add_area">
                                                                 <select data-placeholder="Add Member..." title="Add Member" class="chosen-select form-control member-select" style="width:50%;" tabindex="4">
                                                                     @foreach ($projectmember as $item)
-                                                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                                                    <option style="cursor: pointer;" value="{{$item->id}}">{{$item->name}}</option>
                                                                     @endforeach
                                                                 </select>
+                                                            </div>
+                                                            <div class="col-sm-5">
+                                                                <div class="col-sm-12">
+                                                                    <div class="col-sm-4"> 
+                                                                        <span class="fa fa-calendar"></span>
+                                                                    </div>
+                                                                    <div class="date col-sm-8">
+                                                                        <input type="text" id="setduedate" style="border:none; font-size:12px;margin-left: -20px;" data-mask="99/99/9999" placeholder="mm/dd/yyyy"> 
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         
                                                         </label>
@@ -292,7 +297,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-12"><i class="fa fa-align-right"></i>&nbsp;&nbsp;Description &nbsp;<span style="color:#555; border-radius:0px;" class="btn btn-sm btn-white gray-bg btn-edit-desc">Edit</span></label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px;">
-                                                            <input type="hidden" id="e_task_id" value="0">
+                                                            <input type="hidden" id="e_task_id" value="">
                                                             <p id="avatar_description">Add a more detailed description...</p>
                                                             <textarea name="description" id="e_task_description" class="form-control" style="height:80px; overflow: hidden; overflow-wrap: break-word; resize: none; display:none; font-size:11px;" rows="3" required></textarea>
                                                         </div>
@@ -311,30 +316,14 @@
                                                             </a>
                                                         </label>
                                                     </div>
-
-                                                    <div class="form-group">
+                                                      <div class="form-group">
                                                         <label class="col-sm-12"><i class="fa fa-paperclip"></i>&nbsp;&nbsp;&nbsp;Attachments &nbsp;&nbsp;&nbsp;   
                                                         </label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px;">
-                                                            
-                                                            <div class="file-box">
-                                                                <div class="file">
-                                                                    <a href="#">
-                                                                        <span class="corner"></span>
-                                
-                                                                        <div class="icon">
-                                                                            <i class="fa fa-file"></i>
-                                                                        </div>
-                                                                        <div class="file-name">
-                                                                            Document_2014.doc
-                                                                            <br>
-                                                                            <small>Added: Jan 11, 2014</small>
-                                                                        </div>
-                                                                    </a>
-                                                                </div>
-                                
-                                                            </div>
-
+                                                        
+                                                            <ul class="list-unstyled file-list">
+                                                                <li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>
+                                                            </ul>
                                                         </div>
                                                     </div>
 
@@ -354,54 +343,63 @@
                                                                     <i class="fa fa-picture-o"></i>
                                                                 </a>
                                                                 
-                                                            </div>
-                                                            
+                                                            </div>                                                            
                                                         </div>
-
-
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-12" style="padding-right:0px;"><i class="fa fa-list-ul"></i>&nbsp;&nbsp;Activities &nbsp;<span style="color:#555; border-radius:0px;" class="btn btn-xs btn-white gray-bg pull-right" onclick="$('#_activities').toggle()">Hide Details</span></label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px; display:none;" id="_activities"> 
-                                                                
                                                             <div class="feed-activity-list">
                                                                 <!-- comments display here -->
                                                             </div>
-                                                           
                                                         </div>
-                                                    </div>
-                    
-                              
+                                                    </div> 
                                                 </div>
-                        
+
+                                                <div class="col-sm-3">
+                                                    <div class="u-clearfix">
+                                                        <b>ACTIONS</b>
+                                                        <a  onclick="$('#member_add_area').toggle();" class="button-link" href="#" title="Members">
+                                                            <span class="fa fa-user-circle"></span>&nbsp;
+                                                            <span>Members</span>
+                                                        </a>
+                                                        
+                                                        <a class="button-link" onclick="$('#setduedate').focus();" id="setduedates__" href="#" title="Due Date">
+                                                            <span class="fa fa-calendar"></span>&nbsp;
+                                                            <span>Due Date</span>
+                                                        </a>
+
+                                                        <a class="button-link" class="date" title="Move">
+                                                            <span class="fa fa-long-arrow-right"></span>&nbsp;
+                                                            <span>Move</span>
+                                                        </a>
+                                                        <a class="button-link" href="" id="memarchive" title="Archive">
+                                                            <span class="fa fa-repeat"></span>&nbsp;
+                                                            <span>Archive</span>
+                                                        </a>
+                                                         <a class="button-link" href="#" title="Attachment">
+                                                            <span class="fa fa-paperclip"></span>&nbsp;
+                                                            <span>Attachment</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </fieldset>
                                         </form>
                                     </div>
                                 </div>
-
-                                <!--<div id="tab-4" class="tab-pane">
-                                    <div class="panel-body">
-                                    </div>
-                                </div>
-                                <div id="tab-5" class="tab-pane">
-                                    <div class="panel-body">
-                                    </div>
-                                </div>-->
                             </div>
                         </div>
+                         <div class="modal-footer" style="border:0px solid #000; padding-right:10px; margin-top:1px; padding-top:0px;">
+                             &nbsp;<br>
+                            <button type="reset" class="btn btn-white close_md btn_close" data-dismiss="modal" style="border-radius:0px;">Close</button>
+                        </div>
                     </div>
-
-                    <div class="modal-footer" style="border:0px solid #000; padding-right:10px; margin-top:1px; padding-top:0px;">
-                        &nbsp;<br>
-                        <button type="reset" class="btn btn-white close_md" data-dismiss="modal" style="border-radius:0px;">Close</button>
-                        <!--<button id="update_task" type="button" class="btn btn-primary " style="border-radius:0px;"><i class="fa fa-save"></i> Save</button>-->
-                        
-                    </div>
-
+                </div>
             </div>
         </div>
     </div>
+
     
 <!-- end task model -->
 
@@ -445,6 +443,8 @@
                 return $('.popper-content').html();
             }
         });
+        
+ 
 
         /*$('#dashboard').delegate(".mention","change",function(){
             $('#mention').change(function(){
@@ -464,6 +464,7 @@
         $('#e_task_description').blur(function(){
             
             var task_id = $('#e_task_id').val();
+
             $.ajax({
                 type:"get",
                 url: "{{ url('setdescription')}}/"+task_id,
@@ -506,15 +507,26 @@
                     'due_date': $('#e_duedate').val(),
                     'priority': $("input[name='priority']:checked").val()
                 },
+                
                 success: function(data){
-                    swal({
-                        title: "Success!",
-                        text: "Task has been update!",
-                        type: "success"
-                    });        
+                     
                 }
             });
 
+        });
+
+        $('#memarchive').click(function(){
+           $.ajax({
+                    type:"get",
+                    url: "{{ url('board/destroy')}}/"+$('#e_task_id').val(),
+                    success: function(result){
+                        swal({
+                        title: "Success!",
+                        text: "Archive Successfully",
+                        type: "success"
+                    });   
+                    }
+                });
         });
 
         function addtask()
@@ -694,7 +706,29 @@
         }
 
         //---------------------------
-        // Due Date
+        // Due Date 
+         $("#setduedates").datepicker({
+            dateFormat: 'dd-mm-yy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        }).on("changeDate", function (e) {
+            var task_id = $('#e_task_id').val();
+            $.ajax({
+                type:"get",
+                url: "{{ url('setduedate')}}/"+task_id,
+                dataType:'text',
+                data:{
+                    'due_date': $(this).val()
+                },
+                success: function(data){
+                    
+                }
+            });
+        });
+
 
         $("#setduedate").datepicker({
             dateFormat: 'dd-mm-yy',

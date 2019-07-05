@@ -30,6 +30,7 @@ class HomeController extends Controller
             ->get();
         //dd(DB::getQueryLog());
 
+
         return view('pages.index', ['board'=>$board]);
     }
 
@@ -39,6 +40,7 @@ class HomeController extends Controller
                         ->orderBy('project_id', 'desc')
                         /*->take(10)*/
                         ->get();
+
         return view('pages.boardlist', ['board'=>$board]);
     }
 
@@ -78,11 +80,11 @@ class HomeController extends Controller
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-        if(count($board) == 1){
+        //if(count($board) == 1){
             $board->status = 0;
             $board->closed_by = Auth::user()->id;
             $board->save();
-        }
+        //}
         return back(); 
     }
 
@@ -91,11 +93,12 @@ class HomeController extends Controller
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-        if(count($board) == 1){
+        // if(count($board) == 1){
             $board->status = 1;
             $board->closed_by = Auth::user()->id;
             $board->save();
-        }
+        //}
+
         return back(); 
     }
 
@@ -111,8 +114,13 @@ class HomeController extends Controller
 
     public function destroy($id)
     {
-        //
-    }
+          DB::table('tasks')
+            ->where('id',$id)
+            ->update(['status' => "2"]);
+
+     return back('board')->with('success', 'Archive Board Successfully');
+
+     }
 
     public function get_board_member($board)
     {
@@ -185,9 +193,13 @@ class HomeController extends Controller
             ->where([['projects.status',1],['project_member.user_id', Auth::user()->id],['project_member.status',1],['project_member.project_id',$id]])
             ->get();
 
+       //echo json_encode($board);exit();
+
         $projectmember = DB::table('project_member')
                             ->join('users','users.id','=','project_member.user_id')
                             ->where('project_member.project_id',$id)->get();
+
+
 
         if(count($board)<1) 
         {
@@ -196,10 +208,14 @@ class HomeController extends Controller
 
         $tasktodo = Task::with('handler')
                 ->where('project_id', $id)
+                ->where('status',1)
                 ->orderBy('id', 'desc')
                 ->get();
+     //   echo json_encode($tasktodo);exit();
 
-        $board = Board::where('project_id','=', $id)->first();            
+
+        $board = Board::where('project_id','=', $id)->first(); 
+
         return view('pages.task',compact('tasktodo', 'board','projectmember'));
     }
 
@@ -233,12 +249,12 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-        if(count($task) == 1){
+        // if(count($task) == 1){
             $task->description = $request->description;
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->priority = $request->priority;
             $task->save();
-        }
+        //}
     }
 
     public function gettask($id)
@@ -288,6 +304,7 @@ class HomeController extends Controller
         $projectmember = DB::table('taskhandlers')
                             ->join('users','users.id','=','taskhandlers.user_id')
                             ->where('taskhandlers.task_id',$task_id)->get();
+
         return $projectmember;
     }
 
@@ -305,20 +322,20 @@ class HomeController extends Controller
     {
         $task = Task::where('id','=', $id)
                         ->first();
-        if(count($task) == 1){
+        // if(count($task) == 1){
             $task->description = $request->description;
             $task->save();
-        }
+       // }
     }
 
     function update_duedate(Request $request, $id)
     {
         $task = Task::where('id','=', $id)
                         ->first();
-        if(count($task) == 1){
+        // if(count($task) == 1){
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->save();
-        }
+        //}
     }
 
     function comment(Request $request)
@@ -396,10 +413,10 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
-        if(count($task) == 1){
+        // if(count($task) == 1){
             $task->status = 0;
             $task->save();
-        }
+       // }
         return back(); 
     }
 
@@ -408,10 +425,10 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
-        if(count($task) == 1){
+        // if(count($task) == 1){
             $task->status = 1;
             $task->save();
-        }
+       // }
         return back(); 
     }
 
