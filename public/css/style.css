@@ -2884,10 +2884,51 @@ a.forum-item-title:hover {
     visibility: hidden;
   }
 }
-/* Tabs */
+#hello {
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 32px;
+    overflow: hidden;
+    padding: 4px;
+    margin: 4px;
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    width: 32px;
+    z-index: 2;
+    transition: background-color .1s,color .1s;
+}
+.button-link {
+    background-color: rgba(9,30,66,.04);
+    box-shadow: none;
+    border: none;
+    color: #172b4d;
+    border-radius: 3px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: 32px;
+    margin-top: 8px;
+    max-width: 300px;
+    overflow: hidden;
+    padding: 6px 12px;
+    position: relative;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    transition-property: background-color,border-color,box-shadow;
+    transition-duration: 85ms;
+    transition-timing-function: ease;
+}
 .tabs-container .panel-body {
   background: #fff;
-  border: 1px solid #e7eaec;
   border-radius: 2px;
   padding: 20px;
   position: relative;

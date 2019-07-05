@@ -102,10 +102,15 @@ class HomeController extends Controller
         //
     }
 
-    public function destroy($id)
+     public function destroy($id)
     {
-        //
-    }
+          DB::table('tasks')
+            ->where('id',$id)
+            ->update(['status' => "2"]);
+
+     return back('board')->with('success', 'Archive Board Successfully');
+
+     }
 
     public function get_board_member($board)
     {
@@ -232,10 +237,18 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
+<<<<<<< HEAD
+=======
+        // if(count($task) == 1){
+>>>>>>> 517370f2c69400be9e69d225729944f45caebf10
             $task->description = $request->description;
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->priority = $request->priority;
             $task->save();
+<<<<<<< HEAD
+=======
+       // }
+>>>>>>> 517370f2c69400be9e69d225729944f45caebf10
     }
 
     public function gettask($id)
@@ -306,8 +319,15 @@ class HomeController extends Controller
     {
         $task = Task::where('id','=', $id)
                         ->first();
+<<<<<<< HEAD
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->save();
+=======
+        // if(count($task) == 1){
+            $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
+            $task->save();
+      //  }
+>>>>>>> 517370f2c69400be9e69d225729944f45caebf10
     }
 
     function comment(Request $request)
@@ -399,8 +419,15 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
+<<<<<<< HEAD
             $task->status = 0;
             $task->save();
+=======
+        // if(count($task) == 1){
+            $task->status = 0;
+            $task->save();
+      //  }
+>>>>>>> 517370f2c69400be9e69d225729944f45caebf10
         return back(); 
     }
 
@@ -409,8 +436,15 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
+<<<<<<< HEAD
             $task->status = 1;
             $task->save();
+=======
+        // if(count($task) == 1){
+            $task->status = 1;
+            $task->save();
+       // }
+>>>>>>> 517370f2c69400be9e69d225729944f45caebf10
         return back(); 
     }
 
