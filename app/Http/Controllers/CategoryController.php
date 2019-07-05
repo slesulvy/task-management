@@ -42,7 +42,7 @@ class CategoryController extends Controller
         $category->status=1;   
         $category->save();
         $this->allCategory($category->category_id);
-        return back();
+        //return back();
     }
 
     public function allCategory($selected=0)

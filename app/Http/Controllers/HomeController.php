@@ -75,11 +75,9 @@ class HomeController extends Controller
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-        if(count($board) == 1){
             $board->status = 0;
             $board->closed_by = Auth::user()->id;
             $board->save();
-        }
         return back(); 
     }
 
@@ -88,11 +86,9 @@ class HomeController extends Controller
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-        if(count($board) == 1){
             $board->status = 1;
             $board->closed_by = Auth::user()->id;
             $board->save();
-        }
         return back(); 
     }
 
@@ -236,12 +232,10 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-        if(count($task) == 1){
             $task->description = $request->description;
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->priority = $request->priority;
             $task->save();
-        }
     }
 
     public function gettask($id)
@@ -294,20 +288,16 @@ class HomeController extends Controller
     {
         $task = Task::where('id','=', $id)
                         ->first();
-        if(count($task) == 1){
             $task->priority = $request->priority;
             $task->save();
-        }
     }
 
     function update_description(Request $request, $id)
     {
         $task = Task::where('id','=', $id)
                         ->first();
-        //if(count($task) == 1){
             $task->description = $request->description;
             $task->save();
-        //}
         echo json_encode(array('user'=>Auth::user()->name,'taskname'=>$task->taskname));
 
     }
@@ -316,10 +306,8 @@ class HomeController extends Controller
     {
         $task = Task::where('id','=', $id)
                         ->first();
-        if(count($task) == 1){
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->save();
-        }
     }
 
     function comment(Request $request)
@@ -411,10 +399,8 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
-        if(count($task) == 1){
             $task->status = 0;
             $task->save();
-        }
         return back(); 
     }
 
@@ -423,10 +409,8 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
-        if(count($task) == 1){
             $task->status = 1;
             $task->save();
-        }
         return back(); 
     }
 
