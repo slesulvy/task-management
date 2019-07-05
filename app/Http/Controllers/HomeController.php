@@ -197,7 +197,7 @@ class HomeController extends Controller
 
         $tasktodo = Task::with('handler')
                 ->where('project_id', $id)
-                ->orderBy('id', 'desc')
+                //->orderBy('id', 'desc')
                 ->get();
 
         $board = Board::where('project_id','=', $id)->first();            
