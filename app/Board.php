@@ -40,8 +40,14 @@ class Board extends Model
     public function getProgress()
     {
         // Search only for task that is active (not deleted or archived)
-        $tasks = Task::where('status' , 1)->get();
-        $count = Task::where('status' , 1)->count();
+        $tasks = Task::where([
+            ['status' , '=', '1'],
+            ['project_id' , '=', $this->project_id],
+        ])->get();
+        $count = Task::where([
+            ['status' , '=', '1'],
+            ['project_id' , '=', $this->project_id],
+        ])->count();
         $total_percentage = 0;
         foreach($tasks as $task){
                 $total_percentage += $task->progress;

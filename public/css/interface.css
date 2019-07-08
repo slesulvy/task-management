@@ -1,13 +1,21 @@
-li.priority-level1{
-    border-left: 2px solid #8BC34A;
+.progress.priority-1{
+    background: #b4ede2;
 }
-li.priority-level2{
-    border-left: 2px solid #03A9F4;
+.progress.priority-2{
+    background: #bdcdeb;
 }
-li.priority-level3{
-    border-left: 2px solid #F44336;
+.progress.priority-3{
+    background: #f4dadd;
 }
-
+.progress-bar-1 {
+    background-color: #1ab394;
+}
+.progress-bar-2 {
+    background-color: #235dc8;
+}
+.progress-bar-3 {
+    background-color: #ed5565;
+}
 .noUi-handle:before, .noUi-handle:after{
     display: none !important;
 }
