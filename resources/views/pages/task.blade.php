@@ -266,12 +266,12 @@
 
                                                     <div class="form-group">
                                                         <label class="col-sm-12">
-                                                            <i class="fa fa-credit-card"></i>&nbsp;&nbsp;
+                                                            <i class="fa fa-credit-card"></i>&nbsp;
                                                             <b id="tasktitle" style="text-transform:uppercase;">Task Information</b>
                                                         </label>
-                                                        <span style="font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <span style="font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                           
-                                                            <a href="#" style="font-size: 13px; color: #6b778c;" id="im_where" class="js-open-move-from-header">Done</a>
+                                                            <a href="javascript:void(0)" style="font-size: 12px; color: #6b778c;" id="im_where" class="js-open-move-from-header">Done</a>
                                                         </span>
                                                     </div>
 
@@ -289,7 +289,7 @@
                                                             </div>
                                                             <div class="col-sm-5">
                                                                 <div class="col-sm-12">
-                                                                    <div class="col-sm-4"> 
+                                                                    <div class="col-sm-3"> 
                                                                         <span class="fa fa-calendar"></span>
                                                                     </div>
                                                                     <div class="date col-sm-8">
@@ -386,7 +386,7 @@
                                                             <span>Members</span>
                                                         </a>
                                                         
-                                                        <a class="button-link" onclick="$('#setduedate').focus();" id="setduedates__" href="#" title="Due Date">
+                                                        <a class="button-link" onclick="$('#setduedate').focus();" id="setduedates__" href="javascript:void(0)" title="Due Date">
                                                             <span class="fa fa-calendar"></span>&nbsp;
                                                             <span>Due Date</span>
                                                         </a>
@@ -394,8 +394,9 @@
                                                         <a class="button-link" class="date" title="Move">
                                                             <span class="fa fa-long-arrow-right"></span>&nbsp;
                                                             <span>Move</span>
+                                                            
                                                         </a>
-                                                        <a class="button-link" href="" id="memarchive" title="Archive">
+                                                        <a class="button-link" href="javascript:void(0)" id="memarchive" title="Archive">
                                                             <span class="fa fa-repeat"></span>&nbsp;
                                                             <span>Archive</span>
                                                         </a>
@@ -841,15 +842,31 @@
             $.ajax({
                 type:"get",
                 url: "{{ url('setduedate')}}/"+task_id,
-                dataType:'text',
+                dataType:'json',
                 data:{
                     'due_date': $(this).val()
                 },
                 success: function(data){
-
                 }
             });
         });
+
+        function apiSetDueDate(user, task, duedate)
+        {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/setduedate')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskname' :task,
+                    'duedate':duedate
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
 
         //---------------------------
         // Comment

@@ -106,8 +106,7 @@ class HomeController extends Controller
     {
           DB::table('tasks')
             ->where('id',$id)
-            ->update(['status' => "2"]);
-
+            ->update(['status' => "0"]);
      return back('board')->with('success', 'Archive Board Successfully');
 
      }
@@ -253,8 +252,6 @@ class HomeController extends Controller
                 ->orderBy('id', 'desc')
                 ->first();
         echo '<li task_id="'.$task->id.'" class="'.$task->id.' priority-level'.$task->priority.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
-                <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
-                </div>
                 '.$task->taskname.'
                 <div class="agile-detail">    
                 <span title="Due Date" class=""><i class="fa fa-clock-o"></i>'.'</span>
@@ -315,6 +312,7 @@ class HomeController extends Controller
                         ->first();
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->save();
+        echo json_encode(array('user'=>Auth::user()->name,'taskname'=>$task->taskname,'duedate'=>date_format(date_create($request->due_date),'Y-m-d')));
     }
 
     function comment(Request $request)
