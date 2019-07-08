@@ -613,6 +613,22 @@
             });
         }
 
+        function createTaskPushNot(user, taskName)
+        {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/createTask')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskName' :taskName
+                },
+                success: function(data){
+
+                }
+            });
+        }
+
          $('#memarchive').click(function(){
            $.ajax({
                     type:"get",
@@ -623,9 +639,28 @@
                         text: "Archive Successfully",
                         type: "success"
                     });
+                    console.log('data: ', result);
+                    apiAchiveTask('{{Auth::user()->name}}', "'" + $('#tasktitle').text() + "'");
                     }
                 });
         });
+
+        function apiAchiveTask(user, taskname) {
+            {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/achiveTask')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskname' :taskname
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
+        }
 
         function addtask()
         {
@@ -639,6 +674,7 @@
                     },
                     success: function(result){
                         $('#todo').prepend(result);
+                        createTaskPushNot('{{Auth::user()->name}}', "'"+$('#taskname').val()+"'");
                         $('#taskname').val('');
                     }
                 });
@@ -854,6 +890,8 @@
                     'due_date': $(this).val()
                 },
                 success: function(data){
+                    console.log(data);
+                    apiSetDueDate(data.user, data.taskname, data.duedate)
                 }
             });
         });
