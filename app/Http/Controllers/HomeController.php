@@ -107,8 +107,7 @@ class HomeController extends Controller
           DB::table('tasks')
             ->where('id',$id)
             ->update(['status' => "0"]);
-     return back('board')->with('success', 'Archive Board Successfully');
-
+          //return back('board')->with('success', 'Archive Board Successfully');
      }
 
     public function get_board_member($board)
@@ -220,6 +219,7 @@ class HomeController extends Controller
             $handler->created_by = Auth::user()->id;
             $handler->save();
             $this->gettask($task->id);
+            
         DB::commit();
     }
 

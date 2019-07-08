@@ -35,6 +35,14 @@ class BotController extends Controller
         $this->sentMessageToTelegram($user . ' Move' . $taskName . ' from' . $from . ' To ' . $to);
      }
 
+     function createTask(Request $request) {
+      $this->sentMessageToTelegram($request->user . ' Created ' . $request->taskName . ' task');
+     }
+
+     function achiveTask(Request $request) {
+      $this->sentMessageToTelegram($request->user . ' Achived ' . $request->taskname . ' task');
+     }
+
      function updateDescriptionTask(Request $request) {
         $this->sentMessageToTelegram($request->user . ' Added description to ' . $request->taskName);
      }
