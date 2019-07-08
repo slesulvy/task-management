@@ -280,7 +280,8 @@ class HomeController extends Controller
         }
 
         $member = TaskHandler::with('getUser')->where('task_id', $task_id)->orderBy('id', 'desc')->get();
-        echo json_encode(array('handler'=>$member));
+        $addedMember = TaskHandler::with('getUser')->where([['task_id', $task_id],['user_id',$request->user_id]])->first();
+        echo json_encode(array('handler'=>$member,'addedmember'=>$addedMember));
     }
 
     function gettaskmember($task_id)

@@ -834,12 +834,33 @@
                 },
                 success: function(data){
                     $('#e_member img').remove();
+                    var addby = '{{Auth::user()->name}}';
+                    var added = data['addedmember'].get_user.name;
+                    var taskname = $('#tasktitle').text();
                     data['handler'].map(item =>{
                         $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
                     });
+                    NotifyAddTaskMember(addby,added,taskname);
                 }
             });
         });
+
+        function NotifyAddTaskMember(addby, added, task)
+        {     
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/addTaskMember')}}",
+                dataType:'text',
+                data:{
+                    'addby':addby,
+                    'added' :added,
+                    'taskname':task
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
 
         $('.chosen-select').chosen({width: "100%"});
 
