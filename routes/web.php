@@ -105,6 +105,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('api/createTask', 'BotController@createTask');
     Route::get('api/achiveTask', 'BotController@achiveTask');
     Route::get('api/addTaskMember', 'BotController@addMemberToTask');
+    Route::get('api/setPriorityTask', 'BotController@setPriorityTask');
+    Route::get('api/taskComment', 'BotController@taskComment');
     //Route::get('api/moveTask', '\App\Http\Controllers\BotController@updateDescriptionTask');
     Route::get('api/setduedate', '\App\Http\Controllers\BotController@setDueDate');
    
