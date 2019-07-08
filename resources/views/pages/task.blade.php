@@ -476,9 +476,7 @@
                 }
             }
         });
-
         var taskProgress = document.getElementById('task-progress');
-
         basic_slider.noUiSlider.on('change', function (values, handle) {
             var value = values[handle];
             taskProgress.value = value;

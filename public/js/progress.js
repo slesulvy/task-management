@@ -67,7 +67,7 @@ $('.modal-footer').on('click', '.set-progress', function() {
                 'aria-valuenow': data['task'].progress,
                 'style': 'width:' + data['task'].progress + '%'
             });
-            $('div.project-progress').attr({
+            $('div.project-' + data['task'].project_id + ' .progress-bar').attr({
                 'aria-valuenow': data['project_progress'],
                 'style': 'width:' + data['project_progress'] + '%'
             });
