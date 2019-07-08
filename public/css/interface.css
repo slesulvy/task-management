@@ -7,3 +7,10 @@ li.priority-level2{
 li.priority-level3{
     border-left: 2px solid #F44336;
 }
+
+.noUi-handle:before, .noUi-handle:after{
+    display: none !important;
+}
+.noUi-tooltip{
+    padding: 5px;
+}
