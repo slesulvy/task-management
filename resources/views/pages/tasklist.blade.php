@@ -76,7 +76,7 @@
                                                     <td align="center">{{$i}}</td>
                                                     <td>{{$item->board->projectname}}
                                                         <div class="progress">
-                                                            <div class="progress-bar progress-bar-striped project-progress" role="progressbar" style="width: {{ $item->board->getProgress()  }}%" aria-valuenow="{{ $item->board->getProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar progress-bar-striped progress-bar-info project-progress" role="progressbar" style="width: {{ $item->board->getProgress()  }}%" aria-valuenow="{{ $item->board->getProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
                                                     </td>
                                                     <td>

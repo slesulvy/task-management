@@ -44,7 +44,9 @@ class Board extends Model
         $tasks = $this->tasks;
         $total_percentage = 0;
         foreach($tasks as $task){
-            $total_percentage += $task->progress;
+            if($task->status == 1){
+                $total_percentage += $task->progress;
+            }
         }
         return round($total_percentage/$count);
     }
