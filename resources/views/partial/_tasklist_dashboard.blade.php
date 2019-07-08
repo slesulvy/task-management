@@ -1,8 +1,8 @@
 
-        <li progres_id="{{$item->id}}" class="{{$item->id}} priority-level{{ $item->priority }} default-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-            <!--<div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
+        <li progres_id="{{$item->id}}" class="{{$item->id}} default-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
+            <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
 
-            </div>-->
+            </div>
             {{$item->taskname}}
             <div class="agile-detail">
 
@@ -19,6 +19,10 @@
                         {{$inc_member}}+
                     @endif
                 </a>
+
+                <div class="progress" style="margin-top:10px;">
+                    <div class="progress-bar progress-bar-striped @if ($item->priority == 2) progress-bar-info @elseif ($item->priority == 3) progress-bar-danger @else @endif task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
 
         </li>

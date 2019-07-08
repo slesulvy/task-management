@@ -6,7 +6,7 @@
             @csrf
                 <div class="modal-header" style="padding:7px 14px 5px 14px; ">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                    <h3 class=""><b>Add Board</b></h3>
+                    <h3 class=""><b>Add Project</b></h3>
                 </div>
                 <div class="modal-body">
                     <fieldset class="form-horizontal col-sm-12" style="padding:0 0px 0 0;">                                                    

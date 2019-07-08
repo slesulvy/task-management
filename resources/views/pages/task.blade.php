@@ -7,7 +7,7 @@
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <link href="{{asset('css/interface.css')}}" rel="stylesheet">
-
+    <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
 
     <style>
 
@@ -91,7 +91,7 @@
                     <a href="">Task Manager</a>
                 </li>
                 <li>
-                    <a href="{{url('board')}}">Board</a>
+                    <a href="{{url('board')}}">Project</a>
                 </li>
                 <li class="active">
                 <strong>{{@$board->projectname}} </strong>
@@ -377,7 +377,11 @@
                                                 <div class="col-sm-3">
                                                     <div class="u-clearfix">
                                                         <b>ACTIONS</b>
-                                                        <a  onclick="$('#member_add_area').toggle();" class="button-link" href="javascript:void(0)" title="Members">
+
+                                                        <input type="hidden" class="form-control" id="task-progress">
+                                                        <div id="basic_slider" style="margin-top:10px"></div>
+
+                                                        <a  onclick="$('#member_add_area').toggle();" class="button-link" href="#" title="Members">
                                                             <span class="fa fa-user-circle"></span>&nbsp;
                                                             <span>Members</span>
                                                         </a>
@@ -447,10 +451,70 @@
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
     <script>
 
-       
-        
+        //PROGRESS SLIDER
+        var basic_slider = document.getElementById('basic_slider');
+
+        noUiSlider.create(basic_slider, {
+            start: 0,
+            step: 1,
+            behaviour: 'tap',
+            connect: 'lower',
+            tooltips: true,
+            range: {
+                'min':  0,
+                'max':  100
+            },
+            format: {
+                to: function (value) {
+                    return value;
+                },
+                from: function (value) {
+                    return (value);
+                }
+            }
+        });
+
+        var taskProgress = document.getElementById('task-progress');
+
+        basic_slider.noUiSlider.on('change', function (values, handle) {
+            var value = values[handle];
+            taskProgress.value = value;
+            $.ajax({
+                type: 'POST',
+                url: '/task/progress/',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'id': $('#e_task_id').val(),
+                    'progress': $('#task-progress').val()
+                },
+                success: function(data) {
+                    $('li.' + data['task'].id + ' div.progress div.task-progress').attr({
+                        'aria-valuenow': data['task'].progress,
+                        'style': 'width:' + data['task'].progress + '%'
+                    });
+                    /*swal({
+                        type: 'success',
+                        title: 'The task has been set progress to ' + data['task'].progress + '%',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });*/
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr);
+                    swal({
+                        type: 'error',
+                        title: xhr.responseJSON.error,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            });
+        });
+
+        // END PROGRESS SLIDER
 
         $('.popper').popover({
             placement: 'right',
@@ -477,7 +541,7 @@
         });
 
         $('#e_task_description').blur(function(){
-            
+
             var task_id = $('#e_task_id').val();
             $.ajax({
                 type:"get",
@@ -496,13 +560,13 @@
                 }
             });
 
-            
+
         });
-        
+
         //--------------------------
         // Add task
 
-        $('#taskname').keypress(function(event){       
+        $('#taskname').keypress(function(event){
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if(keycode == '13'){
                 addtask();
@@ -528,7 +592,7 @@
                         title: "Success!",
                         text: "Task has been update!",
                         type: "success"
-                    });        
+                    });
                 }
             });
 
@@ -545,7 +609,7 @@
                     'taskName' :msgStr
                 },
                 success: function(data){
-                   
+
                 }
             });
         }
@@ -559,7 +623,7 @@
                         title: "Success!",
                         text: "Archive Successfully",
                         type: "success"
-                    });   
+                    });
                     }
                 });
         });
@@ -573,15 +637,15 @@
                     data:{
                         'taskname':$('#taskname').val(),
                         'project_id':{{Request::segment(2)}}
-                    }, 
+                    },
                     success: function(result){
                         $('#todo').prepend(result);
                         $('#taskname').val('');
                     }
                 });
             }
-        }    
-        
+        }
+
 
         $(document).ready(function(){
 
@@ -599,12 +663,12 @@
                         data['handler'].map(item =>{
                             $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
                         });
-                        
+
                         $('.feed-activity-list .feed-element').remove();
                         data['comment'].map(item =>{
 
                             //var comment_date = new Date(item.created_at);
-                
+
                             $('.feed-activity-list').append("<div class='feed-element'>"+
                                             "<a class='pull-left'><img alt='image' class='img-circle' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='35px;'></a>"+
                                             "<div class='media-body'>"+
@@ -612,8 +676,11 @@
                                                 "<strong>"+item.get_user.name+"</strong> commented on task <strong>"+item.task.taskname+"</strong><br>"+
                                                 "<small class='text-muted'>"+item.created_at+"</small>"+
                                                 "<div class='well'>"+item.comments+"</div>"+"</div>"+"</div>");
-                        });                     
-                        
+                        });
+
+                        $('#task-progress').val(data['task'].progress);
+                        basic_slider.noUiSlider.set(data['task'].progress);
+
                         $('.star-'+data['task'].priority).addClass('btn-success');
                         if(data['task'].step==1){
                             $('#im_where').html('in List Task');
@@ -625,13 +692,13 @@
                         $('#e_task_description').val(data['task'].description);
                         $('#tasktitle').html(data['task'].taskname);
                         $('#prior'+data['task'].priority).prop('checked', true);
-                        
+
                         if(data['task'].due_date!=null)
                         {
                             var du_date = new Date(data['task'].due_date);
                             $('#setduedate').val(du_date.toLocaleDateString());
                         }
-                        
+
                     }
                 });
             });
@@ -652,30 +719,30 @@
 
 
                     <?php foreach($list as $row){?>
-                          for(var i=0; i<box_<?php echo $row->list_id?>.length;i++){  
+                          for(var i=0; i<box_<?php echo $row->list_id?>.length;i++){
                             idbox_<?php echo $row->list_id?>+=box_<?php echo $row->list_id?>[i].replace('_','');
                             if(i<=box_<?php echo $row->list_id?>.length-2){
                                 idbox_<?php echo $row->list_id?>+=',';
-                            } 
+                            }
                           }
                     <?php } ?>
-    
+
                     inc_update_drag+=1;
                     var idtodo ='';
                     var idprog ='';
                     var iddone ='';
 
-                   
+
 
                     for(var i=0; i<todo.length;i++){
-                        
+
                         idtodo+=todo[i].replace('_','');
                         if(i<=todo.length-2){
                             idtodo+=',';
                         }
                     }
                     //console.log(idtodo);
-                    
+
                     for(var i=0; i<inprogress.length;i++){
                         idprog+=inprogress[i].replace('_','');
                         if(i<=inprogress.length-2){
@@ -692,7 +759,7 @@
 
                     if(inc_update_drag==2)
                     {
-                        
+
                         $.ajax({
                             type:"get",
                             url: "{{ url('movestep')}}",
@@ -706,14 +773,14 @@
                                 <?php }?>
                             },
                             success: function(data){
-                                inc_update_drag=0;  
+                                inc_update_drag=0;
                                 console.log(data);
                             }
                         });
-                        
+
                     }
                 }
-               
+
             }).disableSelection();
 
         });
@@ -721,7 +788,7 @@
         //--------------------------
         // Task handler
 
-        $(".chosen-select").change(function() {    
+        $(".chosen-select").change(function() {
             var task_id = $('#e_task_id').val();
             $.ajax({
                 type:"get",
@@ -734,12 +801,12 @@
                     $('#e_member img').remove();
                     data['handler'].map(item =>{
                         $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
-                    });                   
+                    });
                 }
             });
         });
 
-        $('.chosen-select').chosen({width: "100%"});    
+        $('.chosen-select').chosen({width: "100%"});
 
         //---------------------------
         // Priority
@@ -781,7 +848,6 @@
                     'due_date': $(this).val()
                 },
                 success: function(data){
-                    apiSetDueDate(data.user, data.taskname, data.duedate);
                 }
             });
         });
@@ -823,10 +889,10 @@
                         $('#comments').val('');
                     }
                 });
-            }    
+            }
         })
-        
+
 
     </script>
-    
+
 @endsection

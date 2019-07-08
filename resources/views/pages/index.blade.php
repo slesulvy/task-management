@@ -18,7 +18,7 @@
                     <a href="#">Task Manager</a>
                 </li>
                 <li class="active">
-                    <strong>Boards</strong>
+                    <strong>Projects</strong>
                 </li>
             </ol>
         </div>
@@ -39,7 +39,7 @@
                         <h3 class="font-bold no-margins">
                             {{$item->projectname}} 
                         </h3>
-                            
+
                         </div>
                     </div>
                     <div class="widget-text-box" style="height: 130px; overflow:hidden;">
@@ -54,8 +54,11 @@
                             
                             <a href="{{ url('board/'.$item->project_id)}}" class="btn btn-xs btn-primary" style="border-radius:0px;"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Task&nbsp;&nbsp;</a>
                         </div>
+                        <div class="progress progress-small" style="margin-top:10px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-info task-progress" role="progressbar" style="width: {{$item->progress}}%" aria-valuenow="{{$item->project_id}}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                     </div>
-                </div>
+            </div>
 
                 <?php 
                     $i+=1;
