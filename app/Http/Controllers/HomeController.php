@@ -318,11 +318,56 @@ class HomeController extends Controller
     function comment(Request $request)
     {
         DB::beginTransaction();
-        $comment = new TaskComment();
-        $comment->task_id=$request->task_id;
-        $comment->user_id=Auth::user()->id;
-        $comment->comments=$request->comment;
-        $comment->save();
+
+        if($request->description!='')
+        {
+            $comment = new TaskComment();
+            $comment->task_id = $request->task_id;
+            // dd($comment);
+            $comment->user_id = Auth::user()->id;
+            $comment->status = '1';
+            //$image = $request->file('select_file');
+            //$new_name = rand() . '.' . $image->getClientOriginalExtension();
+            //$image->move(public_path('/images'), $new_name);
+            
+            //$comment->images = $new_name;
+            $comment->comments = $request->description;
+            $comment->save();
+        }
+        if($request->file('select_file')!='')
+        {
+            $comment = new TaskComment();
+            $comment->task_id = $request->task_id;
+            // dd($comment);
+            $comment->user_id = Auth::user()->id;
+            $comment->status = '1';
+            $image = $request->file('select_file');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('/images'), $new_name);
+            
+            $comment->images = $new_name;
+            //$comment->comments = $request->description;
+            $comment->save();
+        }
+        
+        /*$comment = new TaskComment();
+        $comment->task_id = $request->task_id;
+ 
+        $comment->user_id = Auth::user()->id;
+        $comment->status = '1';
+        $image = $request->file('select_file');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('/images'), $new_name);
+         
+        $comment->images = $new_name;
+        $comment->comments = $request->description;
+        $comment->save();*/
+
+         // return response()->json([
+         //   'message'   => 'Image Upload Successfully',
+         //   'uploaded_image' => '<img src="/images/'.$new_name.'" class="img-thumbnail" width="300" />',
+         //   'class_name'  => 'alert-success'
+         //  ]);
         DB::commit();
         $this->get_signle_comment($comment->id);
     }
@@ -344,6 +389,9 @@ class HomeController extends Controller
                     <small class="text-muted">'.date_format(date_create($comment->created_at),'H:i').' - '.date_format(date_create($comment->created_at),'d-M-Y').'</small>
                     <div class="well">
                     '.$comment->comments.'
+                    <a href="'.asset('images/'.$comment->images).'">
+                        '.$comment->images.'
+                    </a>
                     </div>
                 </div>
             </div>';

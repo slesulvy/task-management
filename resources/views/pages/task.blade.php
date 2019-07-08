@@ -28,6 +28,9 @@
           width: 100%;
        
         }
+        .feed-element, .media-body{
+            margin-top:-5px !important;
+        }
     
         .ibox-content{width: 300px; max-height:70vh; overflow-y: hidden;}
         
@@ -339,31 +342,48 @@
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px;">
                                                         
                                                             <ul class="list-unstyled file-list">
-                                                                <li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>
+                                                                <li class="att-list"> <!-- comments display here --></li>
                                                             </ul>
                                                         </div>
                                                     </div>
-
+                                                    <form method="post">
+                                                    </form>
+                                                    <form method="post" id="upload_form" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" id="task_iid" name="task_id">
                                                     <div class="form-group">
                                                         <label class="col-sm-12"><i class="fa fa-comments-o"></i>&nbsp;&nbsp;Add Comment &nbsp;</label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px;">
-                                                            <textarea name="description" id="comments" class="form-control" style="height:40px; overflow: hidden; overflow-wrap: break-word; resize: none; border:1px solid #eee; border-bottom:none; font-size:11px;" rows="3" required></textarea>
+                                                            <textarea name="description" id="comments" class="form-control" style="height:40px; overflow: hidden; overflow-wrap: break-word; resize: none; border:1px solid #eee; border-bottom:none; font-size:11px;" rows="3"></textarea>
                                                             <div class="col-sm-12" style="border:1px solid #eee; border-top:none; padding:5px;">
-                                                                <a id="lunchcomment" class="btn btn-sm btn-primary btn-bitbucket " style="border:none; margin:0 2px;">
-                                                                    <i class="fa fa-send-o"></i> Send
-                                                                </a>
-
+                                                                <button type="submit" name="upload" id="upload" class="btn btn-primary"><i class="fa fa-send-o"></i> Send</button>
                                                                 <a  data-toggle="popover" class=" popper btn btn-sm btn-default btn-bitbucket pull-right" style="border:none; margin:0 2px;">
                                                                     <b>@</b>
                                                                 </a>
                                                                 <a class="btn btn-sm btn-default btn-bitbucket pull-right" style="border:none; margin:0 2px;">
-                                                                    <i class="fa fa-picture-o"></i>
+                                                                    <div class="image-upload">
+                                                                            <label for="file-input">
+                                                                                <i class="fa fa-paperclip"></i>
+                                                                            </label>
+                                                                            <input id="file-input" type="file" name="select_file" id="select_file"/>
+                                                                    </div>
+                                                                    <style>
+                                                                        .image-upload > input
+                                                                        {
+                                                                            display: none;
+                                                                        }
+
+                                                                        .image-upload img
+                                                                        {
+                                                                            width: 80px;
+                                                                            cursor: pointer;
+                                                                        }
+                                                                    </style>
                                                                 </a>
-                                                                
                                                             </div>                                                            
                                                         </div>
                                                     </div>
-
+                                                    </form>
                                                     <div class="form-group">
                                                         <label class="col-sm-12" style="padding-right:0px;"><i class="fa fa-list-ul"></i>&nbsp;&nbsp;Activities &nbsp;<span style="color:#555; border-radius:0px;" class="btn btn-xs btn-white gray-bg pull-right" onclick="$('#_activities').toggle()">Hide Details</span></label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px; display:none;" id="_activities"> 
@@ -676,7 +696,15 @@
                                                 "<small class='pull-right'>1m ago</small>"+
                                                 "<strong>"+item.get_user.name+"</strong> commented on task <strong>"+item.task.taskname+"</strong><br>"+
                                                 "<small class='text-muted'>"+item.created_at+"</small>"+
-                                                "<div class='well'>"+item.comments+"</div>"+"</div>"+"</div>");
+                                                "<div class='well'>"+item.comments+"<a href='<?php echo asset('images/"+item.images+"')?>'>"+item.images+"</a>"+"</div>"+
+                                                "</div>"+"</div>");
+                        });
+                        data['comment'].map(item =>{
+
+                            //var comment_date = new Date(item.created_at);
+                            
+                            $('.att-list').append("<div class='feed-element' style='padding:0'>"+
+                                            "<div class='well'>"+"<a href='<?php echo asset('images/"+item.images+"')?>'><i class='fa fa-file'></i>"+item.images+"</a>"+"</div>"+"</div>");
                         });
 
                         $('#task-progress').val(data['task'].progress);
@@ -689,6 +717,7 @@
                             $('#im_where').html('in List Progress');
                         } else{ $('#im_where').html('in List Done'); }
                         $('#e_task_id').val(data['task'].id);
+                        $('#task_iid').val(data['task'].id);
                         $('#avatar_description').html(data['task'].description);
                         $('#e_task_description').val(data['task'].description);
                         $('#tasktitle').html(data['task'].taskname);
@@ -873,27 +902,52 @@
         //---------------------------
         // Comment
 
-        $('#lunchcomment').click(function(){
-            if($('#comments').val()!=''){
-                $('#_activities').css('display','block');
-                var task_id = $('#e_task_id').val();
-                $.ajax({
-                    type:"get",
-                    url: "{{ url('comment')}}",
-                    dataType:'text',
-                    data:{
-                        'task_id': task_id,
-                        'comment': $('#comments').val()
-                    },
-                    success: function(data){
-                        $('.feed-activity-list').prepend(data);
-                        $('#comments').val('');
-                    }
-                });
+        // $('#lunchcomment').click(function(){
+        //     if($('#comments').val()!=''){
+        //         $('#_activities').css('display','block');
+        //         var task_id = $('#e_task_id').val();
+        //         $.ajax({
+        //             type:"get",
+        //             url: "{{ url('comment')}}",
+        //             dataType:'text',
+        //             data:{
+        //                 'task_id': task_id,
+        //                 'comment': $('#comments').val()
+        //             },
+        //             success: function(data){
+        //                 $('.feed-activity-list').prepend(data);
+        //                 $('#comments').val('');
+        //             }
+        //         });
+        //     }
+        // });
+        $('#upload_form').on('submit', function(event){
+              event.preventDefault();
+              if($('#comments').val()!='' || $('#select_file').val()!=''){
+              // alert(task_id);
+              $.ajax({
+               url:"{{ url('comment')}}",
+               method:"POST",
+               data:new FormData(this),
+               dataType:'text',
+               contentType: false,
+               cache: false,
+               processData: false,
+               success:function(data)
+                   {
+                    $('#comments').val('');
+                    $('#select_file').val('');
+                    $('.feed-activity-list').prepend(data);
+                    $('.att-list').prepend(data);
+                    // $('#message').css('display', 'block');
+                    // $('#message').html(data.message);
+                    // $('#message').addClass(data.class_name);
+                    // $('#uploaded_image').html(data.uploaded_image);
+                   }
+              });
             }
-        })
-
-
+         });
+         
     </script>
 
 @endsection

@@ -51,7 +51,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'HomeController@update_description']);
     Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'HomeController@update_duedate']);
 
-    Route::get('comment',['as'=>'comment','uses'=>'HomeController@comment']);
+    Route::post('comment',['as'=>'comment','uses'=>'HomeController@comment']);
 
     Route::get('movestep',['as'=>'movestep','uses'=>'HomeController@update_step']);
 
