@@ -8,7 +8,6 @@ class Board extends Model
 {
     protected $table="projects";
     public $primaryKey="project_id";
-    public $progress;
 
     protected $hidden = [
         'created_at','updated_at'
@@ -40,7 +39,7 @@ class Board extends Model
 
     public function getProgress()
     {
-        $count = $this->tasks()->first()->count();
+        $count = $this->tasks()->count();
         $tasks = $this->tasks;
         $total_percentage = 0;
         foreach($tasks as $task){
@@ -48,7 +47,12 @@ class Board extends Model
                 $total_percentage += $task->progress;
             }
         }
-        return round($total_percentage/$count);
+        if($count == 0){
+            return 0;
+        }else{
+            return round($total_percentage/$count);
+        }
     }
+
 }
 

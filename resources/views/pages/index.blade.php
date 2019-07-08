@@ -55,10 +55,10 @@
                             <a href="{{ url('board/'.$item->project_id)}}" class="btn btn-xs btn-primary" style="border-radius:0px;"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Task&nbsp;&nbsp;</a>
                         </div>
                         <div class="progress progress-small" style="margin-top:10px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-info task-progress" role="progressbar" style="width: 49%" aria-valuenow="49" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar progress-bar-striped progress-bar-info task-progress" role="progressbar" style="width: {{$item->progress}}%" aria-valuenow="{{$item->project_id}}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
-                </div>
+            </div>
 
                 <?php 
                     $i+=1;

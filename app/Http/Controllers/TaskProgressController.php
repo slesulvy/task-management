@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use Illuminate\Http\Request;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class TaskProgressController extends Controller
 {
@@ -21,8 +22,12 @@ class TaskProgressController extends Controller
                 return response()->json(['error' => 'You can not lower your task progress!'], 404);
             }else{*/
                 $task->progress = $request->progress;
-                $task->save();
-                return response()->json(['project_progress'=> $task->board->getProgress(), 'task' => $task]);
+                if($task->save()){
+                    $project = $task->board;
+                    $project->progress = $project->getProgress();
+                    $project->save();
+                    return response()->json(['project_progress'=> $task->board->getProgress(), 'task' => $task]);
+                }
 //            }
         }else{
             if( $request->progress < 0 ){

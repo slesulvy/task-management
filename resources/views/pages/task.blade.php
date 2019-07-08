@@ -491,6 +491,10 @@
                     'progress': $('#task-progress').val()
                 },
                 success: function(data) {
+                    $('li.' + data['task'].id + ' div.progress div.task-progress').attr({
+                        'aria-valuenow': data['task'].progress,
+                        'style': 'width:' + data['task'].progress + '%'
+                    });
                     /*swal({
                         type: 'success',
                         title: 'The task has been set progress to ' + data['task'].progress + '%',
