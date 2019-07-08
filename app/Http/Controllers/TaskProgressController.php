@@ -23,9 +23,6 @@ class TaskProgressController extends Controller
             }else{*/
                 $task->progress = $request->progress;
                 if($task->save()){
-                    $project = $task->board;
-                    $project->progress = $project->getProgress();
-                    $project->save();
                     return response()->json(['project_progress'=> $task->board->getProgress(), 'task' => $task]);
                 }
 //            }

@@ -35,6 +35,23 @@ class BotController extends Controller
         $this->sentMessageToTelegram($user . ' Move' . $taskName . ' from' . $from . ' To ' . $to);
      }
 
+     function createTask(Request $request) {
+      $this->sentMessageToTelegram($request->user . ' Created ' . $request->taskName . ' task');
+     }
+
+     function achiveTask(Request $request) {
+      $this->sentMessageToTelegram($request->user . ' Achived ' . $request->taskname . ' task');
+     }
+
+     function setPriorityTask(Request $request) {
+      $this->sentMessageToTelegram($request->user . ' Set priority  ' . $request->taskname . ' task to ' . $request->priority);
+     }
+
+     function taskComment(Request $request) {
+      $this->sentMessageToTelegram($request->user . ' Commented on ' . $request->taskname . '(' . $request->comment . ' )');
+     }
+
+
      function updateDescriptionTask(Request $request) {
         $this->sentMessageToTelegram($request->user . ' Added description to ' . $request->taskName);
      }
@@ -43,8 +60,8 @@ class BotController extends Controller
         $this->sentMessageToTelegram($user . ' Added attectment to ' . $taskName);
      }
 
-     function addMemberToTask($assignBy, $taskName, $assignTo) {
-        $this->sentMessageToTelegram($assignBy . ' Added ' . $assignTo . ' To ' . $taskName);
+     function addMemberToTask(Request $request) {
+        $this->sentMessageToTelegram($request->addby . ' Added ' . $request->added . ' To ' . $request->taskname);
      }
 
      function setDueDate(Request $request) {

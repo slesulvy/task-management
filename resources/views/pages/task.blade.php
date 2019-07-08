@@ -497,9 +497,7 @@
                 }
             }
         });
-
         var taskProgress = document.getElementById('task-progress');
-
         basic_slider.noUiSlider.on('change', function (values, handle) {
             var value = values[handle];
             taskProgress.value = value;
@@ -635,6 +633,22 @@
             });
         }
 
+        function createTaskPushNot(user, taskName)
+        {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/createTask')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskName' :taskName
+                },
+                success: function(data){
+
+                }
+            });
+        }
+
          $('#memarchive').click(function(){
            $.ajax({
                     type:"get",
@@ -645,9 +659,28 @@
                         text: "Archive Successfully",
                         type: "success"
                     });
+                    console.log('data: ', result);
+                    apiAchiveTask('{{Auth::user()->name}}', "'" + $('#tasktitle').text() + "'");
                     }
                 });
         });
+
+        function apiAchiveTask(user, taskname) {
+            {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/achiveTask')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskname' :taskname
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
+        }
 
         function addtask()
         {
@@ -661,6 +694,7 @@
                     },
                     success: function(result){
                         $('#todo').prepend(result);
+                        createTaskPushNot('{{Auth::user()->name}}', "'"+$('#taskname').val()+"'");
                         $('#taskname').val('');
                     }
                 });
@@ -829,12 +863,33 @@
                 },
                 success: function(data){
                     $('#e_member img').remove();
+                    var addby = '{{Auth::user()->name}}';
+                    var added = data['addedmember'].get_user.name;
+                    var taskname = $('#tasktitle').text();
                     data['handler'].map(item =>{
                         $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
                     });
+                    NotifyAddTaskMember(addby,added,taskname);
                 }
             });
         });
+
+        function NotifyAddTaskMember(addby, added, task)
+        {     
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/addTaskMember')}}",
+                dataType:'text',
+                data:{
+                    'addby':addby,
+                    'added' :added,
+                    'taskname':task
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
 
         $('.chosen-select').chosen({width: "100%"});
 
@@ -843,6 +898,7 @@
 
         function priority_rate(var_priority)
         {
+            var task_id = $('#e_task_id').val();
             var task_id = $('#e_task_id').val();
             $('.star-1, .star-2, .star-3').removeClass('btn-success');
             $.ajax({
@@ -853,7 +909,35 @@
                     'priority': var_priority
                 },
                 success: function(data){
+                    //CHANGE PROGRESS BAR COLOR
+                    let progress = document.querySelector('li#_' + task_id + ' div.progress');
+                    let bar = document.querySelector('li#_' + task_id + ' div.progress-bar');
+                    progress.classList.remove(progress.classList[1]);
+                    bar.classList.remove(bar.classList[3]);
+                    progress.classList.add('priority-' + var_priority);
+                    bar.classList.add('progress-bar-' + var_priority);
                     $('.star-'+var_priority).addClass('btn-success');
+                    apiSetPriorityTask('{{Auth::user()->name}}', "'"+$('#tasktitle').text()+"'", var_priority);
+                }
+            });
+        }
+
+        function apiSetPriorityTask(user, taskname, priority) {
+            var obj = {};
+                obj[1] = "Normal";
+                obj[2] = "Important";
+                obj[3] = "Critical";
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/setPriorityTask')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskname' :taskname,
+                    'priority':obj[priority]
+                },
+                success: function(data){
+                   
                 }
             });
         }
@@ -878,6 +962,8 @@
                     'due_date': $(this).val()
                 },
                 success: function(data){
+                    console.log(data);
+                    apiSetDueDate(data.user, data.taskname, data.duedate)
                 }
             });
         });

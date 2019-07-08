@@ -107,8 +107,7 @@ class HomeController extends Controller
           DB::table('tasks')
             ->where('id',$id)
             ->update(['status' => "0"]);
-     return back('board')->with('success', 'Archive Board Successfully');
-
+          //return back('board')->with('success', 'Archive Board Successfully');
      }
 
     public function get_board_member($board)
@@ -220,6 +219,7 @@ class HomeController extends Controller
             $handler->created_by = Auth::user()->id;
             $handler->save();
             $this->gettask($task->id);
+            
         DB::commit();
     }
 
@@ -251,13 +251,16 @@ class HomeController extends Controller
                 ->where('task_id', $id)
                 ->orderBy('id', 'desc')
                 ->first();
-        echo '<li task_id="'.$task->id.'" class="'.$task->id.' priority-level'.$task->priority.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
+        echo '<li task_id="'.$task->id.'" class="'.$task->id.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
                 '.$task->taskname.'
                 <div class="agile-detail">    
                 <span title="Due Date" class=""><i class="fa fa-clock-o"></i>'.'</span>
                 <a href="#" class="btn btn-xs pull-right" style="border:none;">
                     <img src="'.asset('img/'.$member->getUser->img).'" width="17px;" class="img img-circle">   
                 </a> 
+                <div class="progress priority-' . $task->priority . '" style="margin-top:10px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-{{ $item->priority }} task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
                 </div>
             </li>';
     }
@@ -277,7 +280,8 @@ class HomeController extends Controller
         }
 
         $member = TaskHandler::with('getUser')->where('task_id', $task_id)->orderBy('id', 'desc')->get();
-        echo json_encode(array('handler'=>$member));
+        $addedMember = TaskHandler::with('getUser')->where([['task_id', $task_id],['user_id',$request->user_id]])->first();
+        echo json_encode(array('handler'=>$member,'addedmember'=>$addedMember));
     }
 
     function gettaskmember($task_id)

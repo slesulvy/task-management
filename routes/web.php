@@ -102,6 +102,11 @@ Route::group(['middleware'=>'auth'], function () {
     // sent notification to telegram
     Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
     Route::get('api/updateDescription', 'BotController@updateDescriptionTask');
+    Route::get('api/createTask', 'BotController@createTask');
+    Route::get('api/achiveTask', 'BotController@achiveTask');
+    Route::get('api/addTaskMember', 'BotController@addMemberToTask');
+    Route::get('api/setPriorityTask', 'BotController@setPriorityTask');
+    Route::get('api/taskComment', 'BotController@taskComment');
     //Route::get('api/moveTask', '\App\Http\Controllers\BotController@updateDescriptionTask');
     Route::get('api/setduedate', '\App\Http\Controllers\BotController@setDueDate');
    
