@@ -849,6 +849,7 @@
         function priority_rate(var_priority)
         {
             var task_id = $('#e_task_id').val();
+            var task_id = $('#e_task_id').val();
             $('.star-1, .star-2, .star-3').removeClass('btn-success');
             $.ajax({
                 type:"get",
@@ -859,6 +860,27 @@
                 },
                 success: function(data){
                     $('.star-'+var_priority).addClass('btn-success');
+                    apiSetPriorityTask('{{Auth::user()->name}}', "'"+$('#tasktitle').text()+"'", var_priority);
+                }
+            });
+        }
+
+        function apiSetPriorityTask(user, taskname, priority) {
+            var obj = {};
+                obj[1] = "Normal";
+                obj[2] = "Important";
+                obj[3] = "Critical";
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/setPriorityTask')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskname' :taskname,
+                    'priority':obj[priority]
+                },
+                success: function(data){
+                   
                 }
             });
         }
