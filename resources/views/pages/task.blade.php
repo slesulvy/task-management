@@ -394,6 +394,7 @@
                                                         <a class="button-link" class="date" title="Move">
                                                             <span class="fa fa-long-arrow-right"></span>&nbsp;
                                                             <span>Move</span>
+                                                            
                                                         </a>
                                                         <a class="button-link" href="" id="memarchive" title="Archive">
                                                             <span class="fa fa-repeat"></span>&nbsp;
