@@ -40,11 +40,15 @@ class BotController extends Controller
      }
 
      function addAttectToTask($user, $taskName) {
-        $this->sentMessageToTelegram($user . 'Added attectment to ' . $taskName);
+        $this->sentMessageToTelegram($user . ' Added attectment to ' . $taskName);
      }
 
      function addMemberToTask($assignBy, $taskName, $assignTo) {
-        $this->sentMessageToTelegram($assignBy . 'added ' . $assignTo . ' To ' . $taskName);
+        $this->sentMessageToTelegram($assignBy . ' Added ' . $assignTo . ' To ' . $taskName);
+     }
+
+     function setDueDate(Request $request) {
+      $this->sentMessageToTelegram($request->user . ' Just set due date of ' . $request->taskname . ' To ' . $request->duedate);
      }
 
 
