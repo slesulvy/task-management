@@ -44,9 +44,7 @@ class Board extends Model
         $count = Task::where('status' , 1)->count();
         $total_percentage = 0;
         foreach($tasks as $task){
-            if($task->status == 1){
                 $total_percentage += $task->progress;
-            }
         }
         if($count == 0){
             return 0;
