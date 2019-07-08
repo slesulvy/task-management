@@ -1,8 +1,8 @@
 
         <li progres_id="{{$item->id}}" class="{{$item->id}} priority-level{{ $item->priority }} default-element ui-sortable-handle btn-update-task" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
-            <div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
+            <!--<div class="agile-detail" style="padding:0 0 5px 0; text-align:left; margin-top:0px;">
 
-            </div>
+            </div>-->
             {{$item->taskname}}
             <div class="agile-detail">
 

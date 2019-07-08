@@ -2897,7 +2897,7 @@ a.forum-item-title:hover {
     margin-right: 4px;
     margin-bottom: 4px;
     margin-left: 4px;
-    width: 32px;
+    width: 22px;
     z-index: 2;
     transition: background-color .1s,color .1s;
 }
