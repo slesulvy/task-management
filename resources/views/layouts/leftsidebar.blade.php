@@ -3,7 +3,7 @@
         <ul class="nav metismenu" id="side-menu">
             
             <li>
-                <a href="{{url('/board')}}"><i class="fa fa-th-large"></i> <span class="nav-label">Boards</span></a>
+                <a href="{{url('/board')}}"><i class="fa fa-th-large"></i> <span class="nav-label">Projects</span></a>
                 
             </li>
 
@@ -14,8 +14,8 @@
             <li>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Control Pannel</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="{{route('boards')}}">Board List</a></li>
-                    <li><a href="{{route('tasks')}}">Task List</a></li>
+                    <li><a href="{{route('boards')}}">Projects List</a></li>
+                    <li><a href="{{route('tasks')}}">Tasks List</a></li>
                     <li><a href="{{route('category')}}">Category</a></li>
                 </ul>
             </li>

@@ -18,7 +18,7 @@
                     <a href="#">Task Manager</a>
                 </li>
                 <li class="active">
-                    <strong>Boards</strong>
+                    <strong>Projects</strong>
                 </li>
             </ol>
         </div>

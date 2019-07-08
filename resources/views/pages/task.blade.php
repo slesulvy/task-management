@@ -91,7 +91,7 @@
                     <a href="">Task Manager</a>
                 </li>
                 <li>
-                    <a href="{{url('board')}}">Board</a>
+                    <a href="{{url('board')}}">Project</a>
                 </li>
                 <li class="active">
                 <strong>{{@$board->projectname}} </strong>
