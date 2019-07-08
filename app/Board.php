@@ -39,8 +39,9 @@ class Board extends Model
 
     public function getProgress()
     {
-        $count = $this->tasks()->count();
-        $tasks = $this->tasks;
+        // Search only for task that is active (not deleted or archived)
+        $tasks = Task::where('status' , 1)->get();
+        $count = Task::where('status' , 1)->count();
         $total_percentage = 0;
         foreach($tasks as $task){
             if($task->status == 1){
