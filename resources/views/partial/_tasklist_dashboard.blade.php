@@ -19,7 +19,7 @@
                 </a>
 
                 <div class="progress priority-{{ $item->priority }}" style="margin-top:10px;">
-                    <div class="progress-bar progress-bar-striped progress-bar-{{ $item->priority }} task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped task-progress progress-bar-{{ $item->priority }}" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
 
