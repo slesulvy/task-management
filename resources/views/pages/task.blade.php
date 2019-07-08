@@ -822,6 +822,13 @@
                     'priority': var_priority
                 },
                 success: function(data){
+                    //CHANGE PROGRESS BAR COLOR
+                    let progress = document.querySelector('li#_' + task_id + ' div.progress');
+                    let bar = document.querySelector('li#_' + task_id + ' div.progress-bar');
+                    progress.classList.remove(progress.classList[1]);
+                    bar.classList.remove(bar.classList[3]);
+                    progress.classList.add('priority-' + var_priority);
+                    bar.classList.add('progress-bar-' + var_priority);
                     $('.star-'+var_priority).addClass('btn-success');
                 }
             });
