@@ -70,7 +70,12 @@
                                             @foreach ($board as $item)
                                                 <tr class="gradeX">
                                                     <td align="center">{{$i}}</td>
-                                                    <td>{{$item->projectname}}</td>
+                                                    <td>
+                                                        {{$item->projectname}}
+                                                        <div class="progress  progress-small project-{{ $item->project_id }}">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-info project-progress" role="progressbar" style="width: {{ $item->progress  }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </td>
                                                     <td>{{substr($item->description,0,60).'...'}}</td>
                                                     <td align="center">
                                                         <a data-toggle="modal" data-target="#addmember" data-Id="{{$item->project_id}}" class="btn-sm btn-white btn-addmember-project"><i class="fa fa-user-o"></i></a> 
