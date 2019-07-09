@@ -53,11 +53,11 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'HomeController@update_description']);
     Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'HomeController@update_duedate']);
 
-    Route::post('comment',['as'=>'comment','uses'=>'HomeController@comment']);
+    Route::post('comment',['as'=>'comment','uses'=>'TaskCommentController@comment']);
 
     Route::get('movestep',['as'=>'movestep','uses'=>'HomeController@update_step']);
 
-    Route::get('getacomment/{id}',['as'=>'getacomment/{id}','uses'=>'HomeController@get_signle_comment']);
+    Route::get('getacomment/{id}',['as'=>'getacomment/{id}','uses'=>'TaskCommentController@get_signle_comment']);
 
     Route::get('boards',[ 'as' => 'boards','uses' => 'HomeController@boards']);
 

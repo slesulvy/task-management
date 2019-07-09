@@ -803,6 +803,7 @@
                     dataType:'json',
                     success: function(data){
                         $('#e_member img').remove();
+                        $('.feed-element').remove();
                         $('#setduedate').val('');
                         data['handler'].map(item =>{
                             $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
