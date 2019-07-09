@@ -106,13 +106,21 @@ class HomeController extends Controller
         //
     }
 
+    public function task_update_step(Request $request,$id){
+      
+          $task = Task::where('id','=', $id)->first();
+          $task->step = $request->all_step;
+          
+          $task->save();
+    }
+
      public function destroy($id)
     {
           DB::table('tasks')
             ->where('id',$id)
             ->update(['status' => "2"]);
 
-     return back('board')->with('success', 'Archive Board Successfully');
+     return back('board');
 
      }
 
@@ -207,8 +215,18 @@ class HomeController extends Controller
                 //->orderBy('id', 'desc')
                 ->get();
 
+        $results = DB::select( DB::raw(" SELECT 1 AS id, 'Thing To-do' title 
+            UNION 
+            SELECT 2 AS id, 'In Progress' title
+            UNION
+            SELECT 3 AS id, 'Done' title
+            UNION
+            SELECT list_id id, list_title title  FROM project_lists WHERE status =1 AND project_id = '$id'") );
+
+        //echo json_encode($results);exit();
+       
         $board = Board::where('project_id','=', $id)->first();            
-        return view('pages.task',compact('tasktodo', 'board','projectmember','list'));
+        return view('pages.task',compact('tasktodo', 'board','projectmember','list','results'));
     }
 
     public function addtask(Request $request)
@@ -322,6 +340,7 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                         ->first();
         // if(count($task) == 1){
+            $task->start_date = date_format(date_create($request->start_date),'Y-m-d');
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->save();
       //  }
