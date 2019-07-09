@@ -131,15 +131,6 @@ class HomeController extends Controller
         $this->showMember($boardMember);   
             
     }
-
-    public function users_select_opt()
-    {
-        $user = User::where('status',1)->orderBy('name')->get();
-        foreach ($user as $item) {
-            echo '<option value="'.$item->id.'">'.$item->name.'</option>';
-        }
-    }
-
     public function showMember($members)
     {
         $i = 0;

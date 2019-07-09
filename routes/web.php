@@ -96,7 +96,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('role/disable/{roleId}',[ 'as' => 'role/disable/{roleId}','uses' => 'RoleController@disableRole']);
     Route::post('role/update',[ 'as' => 'role/update','uses' => 'RoleController@update']);
 
-    Route::get('users_select_opt','HomeController@users_select_opt');
+    Route::get('users_select_opt','UserController@users_select_opt');
 
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
 
