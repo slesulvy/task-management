@@ -402,6 +402,8 @@
                                                 <div class="col-sm-3">
                                                     <div class="u-clearfix">
                                                         <b>ACTIONS</b>
+                                                        <input type="hidden" class="form-control" id="task-progress">
+                                                        <div id="basic_slider" style="margin-top:10px"></div>
                                                         <a  onclick="$('#member_add_area').toggle();" class="button-link" href="#" title="Members">
                                                             <span class="fa fa-user-circle"></span>&nbsp;
                                                             <span>Members</span>
@@ -480,11 +482,65 @@
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
-
+    <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
     <script>
-
-       
-        
+        //PROGRESS SLIDER
+        var basic_slider = document.getElementById('basic_slider');
+        noUiSlider.create(basic_slider, {
+            start: 0,
+            step: 1,
+            behaviour: 'tap',
+            connect: 'lower',
+            tooltips: true,
+            range: {
+                'min':  0,
+                'max':  100
+            },
+            format: {
+                to: function (value) {
+                    return value;
+                },
+                from: function (value) {
+                    return (value);
+                }
+            }
+        });
+        var taskProgress = document.getElementById('task-progress');
+        basic_slider.noUiSlider.on('change', function (values, handle) {
+            var value = values[handle];
+            taskProgress.value = value;
+            $.ajax({
+                type: 'POST',
+                url: '/task/progress/',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'id': $('#e_task_id').val(),
+                    'progress': $('#task-progress').val()
+                },
+                success: function(data) {
+                    $('li.' + data['task'].id + ' div.progress div.task-progress').attr({
+                        'aria-valuenow': data['task'].progress,
+                        'style': 'width:' + data['task'].progress + '%'
+                    });
+                    /*swal({
+                        type: 'success',
+                        title: 'The task has been set progress to ' + data['task'].progress + '%',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });*/
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr);
+                    swal({
+                        type: 'error',
+                        title: xhr.responseJSON.error,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            });
+        });
+        // END PROGRESS SLIDER
 
         $('.popper').popover({
             placement: 'right',
@@ -695,7 +751,10 @@
                                                 "<strong>"+item.get_user.name+"</strong> commented on task <strong>"+item.task.taskname+"</strong><br>"+
                                                 "<small class='text-muted'>"+item.created_at+"</small>"+
                                                 "<div class='well'>"+item.comments+"</div>"+"</div>"+"</div>");
-                        });                     
+                        });
+
+                        $('#task-progress').val(data['task'].progress);
+                        basic_slider.noUiSlider.set(data['task'].progress);
                         
                         $('.star-'+data['task'].priority).addClass('btn-success');
                         if(data['task'].step==1){
