@@ -279,18 +279,45 @@
                                                     </div>
 
                                                     <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
+                                                                <div class="form-group">
+                                                                   <div class="col-sm-7"> 
+                                                                     <i class="fa fa-calendar">&nbsp; Start Date</i>
+                                                                   </div>
+                                                                    <div class="col-sm-5">
+                                                                         <input type="text" style="border:none; font-size:12px;margin-left: -75px;" id="start_dates"data-mask="99/99/9999" placeholder="mm/dd/yyyy" > 
+                                                                    </div>
+                                                                 </div>
+                                                              </div>
+                                                               <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
+                                                                <div class="form-group">
+                                                                   <div class="col-sm-7"> 
+                                                                     <i class="fa fa-calendar">&nbsp;Due Date</i>
+                                                                   </div>
+                                                                    <div class="col-sm-5">
+                                                                         <input type="text" id="setduedate" style="border:none; font-size:12px;margin-left: -75px;" data-mask="99/99/9999" placeholder="mm/dd/yyyy"> 
+                                                                    </div>
+                                                                 </div>
+                                                              </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
                                                         <label class="col-sm-12" style="height:30px;">
                                                             <div class="col-sm-4" style="padding-left:0px;padding-right:0px;">
                                                                 <i class="fa fa-user-o"></i>&nbsp;&nbsp;Members &nbsp;<span style="color:#555; border-radius:0px; margin-top:-5px;" class="pull-right btn btn-sm btn-white gray-bg btn_add_member" onclick="$('#member_add_area').toggle();">+</span> 
                                                             </div>
-                                                            <div class="col-sm-3" style="padding:0px; display:none; margin-top:-5px;" id="member_add_area">
+                                                            <div class="col-sm-5" style="padding:0px; display:none; margin-top:-5px;" id="member_add_area">
                                                                 <select data-placeholder="Add Member..." title="Add Member" class="chosen-select form-control member-select" style="width:50%;" tabindex="4">
                                                                     @foreach ($projectmember as $item)
                                                                     <option style="cursor: pointer;" value="{{$item->id}}">{{$item->name}}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div class="col-sm-5">
+                                                           <!--  <div class="col-sm-5">
                                                                 <div class="col-sm-12">
                                                                     <div class="col-sm-3"> 
                                                                         <span class="fa fa-calendar"></span>
@@ -300,7 +327,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        
+                                                         -->
                                                         </label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px;">
                                                             <div class="col-sm-6" style="padding-left:0; padding-right:0;">
@@ -411,13 +438,22 @@
                                                             <span>Due Date</span>
                                                         </a>
 
-                                                        <a class="button-link" class="date" title="Move">
-                                                            <span class="fa fa-long-arrow-right"></span>&nbsp;
+                                                        <a class="button-link" onclick="$('#move_take_step').toggle();" id="move_task" class="date" title="Move">
+                                                            <span class="fa fa-exchange"></span>&nbsp;
                                                             <span>Move</span>
                                                             
                                                         </a>
-                                                        <a class="button-link" href="javascript:void(0)" id="memarchive" title="Archive">
-                                                            <span class="fa fa-repeat"></span>&nbsp;
+                                                       
+                                                         <div style="padding:0px; display:none; margin-top:-5px;" id="move_take_step">
+                                                                <select data-placeholder="All Task..." id="all_step" onchange="mytaskupdate();" style="width: 100%;" title="All Task">
+                                                                    <option>All Task</option>
+                                                                    @foreach ($results as $item)
+                                                                    <option style="cursor: pointer;" value="{{$item->id}}">{{$item->title}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                        </div>
+                                                        <a class="button-link" id="memarchive" title="Archive">
+                                                            <span class="fa fa-archive"></span>&nbsp;
                                                             <span>Archive</span>
                                                         </a>
                                                          <a class="button-link" href="#" title="Attachment">
@@ -582,6 +618,38 @@
 
         });
 
+       
+
+        function mytaskupdate(){
+        swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this move task!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes,Move it!",
+                closeOnConfirm: false
+
+        },
+         function () {
+            swal("Move!", "Your  Task Has Been Move.", "success");
+           
+                 $.ajax({
+                    type:"get",
+                    url: "{{ url('board/task_update_step')}}/"+$('#e_task_id').val(),
+                    data:{
+                        'all_step': $("#all_step").val()
+                    },
+                    success: function(result){
+                        window.location.reload();
+                         swal("Move!", "Your Task Has Been Move!.", "success");
+
+                    }
+                });
+                
+            });
+        }
+        
         //--------------------------
         // Add task
 
@@ -604,6 +672,7 @@
                 data:{
                     'description':$('#e_task_description').val(),
                     'due_date': $('#e_duedate').val(),
+                    'start_date': $('#s_duedate').val(),
                     'priority': $("input[name='priority']:checked").val()
                 },
                 success: function(data){
@@ -649,20 +718,41 @@
             });
         }
 
+   
+
          $('#memarchive').click(function(){
-           $.ajax({
+              swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this archive task!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes,Archive it!",
+                closeOnConfirm: false
+
+        },
+         function () {
+            swal("Archive!", "Your  Task Has Been Archive.", "success");
+           
+             $.ajax({
                     type:"get",
                     url: "{{ url('board/destroy')}}/"+$('#e_task_id').val(),
                     success: function(result){
+
                         swal({
                         title: "Success!",
                         text: "Archive Successfully",
                         type: "success"
                     });
                     console.log('data: ', result);
-                    apiAchiveTask('{{Auth::user()->name}}', "'" + $('#tasktitle').text() + "'");
+                    apiAchiveTask('{{Auth::user()->name}}', "'" + $('#tasktitle').text() + "'"); 
+                           swal("Archive!", "Your  Task Has Been Archive.", "success");
                     }
                 });
+              window.location.reload();
+                
+            });
+        
         });
 
         function apiAchiveTask(user, taskname) {
@@ -762,6 +852,13 @@
                             var du_date = new Date(data['task'].due_date);
                             $('#setduedate').val(du_date.toLocaleDateString());
                         }
+
+                         if(data['task'].start_date!=null)
+                        {
+                            var starts_dates = new Date(data['task'].start_date);
+                            $('#start_dates').val(starts_dates.toLocaleDateString());
+                        }
+                        
 
                     }
                 });
@@ -962,8 +1059,31 @@
                     'due_date': $(this).val()
                 },
                 success: function(data){
+
                     console.log(data);
                     apiSetDueDate(data.user, data.taskname, data.duedate)
+
+                }
+            });
+        });
+        $("#start_dates").datepicker({
+            dateFormat: 'dd-mm-yy',
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        }).on("changeDate", function (e) {
+            var task_id = $('#e_task_id').val();
+            $.ajax({
+                type:"get",
+                url: "{{ url('setduedate')}}/"+task_id,
+                dataType:'text',
+                data:{
+                    'start_date': $(this).val()
+                },
+                success: function(data){
+                    
                 }
             });
         });

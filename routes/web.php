@@ -65,6 +65,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/edittask/{id}','HomeController@edittask');
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'HomeController@updatetask']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'HomeController@destroy']);
+    Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'HomeController@task_update_step']);
+
 
 
     
