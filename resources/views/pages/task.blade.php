@@ -1023,8 +1023,9 @@
                    {
                     $('#comments').val('');
                     $('#select_file').val('');
+                    $('#_activities').css('display','block');
                     $('.feed-activity-list').prepend(data);
-                    $('.att-list').prepend(data);
+                    // $('.att-list').prepend(data);
                     // $('#message').css('display', 'block');
                     // $('#message').html(data.message);
                     // $('#message').addClass(data.class_name);
