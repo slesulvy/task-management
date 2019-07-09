@@ -730,7 +730,7 @@
                                                 "<small class='pull-right'>1m ago</small>"+
                                                 "<strong>"+item.get_user.name+"</strong> commented on task <strong>"+item.task.taskname+"</strong><br>"+
                                                 "<small class='text-muted'>"+item.created_at+"</small>"+
-                                                "<div class='well'>"+item.comments+"<a href='<?php echo asset('images/"+item.images+"')?>'>"+item.images+"</a>"+"</div>"+
+                                                "<div class='well'>"+item.comments+"<a href='<?php echo asset('images/"+item.image+"')?>'>"+item.image+"</a>"+"</div>"+
                                                 "</div>"+"</div>");
                         });
                         data['comment'].map(item =>{
@@ -738,7 +738,7 @@
                             //var comment_date = new Date(item.created_at);
                             
                             $('.att-list').append("<div class='feed-element' style='padding:0'>"+
-                                            "<div class='well'>"+"<a href='<?php echo asset('images/"+item.images+"')?>'><i class='fa fa-file'></i>"+item.images+"</a>"+"</div>"+"</div>");
+                                            "<div class='well'>"+"<a href='<?php echo asset('images/"+item.image+"')?>'><i class='fa fa-file'></i>"+item.image+"</a>"+"</div>"+"</div>");
                         });
 
                         $('#task-progress').val(data['task'].progress);

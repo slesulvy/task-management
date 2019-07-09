@@ -349,7 +349,7 @@ class HomeController extends Controller
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('/images'), $new_name);
             
-            $comment->images = $new_name;
+            $comment->image = $new_name;
             //$comment->comments = $request->description;
             $comment->save();
         }
@@ -393,8 +393,8 @@ class HomeController extends Controller
                     <small class="text-muted">'.date_format(date_create($comment->created_at),'H:i').' - '.date_format(date_create($comment->created_at),'d-M-Y').'</small>
                     <div class="well">
                     '.$comment->comments.'
-                    <a href="'.asset('images/'.$comment->images).'">
-                        '.$comment->images.'
+                    <a href="'.asset('images/'.$comment->image).'">
+                        '.$comment->image.'
                     </a>
                     </div>
                 </div>

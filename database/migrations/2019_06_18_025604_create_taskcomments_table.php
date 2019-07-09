@@ -14,7 +14,7 @@ class CreateTaskcommentsTable extends Migration
     public function up()
     {
         Schema::create('taskcomments', function (Blueprint $table) {
-            $table->bigIncrements('comment_id');
+            $table->bigIncrements('id');
             $table->bigInteger('task_id');
             $table->bigInteger('user_id');
             $table->string('comments')->nullable();
