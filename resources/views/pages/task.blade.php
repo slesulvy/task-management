@@ -511,7 +511,7 @@
             taskProgress.value = value;
             $.ajax({
                 type: 'POST',
-                url: '/task/progress/',
+                url: '{{ url('task/progress') }}',
                 data: {
                     '_token': $('input[name=_token]').val(),
                     'id': $('#e_task_id').val(),
