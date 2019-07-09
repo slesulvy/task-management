@@ -42,20 +42,22 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('task/close/{id}',[ 'as' => 'task/close/{id}','uses' => 'HomeController@closetask']);
     Route::get('task/restore/{id}',[ 'as' => 'task/restore/{id}','uses' => 'HomeController@restoretask']);
 
-    Route::get('getboardmember/{id}',['as' => 'getboardmember/{id}', 'uses' =>'HomeController@get_board_member']);
-    Route::get('addmember/{project}/{member}',['as' => 'addmember/{project}/{member}', 'uses' =>'HomeController@addmember']);
-    Route::get('removemember/{project}/{member}',['as' => 'removemember/{project}/{member}', 'uses' =>'HomeController@remove_pro_member']);
-    
+    //PROJECT MEMBER
+    Route::get('getboardmember/{id}',['as' => 'getboardmember/{id}', 'uses' =>'ProjectMemberController@get']);
+    Route::get('addmember/{project}/{member}',['as' => 'addmember/{project}/{member}', 'uses' =>'ProjectMemberController@add']);
+    Route::get('removemember/{project}/{member}',['as' => 'removemember/{project}/{member}', 'uses' =>'ProjectMemberController@remove']);
+    //END PROJECT MEMBER
+
     Route::get('addtaskmember/{taskid}',['as'=>'addtaskmember/{taskid}', 'uses'=>'HomeController@addtaskmember']);
     Route::get('setpriority/{id}',['as'=>'setpriority/{id}','uses'=>'HomeController@update_priority']);
     Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'HomeController@update_description']);
     Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'HomeController@update_duedate']);
 
-    Route::post('comment',['as'=>'comment','uses'=>'HomeController@comment']);
-
+    // Task Comment 
+    Route::post('comment',['as'=>'comment','uses'=>'TaskCommentController@comment']);
+    Route::get('getacomment/{id}',['as'=>'getacomment/{id}','uses'=>'TaskCommentController@get_signle_comment']);
+    // End Task Comment
     Route::get('movestep',['as'=>'movestep','uses'=>'HomeController@update_step']);
-
-    Route::get('getacomment/{id}',['as'=>'getacomment/{id}','uses'=>'HomeController@get_signle_comment']);
 
     Route::get('boards',[ 'as' => 'boards','uses' => 'HomeController@boards']);
 
@@ -72,8 +74,8 @@ Route::group(['middleware'=>'auth'], function () {
     
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
 
-    Route::post('addlist',[ 'as' => 'addlist','uses' => 'HomeController@addlist']);
-    Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'HomeController@remove_list']);
+    Route::post('addlist',[ 'as' => 'addlist','uses' => 'ListController@addlist']);
+    Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'ListController@remove_list']);
     //remove_list($id)
 
     Route::get('category',[ 'as' => 'category','uses' => 'CategoryController@index']);
@@ -94,13 +96,15 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('role/disable/{roleId}',[ 'as' => 'role/disable/{roleId}','uses' => 'RoleController@disableRole']);
     Route::post('role/update',[ 'as' => 'role/update','uses' => 'RoleController@update']);
 
-    Route::get('users_select_opt','HomeController@users_select_opt');
+    Route::get('users_select_opt','UserController@users_select_opt');
 
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
 
-
+    //TASK PROGRESS
     Route::get('task/progress/{task}/edit','TaskProgressController@edit');
     Route::post('task/progress','TaskProgressController@set');
+    //END TASK PROGRESS
+
     // sent notification to telegram
     Route::get('sentBot', '\App\Http\Controllers\BotController@sentMessageToTelegram');
     Route::get('api/updateDescription', 'BotController@updateDescriptionTask');

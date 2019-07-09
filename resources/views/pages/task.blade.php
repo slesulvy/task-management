@@ -6,8 +6,12 @@
     <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+<<<<<<< HEAD
     <link href="{{asset('css/interface.css')}}" rel="stylesheet">
 
+=======
+    <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
+>>>>>>> 40d23f4a66e73b1f60b004350b8c5b342ff43f6a
 
     <style>
 
@@ -280,20 +284,20 @@
                                                             <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
                                                                 <div class="form-group">
                                                                    <div class="col-sm-7"> 
-                                                                     <i class="fa fa-calendar">&nbsp; Start Date</i>
+                                                                     <i class="fa fa-calendar"></i>&nbsp;<span style="color: #676a6c;font-weight:700;"> Start Date</span> 
                                                                    </div>
                                                                     <div class="col-sm-5">
-                                                                         <input type="text" style="border:none; font-size:12px;margin-left: -75px;" id="start_dates"data-mask="99/99/9999" placeholder="mm/dd/yyyy" > 
+                                                                         <input type="text" style="border:none; font-size:12px;margin-left: -65px;" id="start_dates"data-mask="99/99/9999" placeholder="mm/dd/yyyy" > 
                                                                     </div>
                                                                  </div>
                                                               </div>
                                                                <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
                                                                 <div class="form-group">
                                                                    <div class="col-sm-7"> 
-                                                                     <i class="fa fa-calendar">&nbsp;Due Date</i>
+                                                                     <i class="fa fa-calendar"></i>&nbsp;<span style="color: #676a6c;font-weight: 700;"> Due Date</span> 
                                                                    </div>
                                                                     <div class="col-sm-5">
-                                                                         <input type="text" id="setduedate" style="border:none; font-size:12px;margin-left: -75px;" data-mask="99/99/9999" placeholder="mm/dd/yyyy"> 
+                                                                         <input type="text" id="setduedate" style="border:none; font-size:12px;margin-left: -70px;" data-mask="99/99/9999" placeholder="mm/dd/yyyy"> 
                                                                     </div>
                                                                  </div>
                                                               </div>
@@ -679,6 +683,7 @@
                     dataType:'json',
                     success: function(data){
                         $('#e_member img').remove();
+                        $('.feed-element').remove();
                         $('#setduedate').val('');
                         data['handler'].map(item =>{
                             $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
