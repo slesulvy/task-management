@@ -21,6 +21,13 @@ class UserController extends Controller
         $users = User::all()->sortByDesc('id');
         return view('pages.user',['users'=>$users,'role'=>$role]);
     }
+    public function users_select_opt()
+    {
+        $user = User::where('status',1)->orderBy('name')->get();
+        foreach ($user as $item) {
+            echo '<option value="'.$item->id.'">'.$item->name.'</option>';
+        }
+    }
 
     /**
      * Show the form for creating a new resource.

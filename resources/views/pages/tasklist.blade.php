@@ -7,8 +7,6 @@
 <link href="{{asset('css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
-<link href="{{asset('css/progress.css')}}" rel="stylesheet">
-
 @endsection
 
 @section ('content')
