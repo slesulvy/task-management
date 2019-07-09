@@ -6,7 +6,6 @@
     <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
-    <link href="{{asset('css/interface.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
 
     <style>
