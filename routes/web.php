@@ -72,8 +72,8 @@ Route::group(['middleware'=>'auth'], function () {
     
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
 
-    Route::post('addlist',[ 'as' => 'addlist','uses' => 'HomeController@addlist']);
-    Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'HomeController@remove_list']);
+    Route::post('addlist',[ 'as' => 'addlist','uses' => 'ListController@addlist']);
+    Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'ListController@remove_list']);
     //remove_list($id)
 
     Route::get('category',[ 'as' => 'category','uses' => 'CategoryController@index']);
