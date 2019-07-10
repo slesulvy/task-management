@@ -118,8 +118,6 @@
                 </div>
             </div>
 
-       
-    </div>
 
     @include('tasks.progress.edit')
     
