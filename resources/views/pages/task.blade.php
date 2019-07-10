@@ -6,12 +6,9 @@
     <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
-<<<<<<< HEAD
     <link href="{{asset('css/interface.css')}}" rel="stylesheet">
 
-=======
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
->>>>>>> 40d23f4a66e73b1f60b004350b8c5b342ff43f6a
 
     <style>
 
@@ -487,6 +484,14 @@
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
 
+
+<!-- <script type="text/javascript">
+    $(document).ready(function(){
+    var aa = $('#tasktitle').html(data['task'].taskname);
+    alert(aa);
+     $("#taskmodal").modal('show');
+    });
+</script> -->
     <script>
 
        

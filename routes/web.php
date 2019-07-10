@@ -31,13 +31,20 @@ Route::get('logout',[ 'as' => 'logout','uses' =>'LoginController@logout']);
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::group(['middleware'=>'auth'], function () {
-    
-    Route::get('board','HomeController@index');
-    Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'HomeController@store']);
-    Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'HomeController@tasks']);
 
-    Route::get('board/close/{id}',[ 'as' => 'board/close/{id}','uses' => 'HomeController@close']);
-    Route::get('board/restore/{id}',[ 'as' => 'board/restore/{id}','uses' => 'HomeController@restore']);
+    //All Board Controller
+    
+    Route::get('board','ProjectController@index');
+    Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'ProjectController@store']);
+    Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'ProjectController@tasks']);
+    Route::get('board/close/{id}',[ 'as' => 'board/close/{id}','uses' => 'ProjectController@close']);
+    Route::get('board/restore/{id}',[ 'as' => 'board/restore/{id}','uses' => 'ProjectController@restore']);
+    Route::get('board/edittask/{id}','ProjectController@edittask');
+    Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'ProjectController@updatetask']);
+    Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
+    Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'ProjectController@task_update_step']);
+
+
 
     Route::get('task/close/{id}',[ 'as' => 'task/close/{id}','uses' => 'HomeController@closetask']);
     Route::get('task/restore/{id}',[ 'as' => 'task/restore/{id}','uses' => 'HomeController@restoretask']);
@@ -64,10 +71,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('tasks',[ 'as' => 'tasks','uses' => 'HomeController@tasklist']);
 
     Route::get('newtask',[ 'as' => 'addtask','uses' => 'HomeController@addtask']);
-    Route::get('board/edittask/{id}','HomeController@edittask');
-    Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'HomeController@updatetask']);
-    Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'HomeController@destroy']);
-    Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'HomeController@task_update_step']);
+   
 
 
 

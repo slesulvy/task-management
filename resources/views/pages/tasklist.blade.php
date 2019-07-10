@@ -7,6 +7,8 @@
 <link href="{{asset('css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
+<link href="{{asset('css/progress.css')}}" rel="stylesheet">
+
 @endsection
 
 @section ('content')
@@ -78,11 +80,13 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        {{substr($item->taskname,0,60)}}
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-striped task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
+                                                      <!--   <a href="{{ url('board')}}/{{ $item->project_id }}"> --> 
+                                                                {{substr($item->taskname,0,60)}}
+                                                                <div class="progress">
+                                                                    <div class="progress-bar progress-bar-striped task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </td>
+                                                       <!--  </a> -->
                                                     <td align="left">
                                                             {{substr($item->description,0,60)}}
                                                     </td>
