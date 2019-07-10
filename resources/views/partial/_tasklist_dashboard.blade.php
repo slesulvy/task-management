@@ -11,7 +11,7 @@
                         <i class="fa fa-star-o"></i>&nbsp;
                     @endfor
                 </div>
-                <div class="progress priority-{{ $item->priority }}" style="margin-top:3px;">
+                <div class="progress priority-{{ $item->priority }}" style="margin-top:3.5px;">
                     <div class="progress-bar progress-bar-striped task-progress progress-bar-{{ $item->priority }}" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>

@@ -6,81 +6,7 @@
     <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
-    <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
-
-    <style>
-
-        .wrapper-content {
-            padding: 0px 0px 40px;
-        }
-
-        .popover {
-            z-index:3333;
-            border-radius: 2px;
-        }
-          .test:hover{
-            color: red;
-        }
-        .caretss {
-          
-          box-shadow: 0 0 2000px #000000;
-          width: 100%;
-       
-        }
-        .feed-element, .media-body{
-            margin-top:-5px !important;
-        }
-    
-        .ibox-content{width: 300px; max-height:70vh; overflow-y: hidden;}
-        
-        .ibox-content-ul{ max-height:62vh; overflow-y: auto; padding-right:5px; }
-        .ibox-content-ul-first{ max-height:60vh; overflow-y: auto; padding-right:5px; }
-        .ibox-content-ul::-webkit-scrollbar, .ibox-content-ul-first::-webkit-scrollbar
-        {
-            width: 2px;
-            height: 4px;
-            background-color: #F5F5F5;
-        }
-        .ibox-content-ul::-webkit-scrollbar-thumb
-        {
-            border-radius: 8px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-            background-color: #eaeaea;
-        }
-
-        /* custom scroll bar */
-
-        .custom-scroll {
-            position: relative;
-            overflow-y: hidden;
-            overflow-x: auto;
-            padding-right:10px;
-            height:75vh;
-        }
-        .custom-scroll::-webkit-scrollbar-track
-        {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            border-radius: 8px;
-            background-color: #fff;
-        }
-
-        .custom-scroll::-webkit-scrollbar
-        {
-            width: 4px;
-            height: 8px;
-            background-color: #fff;
-        }
-
-        .custom-scroll::-webkit-scrollbar-thumb
-        {
-            border-radius: 8px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-            background-color: #eee;
-        }
-
-        /* end custom scroll bar */
-
-    </style>
+    <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">>
 @endsection
 
 @section ('content')
@@ -120,7 +46,7 @@
                     <div class="ibox-content">
                         <h3>Things To-do</h3>
                        
-                        <div class="input-group">
+                        <div class="input-group" style="margin-bottom:10px;">
                             <input type="text" id="taskname" placeholder="Add new task. " class="input input-sm form-control">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-white btn_add_task"> <i class="fa fa-plus"></i> Add task</button>
@@ -281,8 +207,8 @@
                                                         <div class="col-sm-12">
                                                             <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
                                                                 <div class="form-group">
-                                                                   <div class="col-sm-7"> 
-                                                                     <i class="fa fa-calendar">&nbsp; Start Date</i>
+                                                                   <div class="col-sm-7 font-bold">
+                                                                     <i class="fa fa-calendar"></i> Start Date
                                                                    </div>
                                                                     <div class="col-sm-5">
                                                                          <input type="text" style="border:none; font-size:12px;margin-left: -75px;" id="start_dates"data-mask="99/99/9999" placeholder="mm/dd/yyyy" > 
@@ -291,8 +217,8 @@
                                                               </div>
                                                                <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
                                                                 <div class="form-group">
-                                                                   <div class="col-sm-7"> 
-                                                                     <i class="fa fa-calendar">&nbsp;Due Date</i>
+                                                                   <div class="col-sm-7 font-bold">
+                                                                     <i class="fa fa-calendar"></i> Due Date
                                                                    </div>
                                                                     <div class="col-sm-5">
                                                                          <input type="text" id="setduedate" style="border:none; font-size:12px;margin-left: -75px;" data-mask="99/99/9999" placeholder="mm/dd/yyyy"> 
