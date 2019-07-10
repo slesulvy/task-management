@@ -6,84 +6,8 @@
     <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
-<<<<<<< HEAD
     <link href="{{asset('css/interface.css')}}" rel="stylesheet">
-
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
-
-    <style>
-
-        .wrapper-content {
-            padding: 0px 0px 40px;
-        }
-
-        .popover {
-            z-index:3333;
-            border-radius: 2px;
-        }
-          .test:hover{
-            color: red;
-        }
-        .caretss {
-          
-          box-shadow: 0 0 2000px #000000;
-          width: 100%;
-       
-        }
-    
-        .ibox-content{width: 300px; max-height:70vh; overflow-y: hidden;}
-        
-        .ibox-content-ul{ max-height:62vh; overflow-y: auto; padding-right:5px; }
-        .ibox-content-ul-first{ max-height:60vh; overflow-y: auto; padding-right:5px; }
-        .ibox-content-ul::-webkit-scrollbar, .ibox-content-ul-first::-webkit-scrollbar
-        {
-            width: 2px;
-            height: 4px;
-            background-color: #F5F5F5;
-        }
-        .ibox-content-ul::-webkit-scrollbar-thumb
-        {
-            border-radius: 8px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-            background-color: #eaeaea;
-        }
-
-        /* custom scroll bar */
-
-        .custom-scroll {
-            position: relative;
-            overflow-y: hidden;
-            overflow-x: auto;
-            padding-right:10px;
-            height:75vh;
-        }
-        .custom-scroll::-webkit-scrollbar-track
-        {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            border-radius: 8px;
-            background-color: #fff;
-        }
-
-        .custom-scroll::-webkit-scrollbar
-        {
-            width: 4px;
-            height: 8px;
-            background-color: #fff;
-        }
-
-        .custom-scroll::-webkit-scrollbar-thumb
-        {
-            border-radius: 8px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-            background-color: #eee;
-        }
-
-        /* end custom scroll bar */
-
-    </style>
-=======
-    <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
->>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
 @endsection
 
 @section ('content')
