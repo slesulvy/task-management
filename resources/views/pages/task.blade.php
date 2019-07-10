@@ -292,10 +292,7 @@
                                                         <label class="col-sm-12"><i class="fa fa-paperclip"></i>&nbsp;&nbsp;&nbsp;Attachments &nbsp;&nbsp;&nbsp;   
                                                         </label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px;">
-                                                        
-                                                            <ul class="list-unstyled file-list">
-                                                                <li class="att-list"> <!-- comments display here --></li>
-                                                            </ul>
+                                                            <div class="att-list"></div>
                                                         </div>
                                                     </div>
                                                     <form method="post">
@@ -753,8 +750,9 @@
 
                             //var comment_date = new Date(item.created_at);
                             
-                            $('.att-list').append("<div class='feed-element' style='padding:0'>"+
-                                            "<div class='well'>"+"<a href='<?php echo asset('images/"+item.image+"')?>'><i class='fa fa-file'></i>"+item.image+"</a>"+"</div>"+"</div>");
+                            $('.att-list').append("<div class=''>"+"<ul class='list-unstyled file-list feed-element' style='margin:0; padding:0;'>"+
+                                                "<li><a href='<?php echo asset('images/"+item.image+"')?>'><i class='fa fa-paperclip'></i>&nbsp;&nbsp; "+item.image+"</a></li>"+
+                                            "</ul>"+"</div>");
                         });
 
                         $('#task-progress').val(data['task'].progress);

@@ -23,15 +23,15 @@ class TaskCommentController extends Controller
             $comment->status = '1';
             $comment->comments = $request->description;
             if($request->file('select_file')!='')
-        {
-            $comment->task_id = $request->task_id;
-            $comment->user_id = Auth::user()->id;
-            $comment->status = '1';
-            $image = $request->file('select_file');
-            $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('/images'), $new_name);
-            $comment->image = $new_name;
-        }
+            {
+                $comment->task_id = $request->task_id;
+                $comment->user_id = Auth::user()->id;
+                $comment->status = '1';
+                $image = $request->file('select_file');
+                $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('/images'), $new_name);
+                $comment->image = $new_name;
+            }
             $comment->save();
         }
         else{
