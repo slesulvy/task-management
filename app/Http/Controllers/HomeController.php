@@ -105,8 +105,7 @@ class HomeController extends Controller
     public function task_update_step(Request $request,$id){
       
           $task = Task::where('id','=', $id)->first();
-          $task->step = $request->all_step;
-          
+          $task->step = $request->all_step;    
           $task->save();
     }
 
@@ -245,7 +244,6 @@ class HomeController extends Controller
         $task = Task::where('id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-       
             $task->description = $request->description;
             $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
             $task->priority = $request->priority;

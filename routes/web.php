@@ -15,14 +15,6 @@ Route::get('/', function () {
     return redirect('/board');
 });
 
-//Auth::routes();
-
-/*Route::group(['prefix' => 'cp','namespace'=>'Cpanel','middleware'=>'auth'], function () {
-
-    Route::get('/home', 'HomeController@index');
-
-});*/
-
 Auth::routes();
 
 Route::get('login',[ 'as' => 'login','uses' =>'LoginController@index']);
@@ -34,6 +26,7 @@ Route::group(['middleware'=>'auth'], function () {
 
     //All Board Controller
     
+<<<<<<< HEAD
     Route::get('board','ProjectController@index');
     Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'ProjectController@store']);
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'ProjectController@tasks']);
@@ -44,10 +37,13 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
     Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'ProjectController@task_update_step']);
 
+=======
+    Route::get('board','HomeController@index');
+    Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'HomeController@store']);
+>>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
 
 
-    Route::get('task/close/{id}',[ 'as' => 'task/close/{id}','uses' => 'HomeController@closetask']);
-    Route::get('task/restore/{id}',[ 'as' => 'task/restore/{id}','uses' => 'HomeController@restoretask']);
+    
 
     //PROJECT MEMBER
     Route::get('getboardmember/{id}',['as' => 'getboardmember/{id}', 'uses' =>'ProjectMemberController@get']);
@@ -56,20 +52,18 @@ Route::group(['middleware'=>'auth'], function () {
     //END PROJECT MEMBER
 
     Route::get('addtaskmember/{taskid}',['as'=>'addtaskmember/{taskid}', 'uses'=>'HomeController@addtaskmember']);
-    Route::get('setpriority/{id}',['as'=>'setpriority/{id}','uses'=>'HomeController@update_priority']);
-    Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'HomeController@update_description']);
-    Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'HomeController@update_duedate']);
+    
 
     // Task Comment 
     Route::post('comment',['as'=>'comment','uses'=>'TaskCommentController@comment']);
     Route::get('getacomment/{id}',['as'=>'getacomment/{id}','uses'=>'TaskCommentController@get_signle_comment']);
     // End Task Comment
-    Route::get('movestep',['as'=>'movestep','uses'=>'HomeController@update_step']);
 
     Route::get('boards',[ 'as' => 'boards','uses' => 'HomeController@boards']);
 
     Route::get('tasks',[ 'as' => 'tasks','uses' => 'HomeController@tasklist']);
 
+<<<<<<< HEAD
     Route::get('newtask',[ 'as' => 'addtask','uses' => 'HomeController@addtask']);
    
 
@@ -77,6 +71,8 @@ Route::group(['middleware'=>'auth'], function () {
 
     
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
+=======
+>>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
 
     Route::post('addlist',[ 'as' => 'addlist','uses' => 'ListController@addlist']);
     Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'ListController@remove_list']);
@@ -117,7 +113,20 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('api/addTaskMember', 'BotController@addMemberToTask');
     Route::get('api/setPriorityTask', 'BotController@setPriorityTask');
     Route::get('api/taskComment', 'BotController@taskComment');
-    //Route::get('api/moveTask', '\App\Http\Controllers\BotController@updateDescriptionTask');
     Route::get('api/setduedate', '\App\Http\Controllers\BotController@setDueDate');
+    // task controller routing
+    Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'TaskController@list']);
+    Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'TaskController@get']);
+    Route::get('task/close/{id}',[ 'as' => 'task/close/{id}','uses' => 'TaskController@archive']);
+    Route::get('task/restore/{id}',[ 'as' => 'task/restore/{id}','uses' => 'TaskController@restore']);
+    Route::get('setpriority/{id}',['as'=>'setpriority/{id}','uses'=>'TaskController@updatePriority']);
+    Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'TaskController@updateDescription']);
+    Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'TasKController@updateDue']);
+    Route::get('movestep',['as'=>'movestep','uses'=>'TaskController@moveStep']);
+    Route::get('newtask',[ 'as' => 'addtask','uses' => 'TaskController@add']);
+    Route::get('board/edittask/{id}','TaskController@edit');
+    Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'TaskController@update']);
+    Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'TaskController@delete']);
+    Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'TaskController@updateStep']);
    
 });
