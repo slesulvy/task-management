@@ -26,7 +26,6 @@ Route::group(['middleware'=>'auth'], function () {
 
     //All Board Controller
     
-<<<<<<< HEAD
     Route::get('board','ProjectController@index');
     Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'ProjectController@store']);
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'ProjectController@tasks']);
@@ -37,10 +36,6 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
     Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'ProjectController@task_update_step']);
 
-=======
-    Route::get('board','HomeController@index');
-    Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'HomeController@store']);
->>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
 
 
     
@@ -63,7 +58,7 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::get('tasks',[ 'as' => 'tasks','uses' => 'HomeController@tasklist']);
 
-<<<<<<< HEAD
+
     Route::get('newtask',[ 'as' => 'addtask','uses' => 'HomeController@addtask']);
    
 
@@ -71,8 +66,7 @@ Route::group(['middleware'=>'auth'], function () {
 
     
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
-=======
->>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
+
 
     Route::post('addlist',[ 'as' => 'addlist','uses' => 'ListController@addlist']);
     Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'ListController@remove_list']);
