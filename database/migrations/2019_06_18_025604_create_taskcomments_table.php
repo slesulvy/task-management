@@ -19,6 +19,7 @@ class CreateTaskcommentsTable extends Migration
             $table->bigInteger('user_id');
             $table->string('comments')->nullable();
             $table->string('image')->nullable();
+            $table->string('def_image')->nullable();
             $table->bigInteger('status');
             $table->timestamps();
         });
