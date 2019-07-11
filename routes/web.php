@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return redirect('/board');
 });
@@ -23,14 +12,19 @@ Route::get('logout',[ 'as' => 'logout','uses' =>'LoginController@logout']);
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::group(['middleware'=>'auth'], function () {
-    
-    Route::get('board','HomeController@index');
-    Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'HomeController@store']);
 
-    Route::get('board/close/{id}',[ 'as' => 'board/close/{id}','uses' => 'HomeController@close']);
-    Route::get('board/restore/{id}',[ 'as' => 'board/restore/{id}','uses' => 'HomeController@restore']);
+    //All Board Controller
+    Route::get('board','ProjectController@index');
+    Route::get('boards',[ 'as' => 'boards','uses' => 'HomeController@boards']);
+    Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'ProjectController@store']);
+    Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'ProjectController@tasks']);
+    Route::get('board/close/{id}',[ 'as' => 'board/close/{id}','uses' => 'ProjectController@close']);
+    Route::get('board/restore/{id}',[ 'as' => 'board/restore/{id}','uses' => 'ProjectController@restore']);
+    Route::get('board/edittask/{id}','ProjectController@edittask');
+    Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'ProjectController@updatetask']);
+    Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
+    Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'ProjectController@task_update_step']);
 
-    
 
     //PROJECT MEMBER
     Route::get('getboardmember/{id}',['as' => 'getboardmember/{id}', 'uses' =>'ProjectMemberController@get']);
@@ -45,12 +39,9 @@ Route::group(['middleware'=>'auth'], function () {
     Route::post('comment',['as'=>'comment','uses'=>'TaskCommentController@comment']);
     Route::get('getacomment/{id}',['as'=>'getacomment/{id}','uses'=>'TaskCommentController@get_signle_comment']);
     // End Task Comment
-
-    Route::get('boards',[ 'as' => 'boards','uses' => 'HomeController@boards']);
-
     Route::get('tasks',[ 'as' => 'tasks','uses' => 'HomeController@tasklist']);
-
-
+    Route::get('newtask',[ 'as' => 'addtask','uses' => 'HomeController@addtask']);
+    Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
     Route::post('addlist',[ 'as' => 'addlist','uses' => 'ListController@addlist']);
     Route::get('removelist/{id}',[ 'as' => 'removelist/{id}','uses' => 'ListController@remove_list']);
     //remove_list($id)
@@ -59,7 +50,6 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('addcategory',[ 'as' => 'addcategory','uses' => 'CategoryController@store']);
     Route::get('category/close/{id}',[ 'as' => 'category/close/{id}','uses' => 'CategoryController@closecategory']);
     Route::get('category/restore/{id}',[ 'as' => 'category/restore/{id}','uses' => 'CategoryController@restorecategory']);
-
 
     Route::get('users',[ 'as' => 'users','uses' =>'UserController@index']);
     Route::post('users/add',[ 'as' => 'users/add','uses' => 'UserController@store']);
@@ -74,7 +64,6 @@ Route::group(['middleware'=>'auth'], function () {
     Route::post('role/update',[ 'as' => 'role/update','uses' => 'RoleController@update']);
 
     Route::get('users_select_opt','UserController@users_select_opt');
-
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
 
     //TASK PROGRESS

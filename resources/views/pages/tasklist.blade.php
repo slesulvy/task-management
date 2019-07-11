@@ -7,6 +7,7 @@
 <link href="{{asset('css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
+<link href="{{asset('css/progress.css')}}" rel="stylesheet">
 
 @endsection
 
@@ -75,15 +76,17 @@
                                                     <td align="center">{{$i}}</td>
                                                     <td>{{$item->board->projectname}}
                                                         <div class="progress project-{{ $item->project_id }}">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-info project-progress" role="progressbar" style="width: {{ $item->board->progress  }}%" aria-valuenow="{{ $item->board->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar progress-bar-striped progress-bar-info project-progress" role="progressbar" style="background-color: {{ $item->board->back_color }};width: {{ $item->board->progress  }}%" aria-valuenow="{{ $item->board->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
                                                     </td>
                                                     <td>
+                                                     
                                                         {{substr($item->taskname,0,60)}}
                                                         <div class="progress">
                                                             <div class="progress-bar progress-bar-striped task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
                                                     </td>
+                                                      
                                                     <td align="left">
                                                             {{substr($item->description,0,60)}}
                                                     </td>
@@ -115,8 +118,6 @@
                 </div>
             </div>
 
-       
-    </div>
 
     @include('tasks.progress.edit')
     

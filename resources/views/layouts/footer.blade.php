@@ -23,11 +23,10 @@
 <script src="{{asset('js/plugins/touchpunch/jquery.ui.touch-punch.min.js')}}"></script>
 
 <!-- Custom and plugin javascript -->
-
+<script src="{{asset('js/bootstrap-colorpicker.min.js')}}"></script>
 @yield('customJs')
-
-
 <script src="{{asset('js/inspinia.js')}}"></script>
+<script src="{{asset('js/project-color.js')}}"></script>
 <script src="{{asset('js/plugins/pace/pace.min.js')}}"></script>
 
 <script>
