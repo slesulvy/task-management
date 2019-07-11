@@ -30,6 +30,7 @@ class TaskCommentController extends Controller
                 $image = $request->file('select_file');
                 $new_name = rand() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('/images'), $new_name);
+                $comment->def_image = $image->getClientOriginalName();
                 $comment->image = $new_name;
             }
             $comment->save();
@@ -44,6 +45,7 @@ class TaskCommentController extends Controller
                 $image = $request->file('select_file');
                 $new_name = rand() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('/images'), $new_name);
+                $comment->def_image = $image->getClientOriginalName();
                 $comment->image = $new_name;
                 $comment->save();
             }
@@ -70,7 +72,7 @@ class TaskCommentController extends Controller
                     <div class="well">
                     '.$comment->comments.'
                     <a href="'.asset('images/'.$comment->image).'">
-                        '.$comment->image.'
+                        '.$comment->def_image.'
                     </a>
                     </div>
                 </div>
