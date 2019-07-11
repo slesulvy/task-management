@@ -27,7 +27,7 @@ class ProjectController extends Controller
         return view('pages.index', ['board'=>$board]);
     }
 
-    function boards()
+    function list()
     {
         $board = DB::table('projects')
             ->select('projects.*', 'project_member.user_id')
