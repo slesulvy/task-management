@@ -6,12 +6,18 @@
     <link href="{{asset('css/plugins/chosen/bootstrap-chosen.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <link href="{{asset('css/pages/dashboard.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
+    <style>
+        .project-head-color{
+            border-bottom: 1px solid {{$board->back_color}} !important;
+        }
+    </style>
 @endsection
 
 @section ('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="row wrapper border-bottom white-bg page-heading project-head-color">
         <div class="col-lg-12">
             <h2></h2>
             <ol class="breadcrumb">
@@ -430,7 +436,19 @@
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
+<<<<<<< HEAD
+
+
+<!-- <script type="text/javascript">
+    $(document).ready(function(){
+    var aa = $('#tasktitle').html(data['task'].taskname);
+    alert(aa);
+     $("#taskmodal").modal('show');
+    });
+</script> -->
+=======
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
+>>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
     <script>
 
         //PROGRESS SLIDER
