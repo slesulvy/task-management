@@ -14,7 +14,8 @@ class AddColorColumnToProjectsTable extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->char('color', 10)->default('#1ab394')->after('description');            
+            $table->char('back_color', 7)->default('#1ab394')->after('description');
+            $table->char('font_color', 7)->default('#ffffff')->after('description');
         });
     }
 

@@ -8,11 +8,16 @@
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <link href="{{asset('css/pages/dashboard.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
+    <style>
+        .project-head-color{
+            border-bottom: 1px solid {{$board->back_color}} !important;
+        }
+    </style>
 @endsection
 
 @section ('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="row wrapper border-bottom white-bg page-heading project-head-color">
         <div class="col-lg-12">
             <h2></h2>
             <ol class="breadcrumb">

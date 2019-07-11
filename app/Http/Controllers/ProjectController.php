@@ -46,6 +46,8 @@ class ProjectController extends Controller
         $board->category_id = $request->category_id;
         $board->projectname = $request->projectname;
         $board->description = $request->description;
+        $board->back_color = $request->back_color;
+        $board->font_color = $request->font_color;
         $board->created_by = Auth::user()->id;
         $board->save();
         $boardmember = new BoardMember;
