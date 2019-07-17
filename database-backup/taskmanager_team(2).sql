@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 09, 2019 at 10:07 AM
+-- Generation Time: Jul 17, 2019 at 09:12 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -87,7 +87,64 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2019_06_18_040018_alter_project_lists_table', 4),
 (16, '2019_06_18_040018_create_project_member_table', 5),
 (17, '2019_07_08_042247_add_progres_column_to_project_table', 6),
-(18, '2019_06_18_025604_create_taskcomments_table', 7);
+(18, '2019_06_18_025604_create_taskcomments_table', 7),
+(19, '2019_07_11_033802_add_color_column_to_projects_table', 8);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_permissions`
+--
+
+DROP TABLE IF EXISTS `model_has_permissions`;
+CREATE TABLE IF NOT EXISTS `model_has_permissions` (
+  `permission_id` int(10) UNSIGNED NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  KEY `model_has_permissions_model_type_model_id_index` (`model_type`,`model_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_roles`
+--
+
+DROP TABLE IF EXISTS `model_has_roles`;
+CREATE TABLE IF NOT EXISTS `model_has_roles` (
+  `role_id` int(10) UNSIGNED NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  KEY `model_has_roles_model_type_model_id_index` (`model_type`,`model_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `model_has_roles`
+--
+
+INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
+(1, 'App\\User', 13),
+(1, 'App\\User', 19),
+(3, 'App\\User', 3),
+(3, 'App\\User', 7),
+(3, 'App\\User', 11),
+(3, 'App\\User', 19),
+(3, 'App\\User', 20),
+(3, 'App\\User', 21),
+(3, 'App\\User', 22),
+(3, 'App\\User', 23),
+(3, 'App\\User', 24),
+(3, 'App\\User', 25),
+(3, 'App\\User', 26),
+(3, 'App\\User', 27),
+(3, 'App\\User', 28),
+(3, 'App\\User', 29),
+(3, 'App\\User', 30),
+(5, 'App\\User', 10),
+(5, 'App\\User', 11),
+(5, 'App\\User', 14);
 
 -- --------------------------------------------------------
 
@@ -106,6 +163,36 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `permissions`
+--
+
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(1, 'role-list', 'web', '2018-06-19 06:53:05', '2018-06-19 06:53:05'),
+(2, 'role-create', 'web', '2018-06-19 06:53:05', '2018-06-19 06:53:05'),
+(3, 'role-edit', 'web', '2018-06-19 06:53:05', '2018-06-19 06:53:05'),
+(4, 'role-delete', 'web', '2018-06-19 06:53:05', '2018-06-19 06:53:05'),
+(9, 'user-list', 'web', '2019-05-27 04:24:53', '2019-05-27 04:24:55'),
+(10, 'user-create', 'web', '2019-05-27 04:26:11', '2019-05-27 04:26:12'),
+(11, 'user-edit', 'web', '2019-05-27 04:26:31', '2019-05-27 04:26:32'),
+(12, 'user-delete', 'web', '2019-05-27 04:26:50', '2019-05-27 04:26:52');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `projects`
 --
 
@@ -115,6 +202,8 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `category_id` bigint(20) NOT NULL,
   `projectname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
+  `font_color` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#ffffff',
+  `back_color` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#1ab394',
   `progress` tinyint(4) NOT NULL DEFAULT '0',
   `created_by` tinyint(4) DEFAULT NULL,
   `status` smallint(6) NOT NULL DEFAULT '1',
@@ -122,14 +211,16 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `closed_by` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`project_id`, `category_id`, `projectname`, `description`, `progress`, `created_by`, `status`, `created_at`, `updated_at`, `closed_by`) VALUES
-(29, 20, 'PCA Project', 'PCA Project description goes here', 67, 1, 1, '2019-06-27 20:34:00', '2019-07-09 03:02:59', 1);
+INSERT INTO `projects` (`project_id`, `category_id`, `projectname`, `description`, `font_color`, `back_color`, `progress`, `created_by`, `status`, `created_at`, `updated_at`, `closed_by`) VALUES
+(29, 20, 'PCA Project', 'PCA Project description goes here', '#ffffff', '#1ab394', 57, 1, 1, '2019-06-27 20:34:00', '2019-07-16 18:37:27', 1),
+(30, 2, 'test', 'd', '#ffffff', '#1ab394', 31, 13, 1, '2019-07-17 01:48:28', '2019-07-17 02:04:29', NULL),
+(31, 13, 'ddd', 'ddd', '#ffffff', '#1ab394', 0, 3, 1, '2019-07-17 01:49:40', '2019-07-17 01:49:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -150,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `project_lists` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`list_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `project_lists`
@@ -175,7 +266,9 @@ INSERT INTO `project_lists` (`list_id`, `project_id`, `list_title`, `created_by`
 (16, 29, 'ddd', 3, NULL, NULL, NULL, 0, '2019-07-09 00:58:57', '2019-07-09 00:59:03'),
 (17, 29, 'aaa', 3, NULL, NULL, NULL, 0, '2019-07-09 00:59:28', '2019-07-09 00:59:43'),
 (18, 29, 'xxx', 3, NULL, NULL, NULL, 0, '2019-07-09 00:59:33', '2019-07-09 00:59:38'),
-(19, 29, 'test', 3, NULL, NULL, NULL, 0, '2019-07-09 01:00:11', '2019-07-09 01:00:16');
+(19, 29, 'test', 3, NULL, NULL, NULL, 0, '2019-07-09 01:00:11', '2019-07-09 01:00:16'),
+(20, 29, 'ddd', 3, NULL, NULL, NULL, 0, '2019-07-09 23:40:25', '2019-07-09 23:40:33'),
+(21, 30, 'sss', 13, NULL, NULL, NULL, 1, '2019-07-17 01:57:13', '2019-07-17 01:57:13');
 
 -- --------------------------------------------------------
 
@@ -196,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `project_member` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unigue_project_user` (`project_id`,`user_id`),
   KEY `project_user_key` (`project_id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `project_member`
@@ -207,7 +300,79 @@ INSERT INTO `project_member` (`id`, `project_id`, `user_id`, `assign_by`, `remov
 (57, 29, 3, 1, 0, 1, '2019-06-27 20:34:25', '2019-06-27 20:34:25'),
 (58, 29, 7, 1, 0, 1, '2019-06-27 20:39:23', '2019-06-27 20:39:23'),
 (59, 29, 4, 1, 0, 1, '2019-06-27 20:39:25', '2019-06-27 20:39:25'),
-(60, 29, 2, 1, 0, 1, '2019-06-27 20:39:28', '2019-06-27 20:39:28');
+(60, 29, 2, 1, 0, 1, '2019-06-27 20:39:28', '2019-06-27 20:39:28'),
+(61, 30, 13, 13, 0, 1, '2019-07-17 01:48:28', '2019-07-17 01:48:28'),
+(62, 31, 3, 3, 0, 1, '2019-07-17 01:49:40', '2019-07-17 01:49:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `updated_by` (`updated_by`),
+  KEY `created_by` (`created_by`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Supper administrator', 'web', 0, 0, '2018-06-19 06:54:48', '2019-07-17 01:08:07'),
+(3, 'Generale Staff', 'web', NULL, NULL, '2019-05-26 20:28:51', '2019-07-17 01:07:52'),
+(5, 'administrator', 'web', NULL, NULL, '2019-07-16 21:03:14', '2019-07-17 01:07:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_has_permissions`
+--
+
+DROP TABLE IF EXISTS `role_has_permissions`;
+CREATE TABLE IF NOT EXISTS `role_has_permissions` (
+  `permission_id` int(10) UNSIGNED NOT NULL,
+  `role_id` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`permission_id`,`role_id`),
+  KEY `role_has_permissions_role_id_foreign` (`role_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `role_has_permissions`
+--
+
+INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
+(1, 1),
+(1, 4),
+(2, 1),
+(2, 4),
+(3, 1),
+(3, 4),
+(4, 1),
+(4, 4),
+(5, 2),
+(6, 2),
+(7, 2),
+(8, 2),
+(9, 1),
+(9, 3),
+(9, 5),
+(10, 1),
+(10, 5),
+(11, 1),
+(11, 5),
+(12, 1),
+(12, 5);
 
 -- --------------------------------------------------------
 
@@ -276,30 +441,36 @@ CREATE TABLE IF NOT EXISTS `taskcomments` (
   `user_id` bigint(20) NOT NULL,
   `comments` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `def_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `taskcomments`
 --
 
-INSERT INTO `taskcomments` (`id`, `task_id`, `user_id`, `comments`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 105, 3, 'Hi', NULL, 1, '2019-07-08 18:55:11', '2019-07-08 18:55:11'),
-(2, 105, 3, NULL, '1558032013.jpg', 1, '2019-07-08 18:58:53', '2019-07-08 18:58:53'),
-(3, 121, 3, NULL, '1048588047.jpg', 1, '2019-07-08 19:01:34', '2019-07-08 19:01:34'),
-(4, 121, 3, NULL, '1463041409.jpg', 1, '2019-07-08 19:03:25', '2019-07-08 19:03:25'),
-(5, 121, 3, NULL, '420277046.jpg', 1, '2019-07-08 19:06:12', '2019-07-08 19:06:12'),
-(6, 121, 3, NULL, '958488784.jpg', 1, '2019-07-08 19:06:14', '2019-07-08 19:06:14'),
-(7, 121, 3, NULL, '1601904587.gif', 1, '2019-07-08 19:06:34', '2019-07-08 19:06:34'),
-(8, 121, 3, 'Hello world', NULL, 1, '2019-07-08 19:08:40', '2019-07-08 19:08:40'),
-(9, 122, 3, 'Hi', NULL, 1, '2019-07-08 19:38:27', '2019-07-08 19:38:27'),
-(10, 122, 3, NULL, '1270434004.jpg', 1, '2019-07-08 19:38:35', '2019-07-08 19:38:35'),
-(11, 105, 3, NULL, '973207789.gif', 1, '2019-07-08 20:37:17', '2019-07-08 20:37:17'),
-(12, 124, 3, 'eee', NULL, 1, '2019-07-09 03:02:47', '2019-07-09 03:02:47'),
-(13, 124, 3, NULL, '2037929071.pptx', 1, '2019-07-09 03:02:47', '2019-07-09 03:02:47');
+INSERT INTO `taskcomments` (`id`, `task_id`, `user_id`, `comments`, `image`, `def_image`, `status`, `created_at`, `updated_at`) VALUES
+(69, 126, 3, 'dddf', NULL, NULL, 1, '2019-07-11 01:11:23', '2019-07-11 01:11:23'),
+(70, 126, 3, NULL, '1729163572.jpg', '12.jpg', 1, '2019-07-11 01:11:27', '2019-07-11 01:11:27'),
+(71, 126, 3, 'sdfdsf', '950859216.jpg', '2qw.jpg', 1, '2019-07-11 01:11:37', '2019-07-11 01:11:37'),
+(72, 126, 3, 'sdsd', NULL, NULL, 1, '2019-07-11 01:15:48', '2019-07-11 01:15:48'),
+(73, 105, 3, 'dd', NULL, NULL, 1, '2019-07-11 01:18:15', '2019-07-11 01:18:15'),
+(74, 105, 3, 'ddd', '1914177307.png', 'Screenshot (4).png', 1, '2019-07-11 01:18:28', '2019-07-11 01:18:28'),
+(75, 123, 3, 'ded', NULL, NULL, 1, '2019-07-11 01:20:08', '2019-07-11 01:20:08'),
+(76, 124, 3, 'dddd', NULL, NULL, 1, '2019-07-11 01:20:27', '2019-07-11 01:20:27'),
+(77, 124, 3, NULL, '1770446673.png', 'Screenshot (2).png', 1, '2019-07-11 01:21:03', '2019-07-11 01:21:03'),
+(78, 126, 3, 'ggg', NULL, NULL, 1, '2019-07-11 01:24:23', '2019-07-11 01:24:23'),
+(79, 126, 3, NULL, '2047760937.png', 'Screenshot (2).png', 1, '2019-07-11 01:24:39', '2019-07-11 01:24:39'),
+(80, 127, 3, 'Test', NULL, NULL, 1, '2019-07-11 02:51:48', '2019-07-11 02:51:48'),
+(81, 127, 3, 'dd', NULL, NULL, 1, '2019-07-11 18:53:15', '2019-07-11 18:53:15'),
+(82, 127, 3, NULL, '876861388.jpg', '12.jpg', 1, '2019-07-11 18:53:22', '2019-07-11 18:53:22'),
+(83, 127, 3, 'test', NULL, NULL, 1, '2019-07-11 21:20:04', '2019-07-11 21:20:04'),
+(84, 127, 3, 'dd', NULL, NULL, 1, '2019-07-12 00:14:30', '2019-07-12 00:14:30'),
+(85, 127, 3, 'dd', '1444806140.jpg', '15.jpg', 1, '2019-07-12 00:14:36', '2019-07-12 00:14:36'),
+(86, 128, 13, NULL, '1247719287.jpg', '30388d6cd06820716a4ae4c03eee751c.jpg', 1, '2019-07-17 01:50:50', '2019-07-17 01:50:50');
 
 -- --------------------------------------------------------
 
@@ -318,7 +489,7 @@ CREATE TABLE IF NOT EXISTS `taskhandlers` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `hadler_unique` (`task_id`,`user_id`),
   KEY `handler_key` (`task_id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `taskhandlers`
@@ -364,7 +535,17 @@ INSERT INTO `taskhandlers` (`id`, `task_id`, `user_id`, `created_by`, `created_a
 (114, 123, 7, 3, '2019-07-09 01:10:17', '2019-07-09 01:10:17'),
 (115, 124, 3, 3, '2019-07-09 01:10:23', '2019-07-09 01:10:23'),
 (116, 124, 1, 3, '2019-07-09 01:10:26', '2019-07-09 01:10:26'),
-(117, 124, 4, 3, '2019-07-09 01:10:28', '2019-07-09 01:10:28');
+(117, 124, 4, 3, '2019-07-09 01:10:28', '2019-07-09 01:10:28'),
+(118, 125, 3, 3, '2019-07-09 18:35:10', '2019-07-09 18:35:10'),
+(119, 126, 3, 3, '2019-07-09 21:35:17', '2019-07-09 21:35:17'),
+(120, 126, 4, 3, '2019-07-09 23:39:49', '2019-07-09 23:39:49'),
+(121, 126, 7, 3, '2019-07-09 23:39:51', '2019-07-09 23:39:51'),
+(122, 126, 2, 3, '2019-07-09 23:39:54', '2019-07-09 23:39:54'),
+(123, 124, 7, 3, '2019-07-11 02:47:39', '2019-07-11 02:47:39'),
+(124, 127, 3, 3, '2019-07-11 02:51:39', '2019-07-11 02:51:39'),
+(125, 128, 13, 13, '2019-07-17 01:48:50', '2019-07-17 01:48:50'),
+(126, 129, 3, 3, '2019-07-17 01:49:47', '2019-07-17 01:49:47'),
+(127, 130, 13, 13, '2019-07-17 01:57:24', '2019-07-17 01:57:24');
 
 -- --------------------------------------------------------
 
@@ -391,7 +572,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   PRIMARY KEY (`id`),
   KEY `project_idtask` (`project_id`,`taskname`(191)),
   KEY `taskname` (`taskname`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tasks`
@@ -402,7 +583,7 @@ INSERT INTO `tasks` (`id`, `project_id`, `taskname`, `description`, `start_date`
 (102, 29, 'task 2', 'werawer', NULL, NULL, NULL, 1, 0, 1, '2019-06-27 20:43:09', '2019-07-08 19:38:00', 0, 5),
 (103, 29, 'task 3', 'sdfdsfsdfsafasdfasdfasdf', NULL, '2019-07-04 17:00:00', NULL, 1, 0, 1, '2019-06-27 20:43:12', '2019-07-05 00:54:11', 0, 3),
 (104, 29, 'Hello world', 'fdvc kkk up', NULL, NULL, NULL, 1, 100, 3, '2019-07-03 00:33:42', '2019-07-05 01:01:12', 2, 1),
-(105, 29, 'Hello world', NULL, NULL, NULL, NULL, 1, 76, 3, '2019-07-07 21:32:01', '2019-07-07 21:32:17', 1, 2),
+(105, 29, 'Hello world', NULL, NULL, NULL, NULL, 1, 76, 3, '2019-07-07 21:32:01', '2019-07-07 21:32:17', 1, 3),
 (106, 29, 'Hello world', NULL, NULL, NULL, NULL, 1, 81, 3, '2019-07-08 00:32:21', '2019-07-08 00:33:17', 0, 1),
 (107, 29, 'Hello pyton', NULL, NULL, NULL, NULL, 1, 0, 3, '2019-07-08 00:48:12', '2019-07-08 00:48:12', 0, 1),
 (108, 29, 'Hi', NULL, NULL, NULL, NULL, 1, 0, 3, '2019-07-08 00:50:10', '2019-07-08 00:50:10', 0, 1),
@@ -419,9 +600,15 @@ INSERT INTO `tasks` (`id`, `project_id`, `taskname`, `description`, `start_date`
 (119, 29, 'Hello', NULL, NULL, '2019-07-07 17:00:00', NULL, 1, 0, 3, '2019-07-08 01:49:30', '2019-07-08 01:49:42', 0, 1),
 (120, 29, 'Hello world', NULL, NULL, NULL, NULL, 1, 0, 3, '2019-07-08 01:50:04', '2019-07-08 01:50:04', 2, 1),
 (121, 29, 'Hello Python', NULL, NULL, '2019-07-07 17:00:00', NULL, 2, 35, 3, '2019-07-08 01:50:14', '2019-07-08 03:19:53', 2, 1),
-(122, 29, 'Hello', NULL, NULL, NULL, NULL, 1, 70, 3, '2019-07-08 19:38:20', '2019-07-08 20:53:14', 1, 1),
-(123, 29, 'Demo', NULL, '2019-07-08 17:00:00', '2019-07-15 17:00:00', NULL, 1, 21, 3, '2019-07-08 20:38:31', '2019-07-08 20:50:52', 1, 2),
-(124, 29, 'zz', NULL, NULL, NULL, NULL, 1, 100, 3, '2019-07-09 01:10:23', '2019-07-09 03:02:59', 1, 1);
+(122, 29, 'Hello', NULL, NULL, NULL, NULL, 2, 70, 3, '2019-07-08 19:38:20', '2019-07-09 22:27:47', 1, 1),
+(123, 29, 'Demo', NULL, '2019-07-08 17:00:00', '2019-07-15 17:00:00', NULL, 2, 56, 3, '2019-07-08 20:38:31', '2019-07-16 18:39:44', 1, 2),
+(124, 29, 'zz', NULL, NULL, NULL, NULL, 2, 50, 3, '2019-07-09 01:10:23', '2019-07-11 01:20:29', 1, 1),
+(125, 29, 'Hello', NULL, '2019-07-09 17:00:00', '2019-07-31 17:00:00', NULL, 3, 51, 3, '2019-07-09 18:35:10', '2019-07-09 18:36:25', 0, 20),
+(126, 29, 'df', NULL, NULL, NULL, NULL, 2, 59, 3, '2019-07-09 21:35:17', '2019-07-11 01:20:19', 1, 1),
+(127, 29, 'ddd', NULL, NULL, NULL, NULL, 2, 33, 3, '2019-07-11 02:51:39', '2019-07-16 18:37:27', 1, 1),
+(128, 30, 'ss', NULL, NULL, NULL, NULL, 1, 0, 13, '2019-07-17 01:48:50', '2019-07-17 01:48:50', 1, 21),
+(129, 31, 'dd', NULL, NULL, NULL, NULL, 1, 0, 3, '2019-07-17 01:49:47', '2019-07-17 01:49:47', 1, 1),
+(130, 30, 'ddd', NULL, NULL, NULL, NULL, 1, 61, 13, '2019-07-17 01:57:24', '2019-07-17 02:04:29', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -443,20 +630,25 @@ CREATE TABLE IF NOT EXISTS `users` (
   `status` tinyint(1) DEFAULT '1',
   `img` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT 'avatar.jpg',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `role_id`, `password`, `remember_token`, `created_at`, `updated_at`, `status`, `img`) VALUES
-(1, 'LENG Ratha', 'mr.lengratha@gmail.com', NULL, 1, '$2y$10$Pk/IQ7MeA1KDq.mK6AQAV.uZm2wSqP0M7jetx7QIMX5CEaTbpqgn.', NULL, '2019-06-20 00:01:19', '2019-06-20 00:01:19', 1, 'a2.jpg'),
-(2, 'MR. Lipton', 'mr.lipton@gmail.com', NULL, 2, '$2y$10$8lzeS30yp4AAtL3q60tfgeJGd2kWRc5gTgbWpn.l8usyupjVKX/wq', NULL, '2019-06-20 00:04:29', '2019-06-20 00:08:01', 1, 'a3.jpg'),
-(3, 'demo', 'demo@gmail.com', NULL, 1, '$2y$10$dxD1Rm2ukjY5Pay0FTLxkuXltWG.fkyXT6diq11MKnbjgnj4dgumq', NULL, '2019-06-20 06:34:12', '2019-06-20 06:34:12', 1, 'a4.jpg'),
-(4, 'Loto', 'loto@gmail.com', NULL, 2, '$2y$10$ztJh6.anGHXdUb2rStGix.cCiSJmL56/nZoNMTE9CfVZg85oiZMTa', NULL, '2019-06-25 18:32:01', '2019-06-25 18:32:01', 1, 'a5.jpg'),
-(5, 'acer', 'acer@gmail.com', NULL, 2, '$2y$10$6U5jN4ENvyufzxLTrWuljOgVU7Kx4pMd7ScHyeEszprczjFvToCdC', NULL, '2019-06-25 18:32:49', '2019-06-25 18:32:49', 1, 'a6.jpg'),
-(6, 'dell', 'dell@gmail.com', NULL, 2, '$2y$10$.T/BzuHHkZK.Dh07aAaur.Arg21dgEqqlD0kJWc2.EnDOuD0BxCHW', NULL, '2019-06-25 18:33:01', '2019-06-25 18:33:01', 1, 'a7.jpg'),
-(7, 'lenovo', 'lenovo@gmail.com', NULL, 2, '$2y$10$7Ej6mgT/83A2BGl.vb9aXOS.Bl6q1hz6D/eRi0nXfzVgzU9OD9lEe', NULL, '2019-06-25 18:33:18', '2019-06-30 18:49:06', 1, 'avatar.jpg');
+(1, 'LENG Ratha', 'mr.lengratha@gmail.com', NULL, 1, '$2y$10$Pk/IQ7MeA1KDq.mK6AQAV.uZm2wSqP0M7jetx7QIMX5CEaTbpqgn.', NULL, '2019-06-20 00:01:19', '2019-07-17 00:34:08', 0, 'a2.jpg'),
+(3, 'demo', 'demo@gmail.com', NULL, 1, '$2y$10$dxD1Rm2ukjY5Pay0FTLxkuXltWG.fkyXT6diq11MKnbjgnj4dgumq', NULL, '2019-06-20 06:34:12', '2019-07-17 01:28:14', 1, '2019-07-17-08-28-14-51310916f7f4e7cb9825ee219aad4b5f.jpg'),
+(4, 'Loto', 'loto@gmail.com', NULL, 2, '$2y$10$ztJh6.anGHXdUb2rStGix.cCiSJmL56/nZoNMTE9CfVZg85oiZMTa', NULL, '2019-06-25 18:32:01', '2019-07-17 00:34:22', 0, 'a5.jpg'),
+(5, 'acer', 'acer@gmail.com', NULL, 2, '$2y$10$6U5jN4ENvyufzxLTrWuljOgVU7Kx4pMd7ScHyeEszprczjFvToCdC', NULL, '2019-06-25 18:32:49', '2019-07-17 00:34:36', 0, 'a6.jpg'),
+(6, 'dell', 'dell@gmail.com', NULL, 2, '$2y$10$.T/BzuHHkZK.Dh07aAaur.Arg21dgEqqlD0kJWc2.EnDOuD0BxCHW', NULL, '2019-06-25 18:33:01', '2019-07-17 00:34:36', 0, 'a7.jpg'),
+(7, 'lenovo', 'lenovo@gmail.com', NULL, 2, '$2y$10$7Ej6mgT/83A2BGl.vb9aXOS.Bl6q1hz6D/eRi0nXfzVgzU9OD9lEe', NULL, '2019-06-25 18:33:18', '2019-07-17 00:34:35', 0, 'avatar.jpg'),
+(8, 'Hean Thien', 'thiencambodia168@gmail.com', NULL, NULL, '$2y$10$8he.2jk9KPcBIvkO8TwWeulZoTPEZoMQx98toi5aRe3hcpNtHGIT2', NULL, '2019-07-16 21:46:04', '2019-07-17 00:34:35', 0, 'avatar.jpg'),
+(9, 'Hean Thien', 'thienhean@gmail.com', NULL, NULL, '$2y$10$dx0Tb3utDvTBa4Q9H6E5Kuor3EkrF0coMm6zMy3uR35NFh9aXeJfK', NULL, '2019-07-16 21:49:26', '2019-07-17 00:34:35', 0, 'avatar.jpg'),
+(10, 'Hean Thien', 'thienhean1233@gmail.com', NULL, NULL, '$2y$10$aFFj/BDfHcXFxJNcGzKwkeabBzHSScFV663ij4VVs/68ljhFV8x8W', NULL, '2019-07-16 21:52:01', '2019-07-17 00:34:34', 0, 'avatar.jpg'),
+(11, 'mr test', 'test@gmail.com', NULL, NULL, '$2y$10$reqzyRkeeqKir.J11T.bsObTeMlm/ugVN2u17ADX0pwMuNetmLSge', NULL, '2019-07-16 21:54:47', '2019-07-16 21:54:47', 1, '2019-07-17-04-54-47-s.jpg'),
+(13, 'Hean Thien', 'admin@admin.com', NULL, NULL, '$2y$10$1PdzcnrFhp84JFUGw7PoO.PLsR4MmmnDOal5kYjCk7X42FRs.Q.KW', NULL, '2019-07-17 01:09:22', '2019-07-17 01:09:22', 1, '2019-07-17-08-09-22-19.jpg'),
+(14, 'Chan boromey', 'boramey@gmail.com', NULL, NULL, '$2y$10$plFx5HqIB.D3KLr0AxbRFuCYByYPNQnG6i2yIyN9sPoCnNTqy1kGO', NULL, '2019-07-17 01:25:59', '2019-07-17 01:26:40', 1, '2019-07-17-08-26-40-ef31d5db0168618c0b9c67734bd17ccd.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
