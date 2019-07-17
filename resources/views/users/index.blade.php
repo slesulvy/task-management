@@ -30,8 +30,6 @@
 
 
     <div class="wrapper wrapper-content  animated fadeInRight">
-
-        
             <div class="row">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -64,13 +62,14 @@
                                  </tr>
                                 </thead>
                                 <tbody>
+
                                  @foreach ($data as $key => $user)
                                   <tr>
-                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $i++ }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                       @if(!empty($user->img))
-                                          <td><img src="{{asset("images/".$user->img)}}" class="img-circle" width="30" height="30"> </td>
+                                          <td><a href="{{asset("images/".$user->img)}}"> <img src="{{asset("images/".$user->img)}}" class="img-circle" width="30" height="30"> </a></td>
                                           @else
                                     <td><img src="{{asset("images/none-bg.png")}}" class="img-circle" width="30" height="30"> </td>
                                       @endif
@@ -97,7 +96,7 @@
                              @endforeach
                                 </tbody>
                             </table>
-                            </div>
+                        </div>
                 </div>
             </div>
     </div>

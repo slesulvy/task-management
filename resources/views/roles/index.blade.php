@@ -1,12 +1,11 @@
 @extends('layouts.master')
 @section('customCss')
 
-<link href="{{ asset('css/plugins/dataTables/datatables.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/dataTables/datatables.min.css')}}" rel="stylesheet">
 
 @endsection
 
 @section ('content')
-
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2></h2>
@@ -31,7 +30,7 @@
 
     <div class="wrapper wrapper-content  animated fadeInRight">
 
-        
+
             <div class="row">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -52,11 +51,11 @@
                             </div>
 
                             <?php $i=1;?>
-        
+
                             <table class="table table-striped table-bordered table-hover dataTables-example" >
                                     <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th>No</th>
                                                 <th>Name</th>
                                                 <th>Action</th>
                                             </tr>
@@ -64,7 +63,7 @@
                                             <tbody>
                                             @foreach ($roles as $key => $role)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $i++ }}</td>
                                                 <td>{{ $role->name }}</td>
                                                 <td>
                                                     <a href="{{ route('roles.show',$role->id) }}"><i class="fa fa-eye"></i></a>
@@ -83,7 +82,7 @@
                                             @endforeach
                                         </tbody>
                             </table>
-                            
+
 
                         </div>
                 </div>
