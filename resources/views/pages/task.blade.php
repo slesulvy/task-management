@@ -747,7 +747,7 @@
                         $('.feed-element').remove();
                         $('#setduedate').val('');
                         data['handler'].map(item =>{
-                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
+                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
                         });
 
                         $('.feed-activity-list .feed-element').remove();

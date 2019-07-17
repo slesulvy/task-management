@@ -6,6 +6,9 @@
  *   version 2.7.1
  *
 */
+.delete{
+  border: none; background: none; color:red;
+}
 h1,
 h2,
 h3,
