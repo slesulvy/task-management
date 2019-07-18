@@ -14,7 +14,7 @@ class Board extends Model
     ];
 
     protected $fillable=[
-        'project_id','category_id','projectname','description','status'
+        'project_id','category_id','projectname','description','status','back_color', 'font_color'
     ];
 
 

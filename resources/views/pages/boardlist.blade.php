@@ -73,7 +73,7 @@
                                                     <td>
                                                         {{$item->projectname}}
                                                         <div class="progress  progress-small project-{{ $item->project_id }}">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-info project-progress" role="progressbar" style="width: {{ $item->progress  }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar progress-bar-striped progress-bar-info project-progress" role="progressbar" style="background-color: {{ $item->back_color }}; width: {{ $item->progress  }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
                                                     </td>
                                                     <td>{{substr($item->description,0,60).'...'}}</td>

@@ -50,18 +50,20 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('addcategory',[ 'as' => 'addcategory','uses' => 'CategoryController@store']);
     Route::get('category/close/{id}',[ 'as' => 'category/close/{id}','uses' => 'CategoryController@closecategory']);
     Route::get('category/restore/{id}',[ 'as' => 'category/restore/{id}','uses' => 'CategoryController@restorecategory']);
+    
+    Route::resource('users','UserController');
+    // Route::get('users',[ 'as' => 'users','uses' =>'UserController@index']);
+    // Route::post('users/add',[ 'as' => 'users/add','uses' => 'UserController@store']);
+    // Route::get('users/edit/{id}','UserController@edit');
+    // Route::post('users/update',[ 'as' => 'users/update','uses' => 'UserController@update']);
+    // Route::get('users/disable/{id}',[ 'as' => 'users/disable/{id}','uses' => 'UserController@disableUser']);
 
-    Route::get('users',[ 'as' => 'users','uses' =>'UserController@index']);
-    Route::post('users/add',[ 'as' => 'users/add','uses' => 'UserController@store']);
-    Route::get('users/edit/{id}','UserController@edit');
-    Route::post('users/update',[ 'as' => 'users/update','uses' => 'UserController@update']);
-    Route::get('users/disable/{id}',[ 'as' => 'users/disable/{id}','uses' => 'UserController@disableUser']);
-
-    Route::get('role',[ 'as' => 'role','uses' => 'RoleController@index']);
-    Route::post('role/add',[ 'as' => 'role/add','uses' => 'RoleController@store']);
-    Route::get('role/edit/{id}','RoleController@edit');
-    Route::get('role/disable/{roleId}',[ 'as' => 'role/disable/{roleId}','uses' => 'RoleController@disableRole']);
-    Route::post('role/update',[ 'as' => 'role/update','uses' => 'RoleController@update']);
+     Route::resource('roles','RoleController');
+    //  Route::get('role',[ 'as' => 'role','uses' => 'RoleController@index']);
+    // Route::post('role/add',[ 'as' => 'role/add','uses' => 'RoleController@store']);
+    // Route::get('role/edit/{id}','RoleController@edit');
+    // Route::get('role/disable/{roleId}',[ 'as' => 'role/disable/{roleId}','uses' => 'RoleController@disableRole']);
+    // Route::post('role/update',[ 'as' => 'role/update','uses' => 'RoleController@update']);
 
     Route::get('users_select_opt','UserController@users_select_opt');
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);

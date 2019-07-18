@@ -34,7 +34,7 @@
             @foreach ($board as $item)
             <div class="col-lg-3">
                     
-                    <div class="navy-bg p-lg text-center">
+                    <div class="p-lg text-center" style="color: {{ $item->font_color }}; background-color: {{ $item->back_color }}">
                         <div class="m-b-md_change">
                         <h3 class="font-bold no-margins">
                             {{$item->projectname}} 
@@ -52,10 +52,10 @@
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#addmember" data-Id="{{$item->project_id}}" class="btn btn-xs btn-default btn-addmember-project" style="border-radius:0px;"><i class="fa fa-plus"></i>&nbsp;<i class="fa fa-user-o"></i>&nbsp;&nbsp;</a>
                             @endif
                             
-                            <a href="{{ url('board/'.$item->project_id)}}" class="btn btn-xs btn-primary" style="border-radius:0px;"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Task&nbsp;&nbsp;</a>
+                            <a href="{{ url('board/'.$item->project_id)}}" class="btn btn-xs btn-primary" style="border-radius:0;border:none;color: {{ $item->font_color }}; background-color: {{ $item->back_color }}"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Task&nbsp;&nbsp;</a>
                         </div>
                         <div class="progress progress-small" style="margin-top:10px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-info task-progress" role="progressbar" style="width: {{$item->progress}}%" aria-valuenow="{{$item->project_id}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar progress-bar-striped progress-bar-info task-progress" role="progressbar" style="background-color: {{ $item->back_color }};width: {{$item->progress}}%" aria-valuenow="{{$item->project_id}}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
             </div>

@@ -8,11 +8,16 @@
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <link href="{{asset('css/pages/dashboard.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
+    <style>
+        .project-head-color{
+            border-bottom: 1px solid {{$board->back_color}} !important;
+        }
+    </style>
 @endsection
 
 @section ('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="row wrapper border-bottom white-bg page-heading project-head-color">
         <div class="col-lg-12">
             <h2></h2>
             <ol class="breadcrumb">
@@ -433,12 +438,7 @@
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
-
-
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
-   
-    <script type="text/javascript"></script>
-
     <script>
 
         //PROGRESS SLIDER
@@ -640,7 +640,8 @@
                 dataType:'text',
                 data:{
                     'user': user,
-                    'taskName' :taskName
+                    'taskName' :taskName,
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
 
@@ -679,7 +680,9 @@
                            swal("Archive!", "Your  Task Has Been Archive.", "success");
                     }
                 });
-              window.location.reload();
+
+                $('#_'+$('#e_task_id').val()).remove();
+              //window.location.reload();
                 
             });
         
@@ -693,10 +696,11 @@
                 dataType:'text',
                 data:{
                     'user': user,
-                    'taskname' :taskname
+                    'taskname' :taskname,
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
-                   
+                   console.log('apiAchiveTask: ', data);
                 }
             });
         }
@@ -737,30 +741,30 @@
                         $('.feed-element').remove();
                         $('#setduedate').val('');
                         data['handler'].map(item =>{
-                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
+                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
                         });
 
                         $('.feed-activity-list .feed-element').remove();
                         data['comment'].map(item =>{
-
                             //var comment_date = new Date(item.created_at);
-
                             $('.feed-activity-list').append("<div class='feed-element'>"+
                                             "<a class='pull-left'><img alt='image' class='img-circle' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='35px;'></a>"+
                                             "<div class='media-body'>"+
                                                 "<small class='pull-right'>1m ago</small>"+
                                                 "<strong>"+item.get_user.name+"</strong> commented on task <strong>"+item.task.taskname+"</strong><br>"+
                                                 "<small class='text-muted'>"+item.created_at+"</small>"+
-                                                "<div class='well'>"+item.comments+"<a href='<?php echo asset('images/"+item.image+"')?>'>"+item.image+"</a>"+"</div>"+
+                                                "<div class='well'><span class='com'>"+item.comments+"</span><a href='<?php echo asset('images/"+item.image+"')?>' class='def_image'>"+item.def_image+"</a>"+"</div>"+
                                                 "</div>"+"</div>");
+                            
                         });
                         data['comment'].map(item =>{
 
                             //var comment_date = new Date(item.created_at);
-                            
+                            if(item.def_image != null ){
                             $('.att-list').append("<div class=''>"+"<ul class='list-unstyled file-list feed-element' style='margin:0; padding:0;'>"+
-                                                "<li><a href='<?php echo asset('images/"+item.image+"')?>'><i class='fa fa-paperclip'></i>&nbsp;&nbsp; "+item.image+"</a></li>"+
+                                                "<li><a href='<?php echo asset('images/"+item.image+"')?>'><i class='fa fa-paperclip'></i>&nbsp;&nbsp; "+item.def_image+"</a></li>"+
                                             "</ul>"+"</div>");
+                            }
                         });
 
                         $('#task-progress').val(data['task'].progress);
@@ -912,7 +916,8 @@
                 data:{
                     'addby':addby,
                     'added' :added,
-                    'taskname':task
+                    'taskname':task,
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
                    
@@ -963,7 +968,8 @@
                 data:{
                     'user': user,
                     'taskname' :taskname,
-                    'priority':obj[priority]
+                    'priority':obj[priority],
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
                    
@@ -1029,7 +1035,8 @@
                 data:{
                     'user': user,
                     'taskname' :task,
-                    'duedate':duedate
+                    'duedate':duedate,
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
                    

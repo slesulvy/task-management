@@ -32,40 +32,40 @@ class BotController extends Controller
      }
 
      function moveTask($user, $taskName, $from, $to) {
-        $this->sentMessageToTelegram($user . ' Move' . $taskName . ' from' . $from . ' To ' . $to);
+        $this->sentMessageToTelegram($user . ' moved ' . $taskName . ' from' . $from . ' to ' . $to);
      }
 
      function createTask(Request $request) {
-      $this->sentMessageToTelegram($request->user . ' Created ' . $request->taskName . ' task');
+      $this->sentMessageToTelegram($request->user . ' created a task ' . $request->taskName . ' to ' . $request->projectName);
      }
 
      function achiveTask(Request $request) {
-      $this->sentMessageToTelegram($request->user . ' Achived ' . $request->taskname . ' task');
+      $this->sentMessageToTelegram($request->user . ' achived a task ' . $request->taskname . ' of ' . $request->projectName);
      }
 
      function setPriorityTask(Request $request) {
-      $this->sentMessageToTelegram($request->user . ' Set priority  ' . $request->taskname . ' task to ' . $request->priority);
+      $this->sentMessageToTelegram($request->user . ' seted priority to ' . $request->taskname . ' as ' . $request->priority.' in '.$request->projectName);
      }
 
      function taskComment(Request $request) {
-      $this->sentMessageToTelegram($request->user . ' Commented on ' . $request->taskname . '(' . $request->comment . ' )');
+      $this->sentMessageToTelegram($request->user . ' commented to ' . $request->taskname . '(' . $request->comment . ' ) on '.$request->projectName);
      }
 
 
      function updateDescriptionTask(Request $request) {
-        $this->sentMessageToTelegram($request->user . ' Added description to ' . $request->taskName);
+        $this->sentMessageToTelegram($request->user . ' set description to ' . $request->taskName . ' of ' . $request->projectName);
      }
 
      function addAttectToTask($user, $taskName) {
-        $this->sentMessageToTelegram($user . ' Added attectment to ' . $taskName);
+        $this->sentMessageToTelegram($user . ' Added attectment to ' . $taskName . ' in ' . $request->projectName);
      }
 
      function addMemberToTask(Request $request) {
-        $this->sentMessageToTelegram($request->addby . ' Added ' . $request->added . ' To ' . $request->taskname);
+        $this->sentMessageToTelegram($request->addby . ' Added ' . $request->added . ' To ' . $request->taskname . ' in ' . $request->projectName);
      }
 
      function setDueDate(Request $request) {
-      $this->sentMessageToTelegram($request->user . ' Just set due date of ' . $request->taskname . ' To ' . $request->duedate);
+      $this->sentMessageToTelegram($request->user . ' Just set due date of ' . $request->taskname . ' To ' . $request->duedate . ' in ' . $request->projectName);
      }
 
 
