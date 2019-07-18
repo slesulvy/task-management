@@ -436,19 +436,7 @@
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
-<<<<<<< HEAD
-
-
-<!-- <script type="text/javascript">
-    $(document).ready(function(){
-    var aa = $('#tasktitle').html(data['task'].taskname);
-    alert(aa);
-     $("#taskmodal").modal('show');
-    });
-</script> -->
-=======
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
->>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
     <script>
 
         //PROGRESS SLIDER

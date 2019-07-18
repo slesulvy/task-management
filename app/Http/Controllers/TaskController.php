@@ -92,15 +92,23 @@ class TaskController extends Controller
                 ->orderBy('id', 'desc')
                 ->first();
         echo '<li task_id="'.$task->id.'" class="'.$task->id.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
+                    <div class="agile-status">
+                    <div class="task-priority">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                    </div>
+                    <div class="progress priority-' . $task->priority . '" style="margin-top:3.5px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-' . $task->priority . ' task-progress" role="progressbar" style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div id="clear" style="clear:both;"></div>
                 '.$task->taskname.'
-                <div class="agile-detail">    
+                <div class="agile-detail">
                 <span title="Due Date" class=""><i class="fa fa-clock-o"></i>'.'</span>
                 <a href="#" class="btn btn-xs pull-right" style="border:none;">
                     <img src="'.asset('img/'.$member->getUser->img).'" width="17px;" class="img img-circle">   
                 </a> 
-                <div class="progress priority-' . $task->priority . '" style="margin-top:10px;">
-                    <div class="progress-bar progress-bar-striped progress-bar-{{ $item->priority }} task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
                 </div>
             </li>';
     }
