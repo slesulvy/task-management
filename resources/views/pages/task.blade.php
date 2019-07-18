@@ -747,30 +747,30 @@
                         $('.feed-element').remove();
                         $('#setduedate').val('');
                         data['handler'].map(item =>{
-                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
+                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
                         });
 
                         $('.feed-activity-list .feed-element').remove();
                         data['comment'].map(item =>{
-
                             //var comment_date = new Date(item.created_at);
-
                             $('.feed-activity-list').append("<div class='feed-element'>"+
                                             "<a class='pull-left'><img alt='image' class='img-circle' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='35px;'></a>"+
                                             "<div class='media-body'>"+
                                                 "<small class='pull-right'>1m ago</small>"+
                                                 "<strong>"+item.get_user.name+"</strong> commented on task <strong>"+item.task.taskname+"</strong><br>"+
                                                 "<small class='text-muted'>"+item.created_at+"</small>"+
-                                                "<div class='well'>"+item.comments+"<a href='<?php echo asset('images/"+item.image+"')?>'>"+item.image+"</a>"+"</div>"+
+                                                "<div class='well'><span class='com'>"+item.comments+"</span><a href='<?php echo asset('images/"+item.image+"')?>' class='def_image'>"+item.def_image+"</a>"+"</div>"+
                                                 "</div>"+"</div>");
+                            
                         });
                         data['comment'].map(item =>{
 
                             //var comment_date = new Date(item.created_at);
-                            
+                            if(item.def_image != null ){
                             $('.att-list').append("<div class=''>"+"<ul class='list-unstyled file-list feed-element' style='margin:0; padding:0;'>"+
-                                                "<li><a href='<?php echo asset('images/"+item.image+"')?>'><i class='fa fa-paperclip'></i>&nbsp;&nbsp; "+item.image+"</a></li>"+
+                                                "<li><a href='<?php echo asset('images/"+item.image+"')?>'><i class='fa fa-paperclip'></i>&nbsp;&nbsp; "+item.def_image+"</a></li>"+
                                             "</ul>"+"</div>");
+                            }
                         });
 
                         $('#task-progress').val(data['task'].progress);

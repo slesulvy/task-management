@@ -22,9 +22,12 @@
             <li>
                 <a href="#"><i class="fa fa-slideshare"></i> <span class="nav-label">System Settings</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="{{route('users')}}">User</a></li>
-                    <li><a href="{{route('role')}}">Role</a></li>
-                    <li><a href="#">Role Permission</a></li>
+                    @can('user-list')
+                    <li><a href="{{route('users.index')}}">Staffs Management</a></li>
+                    @endcan
+                    @can('role-list')
+                    <li><a href="{{route('roles.index')}}">Role Management</a></li>
+                        @endcan
                 </ul>
             </li>
             

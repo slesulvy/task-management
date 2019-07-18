@@ -39,7 +39,7 @@
                    
                
                 <div class="profile-image">
-                    <img src="{{asset('img/'.$profile->img)}}" class="img-circle circle-border m-b-md" alt="profile">
+                    <img src="{{asset('images/'.$profile->img)}}" class="img-circle circle-border m-b-md" alt="profile">
                 </div>
                 <div class="profile-info">
                     <div class="">
@@ -47,7 +47,13 @@
                             <h2 class="no-margins">
                                 {{$profile->name}}
                             </h2>
-                            <h4>{{$profile->role->role_name}}</h4>
+                            <h4>
+                                @if(!empty($profile->getRoleNames()))
+                                    @foreach($profile->getRoleNames() as $v)
+                                        <label class="badge badge-primary">{{ $v }}</label>
+                                    @endforeach
+                                @endif
+                            </h4>
                             <small>
                                 There are many variations of passages of Lorem Ipsum available, but the majority
                                 have suffered alteration in some form Ipsum available.
