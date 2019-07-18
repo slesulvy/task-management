@@ -179,7 +179,7 @@
     
 
 <!-- task modal -->
-<div class="modal in" id="taskmodal" tabindex="-1" role="dialog" style="border-radius: 0px; display: none;" aria-hidden="true">
+<div class="modal in taskmodal" id="taskmodal" tabindex="-1" role="dialog" style="border-radius: 0px; display: none;" aria-hidden="true">
         <div class="modal-dialog  modal-md" style="border-radius:0px; width: 768px;">
             <div class="modal-content animated bounceInDown">
                     <div class="modal-body" style="padding:10px;">
@@ -343,6 +343,8 @@
                                                         </div>
                                                     </div> 
                                                 </div>
+                                                
+                                                
 
                                                 <div class="col-sm-3">
                                                     <div class="u-clearfix">
@@ -431,19 +433,12 @@
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
-<<<<<<< HEAD
 
 
-<!-- <script type="text/javascript">
-    $(document).ready(function(){
-    var aa = $('#tasktitle').html(data['task'].taskname);
-    alert(aa);
-     $("#taskmodal").modal('show');
-    });
-</script> -->
-=======
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
->>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
+   
+    <script type="text/javascript"></script>
+
     <script>
 
         //PROGRESS SLIDER
