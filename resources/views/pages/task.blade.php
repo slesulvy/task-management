@@ -436,19 +436,7 @@
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
-<<<<<<< HEAD
-
-
-<!-- <script type="text/javascript">
-    $(document).ready(function(){
-    var aa = $('#tasktitle').html(data['task'].taskname);
-    alert(aa);
-     $("#taskmodal").modal('show');
-    });
-</script> -->
-=======
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
->>>>>>> a06ec70f2f9166facfe00d7ed4dc96f31128844f
     <script>
 
         //PROGRESS SLIDER
@@ -650,7 +638,8 @@
                 dataType:'text',
                 data:{
                     'user': user,
-                    'taskName' :taskName
+                    'taskName' :taskName,
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
 
@@ -689,7 +678,9 @@
                            swal("Archive!", "Your  Task Has Been Archive.", "success");
                     }
                 });
-              window.location.reload();
+
+                $('#_'+$('#e_task_id').val()).remove();
+              //window.location.reload();
                 
             });
         
@@ -703,10 +694,11 @@
                 dataType:'text',
                 data:{
                     'user': user,
-                    'taskname' :taskname
+                    'taskname' :taskname,
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
-                   
+                   console.log('apiAchiveTask: ', data);
                 }
             });
         }
@@ -922,7 +914,8 @@
                 data:{
                     'addby':addby,
                     'added' :added,
-                    'taskname':task
+                    'taskname':task,
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
                    
@@ -973,7 +966,8 @@
                 data:{
                     'user': user,
                     'taskname' :taskname,
-                    'priority':obj[priority]
+                    'priority':obj[priority],
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
                    
@@ -1039,7 +1033,8 @@
                 data:{
                     'user': user,
                     'taskname' :task,
-                    'duedate':duedate
+                    'duedate':duedate,
+                    'projectName':'{{@$board->projectname}}'
                 },
                 success: function(data){
                    

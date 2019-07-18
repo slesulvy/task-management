@@ -146,7 +146,7 @@ class ProjectController extends Controller
           DB::table('tasks')
             ->where('id',$id)
             ->update(['status' => "2"]);
-         return back('board');
+         //return back('board');
      }
       public function task_update_step(Request $request,$id){
       

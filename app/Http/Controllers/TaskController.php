@@ -25,7 +25,7 @@ class TaskController extends Controller
         DB::table('tasks')
             ->where('id',$id)
             ->update(['status' => "2"]);
-        return back('board');
+        //return back('board');
     }
 
     public function list($id)
@@ -91,7 +91,7 @@ class TaskController extends Controller
                 ->where('task_id', $id)
                 ->orderBy('id', 'desc')
                 ->first();
-        echo '<li task_id="'.$task->id.'" class="'.$task->id.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
+        /*echo '<li task_id="'.$task->id.'" class="'.$task->id.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
                 '.$task->taskname.'
                 <div class="agile-detail">    
                 <span title="Due Date" class=""><i class="fa fa-clock-o"></i>'.'</span>
@@ -102,7 +102,29 @@ class TaskController extends Controller
                     <div class="progress-bar progress-bar-striped progress-bar-{{ $item->priority }} task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 </div>
-            </li>';
+            </li>';*/
+
+        echo '<li progres_id="'.$task->id.'" class="'.$task->id.' default-element ui-sortable-handle btn-update-task" id="_'.$task->id.'" style="" data-Id="'.$task->id.'" data-toggle="modal" data-target="#taskmodal">
+                <div class="agile-status">
+                    <div class="task-priority">
+                            <i class="fa fa-star"></i>&nbsp;
+                            <i class="fa fa-star-o"></i>&nbsp;
+                            <i class="fa fa-star-o"></i>&nbsp;
+                    </div>
+                    <div class="progress priority-'.$task->priority.'" style="margin-top:3.5px;">
+                        <div class="progress-bar progress-bar-striped task-progress progress-bar-'.$task->priority.'" role="progressbar" style="width: '.$task->progress.'%" aria-valuenow="'.$task->progress.'" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div id="clear" style="clear:both;"></div>
+                '.$task->taskname.'
+                <div class="agile-detail">
+                    <span title="Due Date" class=""><i class="fa fa-clock-o"></i> '.($task->due_date!=null?date_format(date_create($task->due_date),'d-M-Y'):'').'</span>
+                    <a href="#" class="btn btn-xs pull-right" style="border:none;">
+                        <img title="'.$member->getUser->name.'" src="'.asset('images/'.$member->getUser->img.'').'" width="17px;" class="img img-circle">      
+                    </a>
+                </div>
+
+            </li>'; 
     }
 
     public function edit($id)
