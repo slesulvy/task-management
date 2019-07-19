@@ -438,6 +438,8 @@
     <script src="{{asset('js/plugins/chosen/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
+
+
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
     <script>
 
