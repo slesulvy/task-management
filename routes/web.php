@@ -67,7 +67,8 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::get('users_select_opt','UserController@users_select_opt');
     Route::get('profile',['as'=>'profile','uses'=>'ProfileController@index']);
-
+    Route::get('edit_profile/{id}',[ 'as' => 'edit.profile','uses' => 'ProfileController@edit']);
+    Route::post('update_profile/{id}',[ 'as' => 'update.profile','uses' => 'ProfileController@update']);
     //TASK PROGRESS
     Route::get('task/progress/{task}/edit','TaskProgressController@edit');
     Route::post('task/progress','TaskProgressController@set');

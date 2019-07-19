@@ -39,7 +39,7 @@
                    
                
                 <div class="profile-image">
-                    <img src="{{asset('images/'.$profile->img)}}" class="img-circle circle-border m-b-md" alt="profile">
+                    <a href="{{asset('images/'.$profile->img)}}"><img src="{{asset('images/'.$profile->img)}}" class="img-circle circle-border m-b-md" alt="profile"></a>
                 </div>
                 <div class="profile-info">
                     <div class="">
@@ -58,6 +58,9 @@
                                 There are many variations of passages of Lorem Ipsum available, but the majority
                                 have suffered alteration in some form Ipsum available.
                             </small>
+                            <p>
+                                <a href="{{route('edit.profile',$profile->id)}}" class="badge badge-success" style="padding: 8px;"><i class="fa fa-edit"></i> Update profile</a>
+                            </p>
                         </div>
                     </div>
                 </div>
