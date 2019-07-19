@@ -83,7 +83,7 @@
                                                        <a href="{{ url('board')}}/{{ $item->project_id }}">
                                                         {{substr($item->taskname,0,60)}}
                                                         <div class="progress">
-                                                            <div class="progress-bar progress-bar-striped task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar progress-bar-striped task-progress  progress-bar-{{$item->danger_level}}" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
                                                         </a> 
 
