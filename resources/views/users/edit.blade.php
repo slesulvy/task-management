@@ -46,9 +46,9 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-mdd-12">
                                     <div class="col-sm-4" style="padding: 10px 0;">
-                                        <strong>Product's image:</strong>
+                                        <p>Product's image:</p>
                                         <img id="preview"
-                                             src="{{asset("images/".$user->img)}}" style="padding: 10px 0;" width="100%" height="200"/>
+                                             src="{{asset("images/".$user->img)}}" style="padding: 10px 0;" width="auto" height="200"/>
                                         {!! Form::file("profile",["class"=>"form-control","style"=>"display:none","id"=>'image']) !!}
                                         <br/>
                                         <a class="btn btn-primary" href="javascript:changeProfile();"><i class="fa fa-exchange"></i>Change</a> |
