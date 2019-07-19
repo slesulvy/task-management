@@ -20,9 +20,10 @@
             <div class="agile-detail">
 
                 <span title="Due Date" class=""><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
-                <a href="#" class="btn btn-xs pull-right" style="border:none;">
+                <a href="javascript:void(0)" class="btn btn-xs pull-right" style="border:none;">
                     <?php $inc_member=0;?>
                     @foreach ($item->handler as $val)
+                
                         @if($inc_member<5)
                             <img title="{{$val->getUser->name}}" src="<?php echo asset("images/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
                         @endif

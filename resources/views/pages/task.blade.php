@@ -10,7 +10,7 @@
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
     <style>
         .project-head-color{
-            border-bottom: 1px solid {{$board->back_color}} !important;
+            border-bottom: 1px solid <?php echo $board->back_color?> !important;
         }
     </style>
 @endsection
@@ -899,10 +899,11 @@
                     var taskname = $('#tasktitle').text();
                     data['handler'].map(item =>{
                         $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
-                    });
-                    NotifyAddTaskMember(addby,added,taskname);
+                    });                    
                 }
+                
             });
+            NotifyAddTaskMember(addby,added,taskname);
         });
 
         function NotifyAddTaskMember(addby, added, task)

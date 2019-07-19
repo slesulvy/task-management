@@ -173,7 +173,7 @@ class HomeController extends Controller
 
     public function tasks($id)
     {
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         $board = DB::table('projects')
             ->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
             ->where([['projects.status',1],['project_member.user_id', Auth::user()->id],['project_member.status',1],['project_member.project_id',$id]])
@@ -450,13 +450,27 @@ class HomeController extends Controller
      * List Page
      */
 
-    public function tasklist()
+    public function tasklist($project=0)
     {
         DB::enableQueryLog();
-        $task = Task::with('handler','board')
-                ->orderBy('project_id', 'desc')
-                ->get();
-        //$board = Board::where('project_id','=', $id)->first();            
+        if($project==0)
+        {
+            $task = Task::with(['handler','board'])
+                            ->whereIn('id', TaskHandler::where('user_id', Auth::user()->id)->pluck('task_id')->toArray())
+                            ->orderBy('project_id', 'desc')
+                            ->get();
+        }   
+        else
+        {
+            $task = Task::with(['handler','board'])
+                            ->whereIn('id', TaskHandler::where('user_id', Auth::user()->id)->pluck('task_id')->toArray())
+                            //->where('project_id','=',$project)
+                            ->orderBy('project_id', 'desc')
+                            ->get();
+        }       
+        
+        //dd(DB::getQueryLog());
+
         return view('pages.tasklist',compact('task'));
     }
     
