@@ -60,7 +60,8 @@ class ProjectController extends Controller
 
         return back()->with('success', 'Your images has been successfully');
     }
-        public function tasks($id)
+ 
+   public function tasks($id)
     {
         DB::enableQueryLog();
         $board = DB::table('projects')

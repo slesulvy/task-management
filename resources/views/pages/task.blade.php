@@ -184,7 +184,7 @@
     
 
 <!-- task modal -->
-<div class="modal in" id="taskmodal" tabindex="-1" role="dialog" style="border-radius: 0px; display: none;" aria-hidden="true">
+<div class="modal in taskmodal" id="taskmodal" tabindex="-1" role="dialog" style="border-radius: 0px; display: none;" aria-hidden="true">
         <div class="modal-dialog  modal-md" style="border-radius:0px; width: 768px;">
             <div class="modal-content animated bounceInDown">
                     <div class="modal-body" style="padding:10px;">
@@ -348,6 +348,8 @@
                                                         </div>
                                                     </div> 
                                                 </div>
+                                                
+                                                
 
                                                 <div class="col-sm-3">
                                                     <div class="u-clearfix">
