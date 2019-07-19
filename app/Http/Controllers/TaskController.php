@@ -124,7 +124,7 @@ class TaskController extends Controller
                     </a>
                 </div>
 
-            </li>'; 
+            </li>';
     }
 
     public function edit($id)
