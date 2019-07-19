@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Auth;
 use App\User;
+use DB;
+use Hash;
 
 class ProfileController extends Controller
 {
@@ -62,27 +66,40 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        $profile = User::find($id);
+        return view('pages.edit_profile',compact('profile'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'same:confirm-password',
+        ]);
+        $input = $request->all();
+        if(!empty($input['password'])){
+            $input['password'] = Hash::make($input['password']);
+        }else{
+            $input = array_except($input,array('password'));
+        }
+        if($request->hasFile('profile')) {
+            $file         = $request->profile;
+            $timestamp    = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+            $name         = $timestamp. '-' .$file->getClientOriginalName();
+            $input['img']  = $name;
+            $file->move(public_path('/images'), $name);
+        }
+//        dd($input);
+        $user = User::find($id);
+        $user->update($input);
+//        DB::table('model_has_roles')->where('model_id',$id)->delete();
+//        $user->assignRole($request->input('roles'));
+        return redirect()->route('profile')
+            ->with('success','User updated successfully');
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

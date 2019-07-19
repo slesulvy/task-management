@@ -10,6 +10,8 @@ class Task extends Model
 {
     protected $table="tasks";
     public $primaryKey="id";
+    protected $appends = array('danger_level');
+
 
     protected $hidden = [
         'updated_at'
@@ -25,26 +27,21 @@ class Task extends Model
         return $this->hasOne(Board::class, 'project_id', 'project_id');
     }
 
-    function progressing(){
-        if($this->progress == 0){
-
-        }
-        elseif($this->progress > 0 && $this->progress < 100){
-
-        }
-        elseif($this->progress == 100){
-
-        }else{
-            if($this->step == 1){
-                $this->progress = 0;
-            }
-            elseif ($this->step == 2){
-                $this->progress = 10;
-            }
-            elseif($this->step == 3){
-                $this->progress = 100;
+    public function getDangerLevelAttribute()
+    {
+        $now = time();
+        if($this->due_date){
+            $due_date = strtotime($this->due_date);
+            $datediff = $due_date - $now;
+            $datediff = round($datediff / (60 * 60 * 24));
+            if($datediff <= 0){
+                $datediff = 0;
             }
         }
+        else{
+            $datediff = 7;
+        }
+        return $datediff;
     }
 
 }

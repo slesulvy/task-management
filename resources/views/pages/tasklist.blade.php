@@ -40,7 +40,7 @@
             <div class="row">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Users</h5>
+                            <h5>Task List</h5>
                             <div class="ibox-tools">
                                 <!--<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal5" style="border-radius: 0px;">
                                     <i class="fa fa-plus"></i> New Task
@@ -83,11 +83,13 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                     
+                                                       <a href="{{ url('board')}}/{{ $item->project_id }}">
                                                         {{substr($item->taskname,0,60)}}
                                                         <div class="progress">
-                                                            <div class="progress-bar progress-bar-striped task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar progress-bar-striped task-progress  progress-bar-{{$item->danger_level}}" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
+                                                        </a> 
+
                                                     </td>
                                                       
                                                     <td align="left">
@@ -120,6 +122,7 @@
                         </div>
                 </div>
             </div>
+        </div>
 
 
     @include('tasks.progress.edit')

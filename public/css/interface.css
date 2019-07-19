@@ -1,20 +1,26 @@
-.progress.priority-1{
-    background: #b4ede2;
+.progress-bar-7 {
+    background-color: #1cb393;
 }
-.progress.priority-2{
-    background: #bdcdeb;
+.progress-bar-6 {
+    background-color: #49bb86;
 }
-.progress.priority-3{
-    background: #f4dadd;
+.progress-bar-5 {
+    background-color: #84c673;
 }
-.progress-bar-1 {
-    background-color: #1ab394;
-}
-.progress-bar-2 {
-    background-color: #235dc8;
+.progress-bar-4 {
+    background-color: #c0cb61;
 }
 .progress-bar-3 {
-    background-color: #ed5565;
+    background-color: #eccb55;
+}
+.progress-bar-2 {
+    background-color: #eda356;
+}
+.progress-bar-1 {
+    background-color: #ed7b5e;
+}
+.progress-bar-0 {
+    background-color: #ed5665;
 }
 .noUi-handle:before, .noUi-handle:after{
     display: none !important;
@@ -49,4 +55,21 @@ li.ui-sortable-handle:last-child{
     background: #1ab394;
     color: #FFF;
     border: none;
+}
+
+img.logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.flat-bg{
+    background-image: url('../img/bg.png');
+}
+
+.shadow-box{
+    -webkit-box-shadow: 9px 9px 7px -8px rgba(120,120,120,1);
+    -moz-box-shadow: 9px 9px 7px -8px rgba(120,120,120,1);
+    box-shadow: 9px 9px 7px -8px rgba(120,120,120,1);
 }
