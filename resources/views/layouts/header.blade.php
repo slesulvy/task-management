@@ -19,6 +19,7 @@
         <link href="{{ asset('css/style.css')}}" rel="stylesheet">
          <link href="{{asset('css/progress.css')}}" rel="stylesheet">
          <link href="{{asset('css/interface.css')}}" rel="stylesheet">
+         <script src="{{asset('js/jquery.min.js')}}"></script>
 
          @yield('customCss')
 
