@@ -37,7 +37,7 @@
             <div class="row">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Users</h5>
+                            <h5>Task List</h5>
                             <div class="ibox-tools">
                                 <!--<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal5" style="border-radius: 0px;">
                                     <i class="fa fa-plus"></i> New Task
