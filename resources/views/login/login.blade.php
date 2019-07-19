@@ -12,13 +12,18 @@
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="{{ asset('css/interface.css') }}" rel="stylesheet">
 
 </head>
 
-<body class="white-bg">
-
-    <div class="middle-box text-center loginscreen animated fadeInDown">
-        <div style="padding:10px; border:1px solid #eee;">
+<body class="white-bg flat-bg">
+    <div style="padding:20px 0">
+        <div class="white-bg shadow-box" style="padding:10px 0;">
+            <img src="{{ asset('img/pca_logo.png') }}" class="logo animated fadeIn"/>
+        </div>
+    </div>
+    <div class="middle-box text-center loginscreen animated fadeInDown ">
+        <div style="padding:10px;" class="white-bg shadow-box">
             <h3>Welcome to Task Manager</h3>
             <p>Login in. To see it in action.</p>
             {!! session('message') !!}

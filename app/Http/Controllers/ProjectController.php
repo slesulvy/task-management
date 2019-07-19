@@ -60,7 +60,8 @@ class ProjectController extends Controller
 
         return back()->with('success', 'Your images has been successfully');
     }
-        public function tasks($id)
+ 
+   public function tasks($id)
     {
         DB::enableQueryLog();
         $board = DB::table('projects')
@@ -146,7 +147,7 @@ class ProjectController extends Controller
           DB::table('tasks')
             ->where('id',$id)
             ->update(['status' => "2"]);
-         return back('board');
+         //return back('board');
      }
       public function task_update_step(Request $request,$id){
       

@@ -50,3 +50,20 @@ li.ui-sortable-handle:last-child{
     color: #FFF;
     border: none;
 }
+
+img.logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.flat-bg{
+    background-image: url('../img/bg.png');
+}
+
+.shadow-box{
+    -webkit-box-shadow: 9px 9px 7px -8px rgba(120,120,120,1);
+    -moz-box-shadow: 9px 9px 7px -8px rgba(120,120,120,1);
+    box-shadow: 9px 9px 7px -8px rgba(120,120,120,1);
+}
