@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Permission;
 use DB;
 
 
+
 class RoleController extends Controller
 
 {
