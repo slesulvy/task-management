@@ -10,7 +10,7 @@ class Task extends Model
 {
     protected $table="tasks";
     public $primaryKey="id";
-    protected $appends = array('danger_level');
+    protected $appends = array('danger_level', 'expected_hours', 'current_hours', 'actual_hours');
 
 
     protected $hidden = [
@@ -44,4 +44,42 @@ class Task extends Model
         return $datediff;
     }
 
+    public function getExpectedHoursAttribute(){
+        if($this->start_date){
+            if($this->due_date){
+                $due = strtotime($this->due_date);
+                $start = strtotime($this->start_date);
+                $datediff = $due - $start;
+                $datediff = round($datediff / (60 * 60 * 24));
+                $hours = ($datediff * 8) + 8;
+
+                return $hours;
+            }
+        }
+        return 0;
+    }
+    public function getCurrentHoursAttribute(){
+        $now = time();
+        if($this->start_date){
+                $start = strtotime($this->start_date);
+                $datediff = $now - $start;
+                $datediff = round($datediff / (60 * 60 * 24));
+                $hours = ($datediff * 8) + 8;
+                return $hours;
+        }
+        return 0;
+    }
+    public function getActualHoursAttribute(){
+        if($this->start_date){
+            if($this->finish_date){
+                $finish = strtotime($this->finish_date);
+                $start = strtotime($this->start_date);
+                $datediff = $finish - $start;
+                $datediff = round($datediff / (60 * 60 * 24));
+                $hours = ($datediff * 8) + 8;
+                return $hours;
+            }
+        }
+        return 0;
+    }
 }

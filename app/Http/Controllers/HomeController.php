@@ -450,12 +450,15 @@ class HomeController extends Controller
      * List Page
      */
 
-    public function tasklist()
+    public function tasklist($project_id = 0)
     {
         DB::enableQueryLog();
         $task = Task::with('handler','board')
                 ->orderBy('project_id', 'desc')
                 ->get();
+        if($project_id > 0){
+            $task = $task->where('project_id', $project_id);
+        }
         //$board = Board::where('project_id','=', $id)->first();            
         return view('pages.tasklist',compact('task'));
     }

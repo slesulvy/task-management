@@ -18,8 +18,7 @@
             <div id="clear" style="clear:both;"></div>
             {{$item->taskname}}
             <div class="agile-detail">
-
-                <span title="Due Date" class=""><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span>
+                <span title="Due Date" class=""><i class="fa fa-clock-o"></i> {{($item->due_date!=null?date_format(date_create($item->due_date),'d-M-Y'):'')}}</span> |
                 <a href="#" class="btn btn-xs pull-right" style="border:none;">
                     <?php $inc_member=0;?>
                     @foreach ($item->handler as $val)
