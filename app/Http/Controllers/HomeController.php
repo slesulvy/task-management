@@ -130,6 +130,8 @@ class HomeController extends Controller
         $this->showMember($boardMember);   
             
     }
+
+
     public function showMember($members)
     {
         $i = 0;
@@ -450,28 +452,32 @@ class HomeController extends Controller
      * List Page
      */
 
-    public function tasklist($project=0)
+    public function tasklist($project_id=0)
     {
         DB::enableQueryLog();
-        if($project==0)
-        {
-            $task = Task::with(['handler','board'])
-                            ->whereIn('id', TaskHandler::where('user_id', Auth::user()->id)->pluck('task_id')->toArray())
-                            ->orderBy('project_id', 'desc')
-                            ->get();
-        }   
-        else
-        {
-            $task = Task::with(['handler','board'])
-                            ->whereIn('id', TaskHandler::where('user_id', Auth::user()->id)->pluck('task_id')->toArray())
-                            //->where('project_id','=',$project)
-                            ->orderBy('project_id', 'desc')
-                            ->get();
-        }       
-        
-        //dd(DB::getQueryLog());
 
-        return view('pages.tasklist',compact('task'));
+            $task = Task::with(['handler','board'])         
+                            ->whereIn('id', TaskHandler::where('user_id', Auth::user()->id)
+                            ->pluck('task_id')->toArray())
+                            ->orWhere(
+                                function($task)  { 
+                                    $task->whereIn('project_id', BoardMember::where('assign_by', Auth::user()->id)
+                                    ->whereColumn('user_id','=','assign_by')
+                                    ->pluck('project_id')->toArray());
+                                }
+                            )
+                            ->orderBy('project_id', 'desc')
+                            ->get();
+            if($project_id > 0){
+                $task = $task->where('project_id', $project_id);
+            }
+
+            $board = Board::whereIn('project_id', BoardMember::where('user_id', Auth::user()->id)
+            ->pluck('project_id')->toArray())
+            ->orderBy('projectname', 'asc')
+            ->get();
+
+        return view('pages.tasklist',compact('task','board'));
     }
     
     public function closetask($id)

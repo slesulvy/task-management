@@ -40,6 +40,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('getacomment/{id}',['as'=>'getacomment/{id}','uses'=>'TaskCommentController@get_signle_comment']);
     // End Task Comment
     Route::get('tasks',[ 'as' => 'tasks','uses' => 'HomeController@tasklist']);
+    Route::get('tasks/{project_id}','HomeController@tasklist');
     Route::get('newtask',[ 'as' => 'addtask','uses' => 'HomeController@addtask']);
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
     Route::post('addlist',[ 'as' => 'addlist','uses' => 'ListController@addlist']);

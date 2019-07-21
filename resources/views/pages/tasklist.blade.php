@@ -45,6 +45,21 @@
                                 <!--<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal5" style="border-radius: 0px;">
                                     <i class="fa fa-plus"></i> New Task
                                 </a>-->
+                                <div class="col-sm-3 pull-right" style="margin-top:-6px; padding:0;">
+                                    <select name="category_id" id="category_id" class="form-control chosen-select pull-right" required style="width:85%; border-radius:0px; float:left;">
+                                        @foreach ($board as $project)
+                                            <option value="{{$project->project_id}}">{{$project->projectname}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-3 pull-right" style="margin-top:-6px; padding:0;">
+                                    <select name="category_id" id="category_id" class="form-control chosen-select pull-right" required style="width:85%; border-radius:0px; float:left;">
+                                        @foreach ($category as $item)
+                                            <option value="{{$item->category_id}}">{{$item->category_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
         
                             </div>
                         </div>
@@ -139,6 +154,9 @@
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
     <script src="{{asset('js/progress.js')}}"></script>
     <script>
+
+        $('.chosen-select').chosen({width: "90%"});
+
         $('.dataTables-example').DataTable({
             pageLength: 25,
             responsive: true
