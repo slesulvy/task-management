@@ -25,7 +25,7 @@
                     @foreach ($item->handler as $val)
                 
                         @if($inc_member<5)
-                            <img title="{{$val->getUser->name}}" src="<?php echo asset("images/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
+                            <img title="{{$val->getUser->name}}" src="<?php echo asset("images/".$val->getUser->img."")?>" width="17px" height="17px" class="img img-circle">
                         @endif
                         <?php $inc_member++;?>
                     @endforeach

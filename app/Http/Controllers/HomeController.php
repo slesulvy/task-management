@@ -265,7 +265,7 @@ class HomeController extends Controller
                 <div class="agile-detail">    
                 <span title="Due Date" class=""><i class="fa fa-clock-o"></i>'.'</span>
                 <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                    <img src="'.asset('img/'.$member->getUser->img).'" width="17px;" class="img img-circle">   
+                    <img src="'.asset('img/'.$member->getUser->img).'" width="17px" height="17px" class="img img-circle">   
                 </a> 
                 <div class="progress priority-' . $task->priority . '" style="margin-top:10px;">
                     <div class="progress-bar progress-bar-striped progress-bar-{{ $item->priority }} task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
@@ -396,7 +396,7 @@ class HomeController extends Controller
         //dd($comment);
         echo '<div class="feed-element">
                 <a href="#" class="pull-left">
-                    <img alt="image" class="img-circle" src="'.asset('img/'.$comment->getUser->img).'">
+                    <img alt="image" class="img-circle" src="'.asset('img/'.$comment->getUser->img).'" width="35px" height="35px">
                 </a>
                 <div class="media-body ">
                     <small class="pull-right">1m ago</small>
