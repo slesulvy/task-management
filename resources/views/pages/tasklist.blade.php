@@ -46,17 +46,9 @@
                                     <i class="fa fa-plus"></i> New Task
                                 </a>-->
                                 <div class="col-sm-3 pull-right" style="margin-top:-6px; padding:0;">
-                                    <select name="category_id" id="category_id" class="form-control chosen-select pull-right" required style="width:85%; border-radius:0px; float:left;">
+                                    <select name="category_id" id="project_filter" class="form-control chosen-select" required style="width:100%; border-radius:0px; text-align:left;">
                                         @foreach ($board as $project)
                                             <option value="{{$project->project_id}}">{{$project->projectname}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-3 pull-right" style="margin-top:-6px; padding:0;">
-                                    <select name="category_id" id="category_id" class="form-control chosen-select pull-right" required style="width:85%; border-radius:0px; float:left;">
-                                        @foreach ($category as $item)
-                                            <option value="{{$item->category_id}}">{{$item->category_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -83,6 +75,7 @@
                                                 <th>Project Name</th>
                                                 <th>Task Name</th>
                                                 <th>Description</th>
+                                                <th>Due Date</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -109,6 +102,9 @@
                                                       
                                                     <td align="left">
                                                             {{substr($item->description,0,60)}}
+                                                    </td>
+                                                    <td align="left">
+                                                        {{($item->due_date!=null)?date('d-M-Y',strtotime($item->due_date)):''}}
                                                     </td>
                                                     <td align="center" class="center"><?php echo ($item->status==1?'<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>')?></td>
                                                     <td align="center" class="center">
@@ -156,6 +152,9 @@
     <script>
 
         $('.chosen-select').chosen({width: "90%"});
+        $('#project_filter').change(function(){
+            window.open("{{url('tasks')}}/"+$(this).val(),'_parent');
+        });
 
         $('.dataTables-example').DataTable({
             pageLength: 25,

@@ -98,5 +98,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'TaskController@update']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'TaskController@delete']);
     Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'TaskController@updateStep']);
-   
+    Route::get('/project/show/modal/{id}', 'ProjectController@modalInfo');
+    Route::get('/project/edit/modal/{id}', 'ProjectController@modalEdit')->name('project-edit-modal');
+    Route::post('/project/edit/modal/{id}', 'ProjectController@modalEdit')->name('project-update-modal');
+
 });

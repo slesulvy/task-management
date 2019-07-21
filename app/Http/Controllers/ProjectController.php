@@ -12,6 +12,7 @@ use App\Task;
 use App\TaskHandler;
 use App\BoardMember;
 use App\TaskComment;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class ProjectController extends Controller
 {
@@ -157,8 +158,24 @@ class ProjectController extends Controller
           $task->save();
     }
 
+    public function modalInfo(Request $request, $id){
+        $project = Board::with('tasks')->where('project_id', $id)->first();
+        return response()->json($project);
+    }
 
-
-
-   
+    public function modalEdit(Request $request, $id){
+        $project = Board::where('project_id', $id)->first();
+        if ($request->isMethod('post')) {
+            //
+            $project->category_id = $request->category_id;
+            $project->projectname = $request->projectname;
+            $project->description = $request->description;
+            $project->back_color = $request->back_color;
+            $project->font_color = $request->font_color;
+            if($project->save()){
+                return redirect('board');
+            }
+        }
+        return response()->json($project);
+    }
 }
