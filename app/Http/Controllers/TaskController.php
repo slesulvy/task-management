@@ -55,7 +55,7 @@ class TaskController extends Controller
                 ->where('project_id', $id)
                 ->get();
 
-        // echo json_encode($tasktodo);exit();
+       
 
         $results = DB::select( DB::raw(" SELECT 1 AS id, 'Thing To-do' title 
             UNION 
