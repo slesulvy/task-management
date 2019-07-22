@@ -61,7 +61,7 @@
                             <div class="form-group">
                                 <label class="col-sm-12">Description <span style="color:red">*</span></label>
                                 <div class="col-sm-12">
-                                    <textarea name="description" style="width:100%;border:1px solid #eee;" rows="8" required></textarea>
+                                    <textarea name="description" id="description" style="width:100%;border:1px solid #eee;" rows="8" required></textarea>
                                 </div>
                             </div>
 

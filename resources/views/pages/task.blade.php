@@ -10,7 +10,7 @@
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
     <style>
         .project-head-color{
-            border-bottom: 1px solid {{$board->back_color}} !important;
+            border-bottom: 1px solid <?php echo $board->back_color?> !important;
         }
     </style>
 @endsection
@@ -752,14 +752,14 @@
                         $('.feed-element').remove();
                         $('#setduedate').val('');
                         data['handler'].map(item =>{
-                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
+                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px' height='25px' style='margin-right:2px;' class='img img-circle' />");
                         });
 
                         $('.feed-activity-list .feed-element').remove();
                         data['comment'].map(item =>{
                             //var comment_date = new Date(item.created_at);
                             $('.feed-activity-list').append("<div class='feed-element'>"+
-                                            "<a class='pull-left'><img alt='image' class='img-circle' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='35px;'></a>"+
+                                            "<a class='pull-left'><img alt='image' class='img-circle' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='35px' height='35px'></a>"+
                                             "<div class='media-body'>"+
                                                 "<small class='pull-right'>1m ago</small>"+
                                                 "<strong>"+item.get_user.name+"</strong> commented on task <strong>"+item.task.taskname+"</strong><br>"+
@@ -911,11 +911,12 @@
                     var added = data['addedmember'].get_user.name;
                     var taskname = $('#tasktitle').text();
                     data['handler'].map(item =>{
-                        $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
-                    });
-                    NotifyAddTaskMember(addby,added,taskname);
+                        $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px' height='25px' style='margin-right:2px;' class='img img-circle' />");
+                    });                    
                 }
+                
             });
+            NotifyAddTaskMember(addby,added,taskname);
         });
 
         function NotifyAddTaskMember(addby, added, task)

@@ -130,6 +130,8 @@ class HomeController extends Controller
         $this->showMember($boardMember);   
             
     }
+
+
     public function showMember($members)
     {
         $i = 0;
@@ -173,7 +175,7 @@ class HomeController extends Controller
 
     public function tasks($id)
     {
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         $board = DB::table('projects')
             ->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
             ->where([['projects.status',1],['project_member.user_id', Auth::user()->id],['project_member.status',1],['project_member.project_id',$id]])
@@ -263,7 +265,7 @@ class HomeController extends Controller
                 <div class="agile-detail">    
                 <span title="Due Date" class=""><i class="fa fa-clock-o"></i>'.'</span>
                 <a href="#" class="btn btn-xs pull-right" style="border:none;">
-                    <img src="'.asset('img/'.$member->getUser->img).'" width="17px;" class="img img-circle">   
+                    <img src="'.asset('img/'.$member->getUser->img).'" width="17px" height="17px" class="img img-circle">   
                 </a> 
                 <div class="progress priority-' . $task->priority . '" style="margin-top:10px;">
                     <div class="progress-bar progress-bar-striped progress-bar-{{ $item->priority }} task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
@@ -394,7 +396,7 @@ class HomeController extends Controller
         //dd($comment);
         echo '<div class="feed-element">
                 <a href="#" class="pull-left">
-                    <img alt="image" class="img-circle" src="'.asset('img/'.$comment->getUser->img).'">
+                    <img alt="image" class="img-circle" src="'.asset('img/'.$comment->getUser->img).'" width="35px" height="35px">
                 </a>
                 <div class="media-body ">
                     <small class="pull-right">1m ago</small>
@@ -450,14 +452,32 @@ class HomeController extends Controller
      * List Page
      */
 
-    public function tasklist()
+    public function tasklist($project_id=0)
     {
         DB::enableQueryLog();
-        $task = Task::with('handler','board')
-                ->orderBy('project_id', 'desc')
-                ->get();
-        //$board = Board::where('project_id','=', $id)->first();            
-        return view('pages.tasklist',compact('task'));
+
+            $task = Task::with(['handler','board'])         
+                            ->whereIn('id', TaskHandler::where('user_id', Auth::user()->id)
+                            ->pluck('task_id')->toArray())
+                            ->orWhere(
+                                function($task)  { 
+                                    $task->whereIn('project_id', BoardMember::where('assign_by', Auth::user()->id)
+                                    ->whereColumn('user_id','=','assign_by')
+                                    ->pluck('project_id')->toArray());
+                                }
+                            )
+                            ->orderBy('project_id', 'desc')
+                            ->get();
+            if($project_id > 0){
+                $task = $task->where('project_id', $project_id);
+            }
+
+            $board = Board::whereIn('project_id', BoardMember::where('user_id', Auth::user()->id)
+            ->pluck('project_id')->toArray())
+            ->orderBy('projectname', 'asc')
+            ->get();
+
+        return view('pages.tasklist',compact('task','board'));
     }
     
     public function closetask($id)

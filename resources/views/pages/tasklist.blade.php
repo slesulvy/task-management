@@ -1,4 +1,7 @@
 
+
+
+
 @extends('layouts.master')
 
 @section('customCss')
@@ -37,11 +40,18 @@
             <div class="row">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Users</h5>
+                            <h5>Task List</h5>
                             <div class="ibox-tools">
                                 <!--<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal5" style="border-radius: 0px;">
                                     <i class="fa fa-plus"></i> New Task
                                 </a>-->
+                                <div class="col-sm-3 pull-right" style="margin-top:-6px; padding:0;">
+                                    <select name="category_id" id="project_filter" class="form-control chosen-select" required style="width:100%; border-radius:0px; text-align:left;">
+                                        @foreach ($board as $project)
+                                            <option value="{{$project->project_id}}">{{$project->projectname}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
         
                             </div>
                         </div>
@@ -65,6 +75,7 @@
                                                 <th>Project Name</th>
                                                 <th>Task Name</th>
                                                 <th>Description</th>
+                                                <th>Due Date</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -83,7 +94,7 @@
                                                        <a href="{{ url('board')}}/{{ $item->project_id }}?taskmodal={{ $item->id}}" data-target="#taskmodal">
                                                         {{substr($item->taskname,0,60)}}
                                                         <div class="progress">
-                                                            <div class="progress-bar progress-bar-striped task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar progress-bar-striped task-progress  progress-bar-{{$item->danger_level}}" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
                                                         </a> 
 
@@ -91,6 +102,9 @@
                                                       
                                                     <td align="left">
                                                             {{substr($item->description,0,60)}}
+                                                    </td>
+                                                    <td align="left">
+                                                        {{($item->due_date!=null)?date('d-M-Y',strtotime($item->due_date)):''}}
                                                     </td>
                                                     <td align="center" class="center"><?php echo ($item->status==1?'<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>')?></td>
                                                     <td align="center" class="center">
@@ -136,6 +150,12 @@
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
     <script src="{{asset('js/progress.js')}}"></script>
     <script>
+
+        $('.chosen-select').chosen({width: "90%"});
+        $('#project_filter').change(function(){
+            window.open("{{url('tasks')}}/"+$(this).val(),'_parent');
+        });
+
         $('.dataTables-example').DataTable({
             pageLength: 10,
             responsive: true

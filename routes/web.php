@@ -40,6 +40,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('getacomment/{id}',['as'=>'getacomment/{id}','uses'=>'TaskCommentController@get_signle_comment']);
     // End Task Comment
     Route::get('tasks',[ 'as' => 'tasks','uses' => 'HomeController@tasklist']);
+    Route::get('tasks/{project_id}','HomeController@tasklist');
     Route::get('newtask',[ 'as' => 'addtask','uses' => 'HomeController@addtask']);
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'HomeController@gettask']);
     Route::post('addlist',[ 'as' => 'addlist','uses' => 'ListController@addlist']);
@@ -97,5 +98,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'TaskController@update']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'TaskController@delete']);
     Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'TaskController@updateStep']);
-   
+    Route::get('/project/show/modal/{id}', 'ProjectController@modalInfo');
+    Route::get('/project/edit/modal/{id}', 'ProjectController@modalEdit')->name('project-edit-modal');
+    Route::post('/project/edit/modal/{id}', 'ProjectController@modalEdit')->name('project-update-modal');
+
 });

@@ -19,7 +19,7 @@
                     <a href="#">User</a>
                 </li>
                 <li class="active">
-                    <strong>Prfile</strong>
+                    <strong>Profile</strong>
                 </li>
             </ol>
         </div>
@@ -96,9 +96,8 @@
                                         <h3>Task List</h3>
                                         <ul class="list-unstyled file-list">
                                             @foreach ($profile->task as $item)
-                                                <li><a href="#"><i class="fa fa-tasks"></i>&nbsp;&nbsp; {{$item->task->taskname}}</a></li>
+                                                <li style="background: linear-gradient(to right, #f7f7f7 {{$item->task->progress}}%,white 0%,#f7f7f7 {{$item->task->progress}}%,white 0%,white 100%);"><a href="#"><i class="fa fa-tasks"></i>&nbsp;&nbsp; {{$item->task->taskname}}</a> <span class="pull-right">{{$item->task->progress}}%</span></li>
                                             @endforeach
-                                            
                                             
                                         </ul>
                                     </div>

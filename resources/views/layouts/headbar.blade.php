@@ -9,7 +9,7 @@
                 
                 <li>
                     <div style="background:#1ab394; padding:9px 6px;">
-                        <a style="color:#fff;" data-toggle="modal" data-target="#myModal5">
+                        <a style="color:#fff;" onclick="addProject('{{ route('board/addnew') }}')" data-toggle="modal" data-target="#myModal5">
                             <i class="fa fa-plus"></i>
                         </a>    
                     </div>

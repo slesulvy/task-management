@@ -16,7 +16,7 @@
             <h2></h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="index-2.html">Task Manager</a>
+                    <a href="{{ url ('board') }}">Task Manager</a>
                 </li>
                 <li class="active">
                     <strong>Project List</strong>

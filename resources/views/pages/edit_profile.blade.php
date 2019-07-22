@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-lg-12 margin-tb">
                     <div class="pull-left">
-                        <h2>Create New User</h2>
+                        <h2>Update Profile</h2>
                     </div>
                     <div class="pull-right">
                         <a class="btn btn-primary" href="{{ route('profile') }}"> Back</a>
@@ -40,49 +40,48 @@
                     </ul>
                 </div>
             @endif
-
-
             {!! Form::model($profile, ['method' => 'post','enctype' => 'multipart/form-data','route' => ['update.profile', $profile->id]]) !!}
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-mdd-12">
-                    <div class="col-sm-4" style="padding: 10px 0;">
-                        <strong>Product's image:</strong>
+                <div class="col-xs-4 col-sm-4 col-mdd-4">
+                    <div class="col-sm-12" style="padding: 10px 0;">
                         <img id="preview"
-                             src="{{asset("images/".$profile->img)}}" style="padding: 10px 0;" width="100%" height="200"/>
+                             src="{{asset("images/".$profile->img)}}" width="100%" height="auto"/>
                         {!! Form::file("profile",["class"=>"form-control","style"=>"display:none","id"=>'image']) !!}
                         <br/>
-                        <a class="btn btn-primary" href="javascript:changeProfile();"><i class="fa fa-exchange"></i>Change</a> |
-                        <a class="btn btn-danger" href="javascript:removeImage()"><i class="fa fa-trash"></i>Remove</a>
+                        <p style="padding: 10px 0; text-align: center;">
+                            <a class="btn btn-primary" href="javascript:changeProfile();"><i class="fa fa-exchange"></i>Change</a> |
+                            <a class="btn btn-danger" href="javascript:removeImage()"><i class="fa fa-trash"></i>Remove</a>
+                        </p>
                         <input type="hidden" style="display: none" value="0" name="remove" id="remove">
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xs-8 col-sm-8 col-md-8">
                     <div class="form-group">
                         <strong>Name:</strong>
                         {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                         <input type="hidden" name="updated_by" value="{{ Auth::user()->id }}">
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xs-8 col-sm-8 col-md-8">
                     <div class="form-group">
                         <strong>Email:</strong>
                         {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xs-8 col-sm-8 col-md-8">
                     <div class="form-group">
                         <strong>Password:</strong>
                         {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xs-8 col-sm-8 col-md-8">
                     <div class="form-group">
                         <strong>Confirm Password:</strong>
                         {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <div class="col-xs-8 col-sm-8 col-md-8 text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
