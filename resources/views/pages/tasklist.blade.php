@@ -80,7 +80,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                       <a href="{{ url('board')}}/{{ $item->project_id }}">
+                                                       <a href="{{ url('board')}}/{{ $item->project_id }}?taskmodal={{ $item->id}}" data-target="#taskmodal">
                                                         {{substr($item->taskname,0,60)}}
                                                         <div class="progress">
                                                             <div class="progress-bar progress-bar-striped task-progress" role="progressbar" style="width: {{ $item->progress }}%" aria-valuenow="{{ $item->progress }}" aria-valuemin="0" aria-valuemax="100"></div>

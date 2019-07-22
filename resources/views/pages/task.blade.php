@@ -441,7 +441,16 @@
 
 
     <script src="{{asset('js/plugins/nouslider/jquery.nouislider.min.js')}}"></script>
+    
     <script>
+
+        $(document).ready(function() {
+          var url = window.location.href;
+          if (url.indexOf('?taskmodal=') != -1) {
+            var id = url.substring(url.lastIndexOf('/') + 14);               
+                $("#taskmodal").modal();
+            }
+        });
 
         //PROGRESS SLIDER
         var basic_slider = document.getElementById('basic_slider');
