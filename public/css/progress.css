@@ -1,6 +1,18 @@
 .swal2-popup, .sweet-alert{
     width: 40% !important;
 }
+.noUi-horizontal {
+    height: 12px !important;
+}
+#basic_slider{
+    margin-bottom: 15px;
+}
+.noUi-horizontal .noUi-handle {
+    width: 28px !important;
+    height: 28px !important;
+    top: -9px !important;
+    border-radius: 50%;
+}
 .progress {
     height: 5px;
     margin: 5px 0 0 0;
@@ -13,9 +25,8 @@
 .noUi-tooltip{
     display: block;
     position: absolute;
-    border: 1px solid #D9D9D9;
     border-radius: 3px;
-    background: #fff;
+    background: none;
     color: #000;
     padding: 5px;
     text-align: center;
@@ -23,5 +34,4 @@
     -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     left: 50%;
-    bottom: 120%;
 }
