@@ -374,7 +374,7 @@
                                                             
                                                         </a>
                                                        
-                                                         <div style="padding:0px; display:none; margin-top:-5px;" id="move_take_step">
+                                                        <div style="padding:0px; display:none; margin-top:-5px;" id="move_take_step">
                                                                 <select data-placeholder="All Task..." id="all_step" onchange="mytaskupdate();" style="width: 100%;" title="All Task">
                                                                     <option>All Task</option>
                                                                     @foreach ($results as $item)
@@ -386,10 +386,10 @@
                                                             <span class="fa fa-archive"></span>&nbsp;
                                                             <span>Archive</span>
                                                         </a>
-                                                         <a class="button-link" href="#" title="Attachment">
+                                                        <!--<a class="button-link" href="#" title="Attachment">
                                                             <span class="fa fa-paperclip"></span>&nbsp;
                                                             <span>Attachment</span>
-                                                        </a>
+                                                        </a>-->
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -751,6 +751,7 @@
                         $('#e_member img').remove();
                         $('.feed-element').remove();
                         $('#setduedate').val('');
+                        $('#start_dates').val('');
                         data['handler'].map(item =>{
                             $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
                         });
