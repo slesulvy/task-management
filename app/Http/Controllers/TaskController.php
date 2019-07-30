@@ -55,6 +55,8 @@ class TaskController extends Controller
                 ->where('project_id', $id)
                 ->get();
 
+       
+
         $results = DB::select( DB::raw(" SELECT 1 AS id, 'Thing To-do' title 
             UNION 
             SELECT 2 AS id, 'In Progress' title

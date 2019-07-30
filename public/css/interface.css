@@ -22,6 +22,30 @@
 .progress-bar-0 {
     background-color: #ed5665;
 }
+.progress-border-7 {
+    border-left: 2px solid #1cb393;
+}
+.progress-border-6 {
+    border-left: 2px solid #49bb86;
+}
+.progress-border-5 {
+    border-left: 2px solid #84c673;
+}
+.progress-border-4 {
+    border-left: 2px solid #c0cb61;
+}
+.progress-border-3 {
+    border-left: 2px solid #eccb55;
+}
+.progress-border-2 {
+    border-left: 2px solid #eda356;
+}
+.progress-border-1 {
+    border-left: 2px solid #ed7b5e;
+}
+.progress-border-0 {
+    border-left: 2px solid #ed5665;
+}
 .noUi-handle:before, .noUi-handle:after{
     display: none !important;
 }
@@ -65,7 +89,13 @@ img.logo{
 }
 
 .flat-bg{
-    background-image: url('../img/bg.png');
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0c54a4+0,013269+100 */
+    background: #0c54a4; /* Old browsers */
+    background: -moz-linear-gradient(top,  #0c54a4 0%, #013269 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #0c54a4 0%,#013269 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #0c54a4 0%,#013269 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c54a4', endColorstr='#013269',GradientType=0 ); /* IE6-9 */
+
 }
 
 .shadow-box{
