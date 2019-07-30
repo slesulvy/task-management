@@ -243,6 +243,35 @@
                     });                    
             });
         }
+
+        $('#btn_addmember').click(function(){
+            var project_id = $('#md_project_id').val();
+            var member_id = $('.chosen-select').val();
+            if($('.chosen-select').val()!=null && project_id!='')
+            {
+
+                $.ajax({
+                    type:"get",
+                    dataType:'text',
+                    url: "{{ url('addmember')}}/"+project_id+"/"+member_id,
+                    success: function(data){
+                        $('#member').html(data);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        swal({
+                            title: "Dupplicated Member!",
+                            text: "This user already existed in this project",
+                            type: "warning"
+                        });
+                    }
+
+                });
+            }
+            else{
+                $('#reqired-member').fadeOut('');
+                $('#reqired-member').fadeIn('');
+            }
+        });
         
 
 

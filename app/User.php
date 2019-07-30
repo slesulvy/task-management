@@ -55,6 +55,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(BoardMember::class, 'user_id', 'id');
     }
+
+    function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'taskhandlers');
+    }
+
+    function urgentTasks()
+    {
+        return $this->tasks()->orderBy('due_date','desc')->take(10);
+    }
     
 
 }

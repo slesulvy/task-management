@@ -45,10 +45,13 @@
                                 <!--<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal5" style="border-radius: 0px;">
                                     <i class="fa fa-plus"></i> New Task
                                 </a>-->
+                                Project :
                                 <div class="col-sm-3 pull-right" style="margin-top:-6px; padding:0;">
-                                    <select name="category_id" id="project_filter" class="form-control chosen-select" required style="width:100%; border-radius:0px; text-align:left;">
+                                     
+                                    <select name="category_id" id="project_filter" data-placeholder="choose a project" class="form-control chosen-select" required style="width:100%; border-radius:0px; text-align:left;">
+                                        <option value="">--All--</option>
                                         @foreach ($board as $project)
-                                            <option value="{{$project->project_id}}">{{$project->projectname}}</option>
+                                            <option {{(Request::segment(2)==$project->project_id?'selected':'')}} value="{{$project->project_id}}">{{$project->projectname}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -66,7 +69,7 @@
 
                             <?php $i=1;?>
 
-                            
+                        
         
                             <table class="table table-striped table-bordered table-hover dataTables-example" >
                                     <thead>
