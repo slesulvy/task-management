@@ -22,28 +22,28 @@
 .progress-bar-0 {
     background-color: #ed5665;
 }
-.list-unstyled .progress-border-7 {
+.list-unstyled .progress-border-7, .progress-border-7  {
     border-left: 2px solid #1cb393;
 }
-.list-unstyled .progress-border-6 {
+.list-unstyled .progress-border-6, .progress-border-6 {
     border-left: 2px solid #49bb86;
 }
-.list-unstyled .progress-border-5 {
+.list-unstyled .progress-border-5, .progress-border-5 {
     border-left: 2px solid #84c673;
 }
-.list-unstyled .progress-border-4 {
+.list-unstyled .progress-border-4, .progress-border-4 {
     border-left: 2px solid #c0cb61;
 }
-.list-unstyled .progress-border-3 {
+.list-unstyled .progress-border-3, .progress-border-3 {
     border-left: 2px solid #eccb55;
 }
-.list-unstyled .progress-border-2 {
+.list-unstyled .progress-border-2, .progress-border-2 {
     border-left: 2px solid #eda356;
 }
-.list-unstyled .progress-border-1 {
+.list-unstyled .progress-border-1, .progress-border-1  {
     border-left: 2px solid #ed7b5e;
 }
-.list-unstyled .progress-border-0 {
+.list-unstyled .progress-border-0, .progress-border-0  {
     border-left: 2px solid #ed5665;
 }
 .noUi-handle:before, .noUi-handle:after{
