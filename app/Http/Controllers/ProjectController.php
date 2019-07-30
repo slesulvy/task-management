@@ -109,17 +109,17 @@ class ProjectController extends Controller
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-            $board->status = 0;
+            $board->status = 2;
             $board->closed_by = Auth::user()->id;
             $board->save();
         return back(); 
     }
-    public function restore($id)
+    public function restore($id, $status)
     {
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-            $board->status = 1;
+            $board->status = $status;
             $board->closed_by = Auth::user()->id;
             $board->save();
         return back(); 

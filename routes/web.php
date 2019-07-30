@@ -19,7 +19,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'ProjectController@store']);
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'ProjectController@tasks']);
     Route::get('board/close/{id}',[ 'as' => 'board/close/{id}','uses' => 'ProjectController@close']);
-    Route::get('board/restore/{id}',[ 'as' => 'board/restore/{id}','uses' => 'ProjectController@restore']);
+    Route::get('board/restore/{id}/{status}',[ 'as' => 'board/restore/{id}/{status}','uses' => 'ProjectController@restore']);
     Route::get('board/edittask/{id}','ProjectController@edittask');
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'ProjectController@updatetask']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
