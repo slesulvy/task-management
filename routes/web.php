@@ -88,7 +88,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'TaskController@list']);
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'TaskController@get']);
     Route::get('task/close/{id}',[ 'as' => 'task/close/{id}','uses' => 'TaskController@archive']);
-    Route::get('task/restore/{id}',[ 'as' => 'task/restore/{id}','uses' => 'TaskController@restore']);
+    Route::get('task/restore/{id}/{status}',[ 'as' => 'task/restore/{id}/{status}','uses' => 'TaskController@restore']);
     Route::get('setpriority/{id}',['as'=>'setpriority/{id}','uses'=>'TaskController@updatePriority']);
     Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'TaskController@updateDescription']);
     Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'TasKController@updateDue']);
