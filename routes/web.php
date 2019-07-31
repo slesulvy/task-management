@@ -24,6 +24,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'ProjectController@updatetask']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
     Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'ProjectController@task_update_step']);
+    Route::get('timeframe',[ 'as' => 'timeframe','uses' => 'ProjectController@timeframe']);
 
 
     //PROJECT MEMBER

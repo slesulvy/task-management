@@ -27,7 +27,9 @@ class ProjectController extends Controller
 
         return view('pages.index', ['board'=>$board]);
     }
-
+    public function timeframe(){
+        return view('pages.timeframe');
+    }
     function list()
     {
         $board = DB::table('projects')
