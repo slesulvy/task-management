@@ -98,8 +98,8 @@ class ProjectController extends Controller
             UNION
             SELECT list_id id, list_title title  FROM project_lists WHERE status =1 AND project_id = '$id'") );
 
-        //echo json_encode($results);exit();
-       
+
+
         $board = Board::where('project_id','=', $id)->first();            
         return view('pages.task',compact('tasktodo', 'board','projectmember','list','results'));
     }
@@ -114,6 +114,14 @@ class ProjectController extends Controller
             $board->save();
         return back(); 
     }
+    public function date_permission($id){
+        $data = DB::table('projects')
+            ->join('tasks', 'projects.project_id', '=', 'tasks.project_id')
+            ->select('projects.created_by', 'tasks.created_by')
+            ->get();
+       return response()->json($data);
+    }
+
     public function restore($id)
     {
         $board = Board::where('project_id','=', $id)

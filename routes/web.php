@@ -24,6 +24,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'ProjectController@updatetask']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
     Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'ProjectController@task_update_step']);
+    Route::get('board/date_permission/{id}',[ 'as' => 'board/date_permission/{id}','uses' => 'ProjectController@date_permission']);
 
 
     //PROJECT MEMBER
@@ -84,6 +85,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('api/setPriorityTask', 'BotController@setPriorityTask');
     Route::get('api/taskComment', 'BotController@taskComment');
     Route::get('api/setduedate', '\App\Http\Controllers\BotController@setDueDate');
+    Route::get('api/setstartdate', '\App\Http\Controllers\BotController@setStartueDate');
     // task controller routing
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'TaskController@list']);
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'TaskController@get']);
@@ -92,6 +94,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('setpriority/{id}',['as'=>'setpriority/{id}','uses'=>'TaskController@updatePriority']);
     Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'TaskController@updateDescription']);
     Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'TasKController@updateDue']);
+    Route::get('setstartdate/{id}',['as'=>'setstartdate/{id}','uses'=>'TasKController@updatestart']);
     Route::get('movestep',['as'=>'movestep','uses'=>'TaskController@moveStep']);
     Route::get('newtask',[ 'as' => 'addtask','uses' => 'TaskController@add']);
     Route::get('board/edittask/{id}','TaskController@edit');

@@ -52,6 +52,7 @@ class ProjectMemberController extends Controller
             ->where('project_member.status',1)
             ->orderBy('project_member.id')
             ->get();
+    // echo json_encode($boardMember);exit();
         $this->show($boardMember);
 
     }
