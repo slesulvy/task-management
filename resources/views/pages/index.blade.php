@@ -46,7 +46,7 @@
                         <p style="font-size:12px; word-break: break-all;">{{ substr($item->description,0,50).'...'}}</p>
                         <div class="text-right">
                             @if($item->created_by == Auth::user()->id)
-                                <a href="{{route('timeframe')}}" class="btn btn-xs btn-default" style="border-radius:0px;"><i class="fa fa-clock-o"></i></a>
+                                <a href="{{route('timeframe',$item->project_id)}}" class="btn btn-xs btn-default" style="border-radius:0px;"><i class="fa fa-clock-o"></i></a>
                                 <a href="javascript:void(0);" title="Archive" onclick="archive({{$item->project_id}})" class="btn btn-xs btn-default" style="border-radius:0px;">&nbsp;<i class="fa fa-archive"></i>&nbsp;</a>
                                 <a href="javascript:void(0)" title="Project Member" data-toggle="modal" data-target="#addmember" data-Id="{{$item->project_id}}" class="btn btn-xs btn-default btn-addmember-project" style="border-radius:0px;"><!--<i class="fa fa-plus"></i>&nbsp;-->&nbsp;<i class="fa fa-user-o"></i>&nbsp;</a>
                                 <a href="javascript:void(0)" title="Edit Project" style="border-radius:0px;" data-toggle="modal" data-target="#myModal5" onclick="editproject({{ $item->project_id }}, '{{ route('project-edit-modal', $item->project_id )}}')" class="btn btn-xs btn-default">&nbsp;<i class="fa fa-pencil-square-o"></i>&nbsp;</a>

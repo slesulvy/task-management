@@ -27,8 +27,17 @@ class ProjectController extends Controller
 
         return view('pages.index', ['board'=>$board]);
     }
-    public function timeframe(){
-        return view('pages.timeframe');
+    public function timeframe($id){
+        $tasktodo = Task::with('handler')
+                ->where([['project_id', $id],['status',1]])
+                
+                ->where('project_id', $id)
+                ->whereNotNull('start_date')
+                ->whereNotNull('due_date')
+                ->orderBy('id', 'desc')
+                ->get();
+               // dd($tasktodo);
+        return view('pages.timeframe',['task'=>json_encode($tasktodo)]);
     }
     function list()
     {

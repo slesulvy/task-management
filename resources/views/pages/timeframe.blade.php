@@ -5,82 +5,34 @@
     <link href="{{asset('css/plugins/fullcalendar/fullcalendar.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/fullcalendar/fullcalendar.print.css')}}" rel='stylesheet' media='print'>
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <style>
+        .fc-time {
+            display: none;
+        }
+    </style>
 @endsection
 
 @section ('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
-            <h2>Calendar of Project</h2>
+            <h4> </h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{url('board')}}">Board</a>
                 </li>
                 <li class="active">
-                    <strong>Calendar</strong>
+                    <strong>Project timeframe</strong>
                 </li>
             </ol>
         </div>
     </div>
+
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInDown">
-            <div class="col-lg-3">
+            <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Draggable of Tasks</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div id='external-events'>
-                            <p>Drag a event and drop into callendar.</p>
-                            <div class='external-event navy-bg'>Go to shop and buy some products.</div>
-                            <div class='external-event navy-bg'>Check the new CI from Corporation.</div>
-                            <div class='external-event navy-bg'>Send documents to John.</div>
-                            <div class='external-event navy-bg'>Phone to Sandra.</div>
-                            <div class='external-event navy-bg'>Chat with Michael.</div>
-                            <p class="m-t">
-                                <input type='checkbox' id='drop-remove' class="i-checks" checked /> <label for='drop-remove'>remove after drop</label>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Striped Table </h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
+                        <h5>Project timeframe</h5>
                     </div>
                     <div class="ibox-content">
                         <div id="calendar"></div>
@@ -125,14 +77,46 @@
             var m = date.getMonth();
             var y = date.getFullYear();
 
+            var task = [];
+            var tasks = {};
+            var allTaskArray = [];
+            task = <?php echo $task ?>;
+
+            task.map(item => {
+                tasks['start'] = item.start_date;
+                tasks['id'] = item.id;
+                tasks['title'] = item.taskname;
+                tasks['end'] = (item.due_date);
+          
+                allTaskArray.push({
+                        id: tasks['id'], 
+                        title: tasks['title'],
+                        start: new Date(tasks['start']),
+                        end: new Date(tasks['end']).setDate(new Date(tasks['end']).getDate() + 1),
+                        allDay: false,
+                        displayEventTime: false
+                 })
+           
+            })
+
+            console.log(allTaskArray);
+            
+
             $('#calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
-                editable: true,
-                droppable: true, // this allows things to be dropped onto the calendar
+                views: {
+                    timeGridFourDay: {
+                    type: 'timeGrid',
+                    duration: { days: 4 },
+                    buttonText: '4 day'
+                    }
+                },
+                editable: false,
+                droppable: false, // this allows things to be dropped onto the calendar
                 drop: function() {
                     // is the "remove after drop" checkbox checked?
                     if ($('#drop-remove').is(':checked')) {
@@ -140,52 +124,7 @@
                         $(this).remove();
                     }
                 },
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: new Date(y, m, 1)
-                    },
-                    {
-                        title: 'Long Event',
-                        start: new Date(y, m, d-5),
-                        end: new Date(y, m, d-2)
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: new Date(y, m, d-3, 16, 0),
-                        allDay: false
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: new Date(y, m, d+4, 16, 0),
-                        allDay: false
-                    },
-                    {
-                        title: 'Meeting',
-                        start: new Date(y, m, d, 10, 30),
-                        allDay: false
-                    },
-                    {
-                        title: 'Lunch',
-                        start: new Date(y, m, d, 12, 0),
-                        end: new Date(y, m, d, 14, 0),
-                        allDay: false
-                    },
-                    {
-                        title: 'Birthday Party',
-                        start: new Date(y, m, d+1, 19, 0),
-                        end: new Date(y, m, d+1, 22, 30),
-                        allDay: false
-                    },
-                    {
-                        title: 'Click for Google',
-                        start: new Date(y, m, 28),
-                        end: new Date(y, m, 29),
-                        url: 'http://google.com/'
-                    }
-                ]
+                 events: allTaskArray
             });
 
 
