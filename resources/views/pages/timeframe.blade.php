@@ -26,7 +26,7 @@
             <div class="col-lg-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Draggable Events</h5>
+                        <h5>Draggable of Tasks</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -57,12 +57,6 @@
                                 <input type='checkbox' id='drop-remove' class="i-checks" checked /> <label for='drop-remove'>remove after drop</label>
                             </p>
                         </div>
-                    </div>
-                </div>
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content">
-                        <h2>FullCalendar</h2> is a jQuery plugin that provides a full-sized, drag & drop calendar like the one below. It uses AJAX to fetch events on-the-fly for each month and is
-                        easily configured to use your own feed format (an extension is provided for Google Calendar).
                     </div>
                 </div>
             </div>
