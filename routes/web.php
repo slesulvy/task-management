@@ -19,12 +19,16 @@ Route::group(['middleware'=>'auth'], function () {
     Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'ProjectController@store']);
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'ProjectController@tasks']);
     Route::get('board/close/{id}',[ 'as' => 'board/close/{id}','uses' => 'ProjectController@close']);
-    Route::get('board/restore/{id}',[ 'as' => 'board/restore/{id}','uses' => 'ProjectController@restore']);
+    Route::get('board/restore/{id}/{status}',[ 'as' => 'board/restore/{id}/{status}','uses' => 'ProjectController@restore']);
     Route::get('board/edittask/{id}','ProjectController@edittask');
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'ProjectController@updatetask']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
     Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'ProjectController@task_update_step']);
+<<<<<<< HEAD
     Route::get('board/date_permission/{id}',[ 'as' => 'board/date_permission/{id}','uses' => 'ProjectController@date_permission']);
+=======
+    Route::get('timeframe',[ 'as' => 'timeframe','uses' => 'ProjectController@timeframe']);
+>>>>>>> 40133c5163c2afeea9730b8ca355e70e7686cfb1
 
 
     //PROJECT MEMBER
@@ -90,7 +94,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'TaskController@list']);
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'TaskController@get']);
     Route::get('task/close/{id}',[ 'as' => 'task/close/{id}','uses' => 'TaskController@archive']);
-    Route::get('task/restore/{id}',[ 'as' => 'task/restore/{id}','uses' => 'TaskController@restore']);
+    Route::get('task/restore/{id}/{status}',[ 'as' => 'task/restore/{id}/{status}','uses' => 'TaskController@restore']);
     Route::get('setpriority/{id}',['as'=>'setpriority/{id}','uses'=>'TaskController@updatePriority']);
     Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'TaskController@updateDescription']);
     Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'TasKController@updateDue']);

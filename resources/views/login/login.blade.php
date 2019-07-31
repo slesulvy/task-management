@@ -17,7 +17,7 @@
 </head>
 
 <body class="white-bg flat-bg">
-    <div style="padding:20px 0">
+    <div>
         <div class="white-bg shadow-box" style="padding:10px 0;">
             <img src="{{ asset('img/pca_logo.png') }}" class="logo animated fadeIn"/>
         </div>
@@ -36,10 +36,6 @@
                     <input type="password" name="password" class="form-control" placeholder="Password" required="">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-                <a href="#"><small>Forgot password?</small></a>
-                <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="">Create an account</a>
             </form>
             <p class="m-t"> <small>Task Manager &copy; 2019</small> </p>
         </div>

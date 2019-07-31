@@ -45,10 +45,13 @@
                                 <!--<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal5" style="border-radius: 0px;">
                                     <i class="fa fa-plus"></i> New Task
                                 </a>-->
+                                Project :
                                 <div class="col-sm-3 pull-right" style="margin-top:-6px; padding:0;">
-                                    <select name="category_id" id="project_filter" class="form-control chosen-select" required style="width:100%; border-radius:0px; text-align:left;">
+                                     
+                                    <select name="category_id" id="project_filter" data-placeholder="choose a project" class="form-control chosen-select" required style="width:100%; border-radius:0px; text-align:left;">
+                                        <option value="">--All--</option>
                                         @foreach ($board as $project)
-                                            <option value="{{$project->project_id}}">{{$project->projectname}}</option>
+                                            <option {{(Request::segment(2)==$project->project_id?'selected':'')}} value="{{$project->project_id}}">{{$project->projectname}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -66,7 +69,7 @@
 
                             <?php $i=1;?>
 
-                            
+                        
         
                             <table class="table table-striped table-bordered table-hover dataTables-example" >
                                     <thead>
@@ -85,9 +88,9 @@
                                             @foreach ($task as $item)
                                                 <tr class="gradeX task-{{ $item->id }}">
                                                     <td align="center">{{$i}}</td>
-                                                    <td>{{$item->board->projectname}}
+                                                    <td>{{$item->board['projectname']}}
                                                         <div class="progress project-{{ $item->project_id }}">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-info project-progress" role="progressbar" style="width: {{ $item->board->progress  }}%" aria-valuenow="{{ $item->board->progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar progress-bar-striped progress-bar-info project-progress" role="progressbar" style="width: {{ $item->board['progress']  }}%" aria-valuenow="{{ $item->board['progress'] }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -108,6 +111,10 @@
                                                     </td>
                                                     <td align="center" class="center"><?php echo ($item->status==1?'<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>')?></td>
                                                     <td align="center" class="center">
+
+                                                        <?php 
+                                                            $status = $item->status == 1 ? 0: 1;
+                                                        ?>
                                                                  
                                                         <!--<a onclick="edit_user({{$item->id}})" href="javascript:void(0)" data-toggle="modal" data-target="#edit_user" class="btn-sm btn-warning"><i class="fa fa-pencil"></i></a> | -->
                                                         <a title="Progress" href="#" class="btn-sm btn-white progress-modal"
@@ -116,8 +123,10 @@
                                                             data-title="{{ $item->taskname }}">
                                                             <i class="fa fa-chevron-up"></i>
                                                         </a> |
-                                                        <a title="Restore" onclick="return confirm('Are you sure you to disable this user?')" href="{{ url('task/restore/'.$item->id)}}" class="btn-sm btn-white"><i class="fa fa-paper-plane"></i></a> |
-                                                        <a title="Archive" onclick="return confirm('Are you sure you to archive this board?')" href="{{ url('task/close/'.$item->id)}}" class="btn-sm btn-white"><i class="fa fa-trash"></i></a>
+                                                        <a title="{{$item->status == 1 ? 'Achive':'Restore'}}" onclick="return confirm('Are you sure you to <?php echo ($item->status==1? 'Achive': 'Restore')?> this task?')" href="{{ url('task/restore/'.$item->id.'/'.$status)}}" class="btn-sm btn-white">
+                                                            <?php echo ($item->status==1?'<i class="fa fa-archive"></i>':'<i class="fa fa-paper-plane"></i>')?>
+                                                        </a> |
+                                                        <a title="Delete" onclick="return confirm('Are you sure you to delete this task?')" href="{{ url('task/close/'.$item->id)}}" class="btn-sm btn-white"><i class="fa fa-trash"></i></a>
                                                     
                                                     </td>
                                                 </tr>

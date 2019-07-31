@@ -69,6 +69,7 @@ class Task extends Model
         }
         return 0;
     }
+
     public function getActualHoursAttribute(){
         if($this->start_date){
             if($this->finish_date){
@@ -82,4 +83,10 @@ class Task extends Model
         }
         return 0;
     }
+
+    public function user()
+    {
+        return $this->belongsToMany('App\User','taskhandlers');
+    }
+
 }

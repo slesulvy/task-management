@@ -22,8 +22,10 @@ class ProfileController extends Controller
         $id = Auth::user()->id;
         $profile = User::with('role','task.task','board.board')
                         ->where('id',$id)
-                        ->first();
-        return view('pages.profile',compact('profile'));
+                        ->first();               
+        $toptenurgenttask = $profile->urgentTasks;
+        //dd($toptenurgenttask);
+        return view('pages.profile',compact('profile','toptenurgenttask'));
     }
 
     /**

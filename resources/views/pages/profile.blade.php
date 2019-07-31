@@ -73,7 +73,7 @@
                             <strong>{{count($profile->board)}}</strong> Projects
                         </td>
                         <td>
-                            <strong>{{count($profile->task)}}</strong> Tasks
+                            <strong>Top 10</strong>  Urgent Tasks
                         </td>
 
                     </tr>
@@ -95,8 +95,8 @@
                                 <div class="ibox-content">
                                         <h3>Task List</h3>
                                         <ul class="list-unstyled file-list">
-                                            @foreach ($profile->task as $item)
-                                                <li style="background: linear-gradient(to right, #f7f7f7 {{$item->task->progress}}%,white 0%,#f7f7f7 {{$item->task->progress}}%,white 0%,white 100%);"><a href="#"><i class="fa fa-tasks"></i>&nbsp;&nbsp; {{$item->task->taskname}}</a> <span class="pull-right">{{$item->task->progress}}%</span></li>
+                                            @foreach ($toptenurgenttask as $item)
+                                                <li class="progress-border-{{$item->danger_level}}" style="background: linear-gradient(to right, #f7f7f7 {{$item->progress}}%,white 0%,#f7f7f7 {{$item->progress}}%,white 0%,white 100%);"><a href="#"><i class="fa fa-tasks"></i>&nbsp;&nbsp; {{$item->taskname}}</a> <span class="pull-right">{{$item->progress}}%</span></li>
                                             @endforeach
                                             
                                         </ul>

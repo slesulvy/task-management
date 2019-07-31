@@ -215,17 +215,17 @@ class TaskController extends Controller
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
-        $task->status = 0;
+        $task->status = 2;
         $task->save();
         return back(); 
     }
 
-    public function restore($id)
+    public function restore($id, $status)
     {
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
-        $task->status = 1;
+        $task->status = $status;
         $task->save();
         return back(); 
     }

@@ -82,9 +82,14 @@
                                                     </td>
                                                     <td align="center" class="center"><?php echo ($item->status==1?'<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>')?></td>
                                                     <td align="center" class="center">
-                                                        @if(Auth::user()->id==$item->created_by)         
-                                                        <a title="Restore" onclick="return confirm('Are you sure you to disable this user?')" href="{{ url('board/restore/'.$item->project_id)}}" class="btn-sm btn-white"><i class="fa fa-paper-plane"></i></a> |
-                                                        <a title="Archive" onclick="return confirm('Are you sure you to archive this board?')" href="{{ url('board/close/'.$item->project_id)}}" class="btn-sm btn-white"><i class="fa fa-trash"></i></a> 
+                                                    
+                                                        @if(Auth::user()->id==$item->created_by) 
+                                                        <?php 
+                                                            $status = $item->status == 1 ? 0: 1;
+                                                        ?>
+                                                         
+                                                        <a title="{{$item->status == 1 ? 'Achive':'Restore'}}"  onclick="return confirm('Are you sure you to disable this item?')" href="{{ url('board/restore/'.$item->project_id.'/'.$status)}}" class="btn-sm btn-white"><?php echo ($item->status==1?'<i class="fa fa-archive"></i>':'<i class="fa fa-paper-plane"></i>')?></a> |
+                                                        <a title="Delete" onclick="return confirm('Are you sure you to archive this board?')" href="{{ url('board/close/'.$item->project_id)}}" class="btn-sm btn-white"><i class="fa fa-trash"></i></a> 
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -243,6 +248,35 @@
                     });                    
             });
         }
+
+        $('#btn_addmember').click(function(){
+            var project_id = $('#md_project_id').val();
+            var member_id = $('.chosen-select').val();
+            if($('.chosen-select').val()!=null && project_id!='')
+            {
+
+                $.ajax({
+                    type:"get",
+                    dataType:'text',
+                    url: "{{ url('addmember')}}/"+project_id+"/"+member_id,
+                    success: function(data){
+                        $('#member').html(data);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        swal({
+                            title: "Dupplicated Member!",
+                            text: "This user already existed in this project",
+                            type: "warning"
+                        });
+                    }
+
+                });
+            }
+            else{
+                $('#reqired-member').fadeOut('');
+                $('#reqired-member').fadeIn('');
+            }
+        });
         
 
 

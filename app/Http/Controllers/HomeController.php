@@ -32,7 +32,7 @@ class HomeController extends Controller
         $board = DB::table('projects')
             ->select('projects.*', 'project_member.user_id')
             ->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
-            ->where([['project_member.user_id', Auth::user()->id],['project_member.status',1]])
+            ->where([['project_member.user_id', Auth::user()->id],['project_member.status',1], ['projects.status', '!=', 2]])
             ->get();
         /*$board = Board::orderBy('project_id', 'desc')
                         ->get();*/
@@ -75,7 +75,7 @@ class HomeController extends Controller
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-            $board->status = 0;
+            $board->status = 2;
             $board->closed_by = Auth::user()->id;
             $board->save();
         return back(); 
@@ -456,7 +456,7 @@ class HomeController extends Controller
     {
         DB::enableQueryLog();
 
-            $task = Task::with(['handler','board'])         
+            $task = Task::with(['handler','board'])       
                             ->whereIn('id', TaskHandler::where('user_id', Auth::user()->id)
                             ->pluck('task_id')->toArray())
                             ->orWhere(
@@ -471,6 +471,7 @@ class HomeController extends Controller
             if($project_id > 0){
                 $task = $task->where('project_id', $project_id);
             }
+            $task = $task->where('status', '!=', 2);
 
             $board = Board::whereIn('project_id', BoardMember::where('user_id', Auth::user()->id)
             ->pluck('project_id')->toArray())

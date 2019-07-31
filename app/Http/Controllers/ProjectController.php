@@ -27,7 +27,9 @@ class ProjectController extends Controller
 
         return view('pages.index', ['board'=>$board]);
     }
-
+    public function timeframe(){
+        return view('pages.timeframe');
+    }
     function list()
     {
         $board = DB::table('projects')
@@ -109,11 +111,12 @@ class ProjectController extends Controller
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-            $board->status = 0;
+            $board->status = 2;
             $board->closed_by = Auth::user()->id;
             $board->save();
         return back(); 
     }
+<<<<<<< HEAD
     public function date_permission($id){
         $data = DB::table('projects')
             ->join('tasks', 'projects.project_id', '=', 'tasks.project_id')
@@ -123,11 +126,14 @@ class ProjectController extends Controller
     }
 
     public function restore($id)
+=======
+    public function restore($id, $status)
+>>>>>>> 40133c5163c2afeea9730b8ca355e70e7686cfb1
     {
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-            $board->status = 1;
+            $board->status = $status;
             $board->closed_by = Auth::user()->id;
             $board->save();
         return back(); 
