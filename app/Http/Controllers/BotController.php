@@ -68,6 +68,12 @@ class BotController extends Controller
       $this->sentMessageToTelegram($request->user . ' Just set due date of ' . $request->taskname . ' To ' . $request->duedate . ' in ' . $request->projectName);
      }
 
+     function setStartueDate(Request $request) {
+      $this->sentMessageToTelegram($request->user . ' Just set start date of ' . $request->taskname . ' To ' . $request->startdate . ' in ' . $request->projectName);
+     }
+
+
+
 
     // Route::post('bot/sendmessage', function() {
     //     Telegram::sendMessage([
