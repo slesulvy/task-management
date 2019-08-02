@@ -15,7 +15,12 @@
             border: none;
             border-radius:0px;
         }
-    </style>
+        .userProfile {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+    </style> 
 @endsection
 
 @section ('content')
@@ -33,6 +38,14 @@
         </div>
     </div>
 
+    
+    @foreach($tasktodo as $item)
+        @foreach($item->handler as $v)
+            {{$v->getUser->img}}
+        @endforeach
+
+    @endforeach
+
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInDown">
             <div class="col-lg-12">
@@ -49,40 +62,6 @@
     </div>
     <script>
         $(document).ready(function() {
-                $('.i-checks').iCheck({
-                    checkboxClass: 'icheckbox_square-green',
-                    radioClass: 'iradio_square-green'
-                });
-
-            /* initialize the external events
-            -----------------------------------------------------------------*/
-
-
-            $('#external-events div.external-event').each(function() {
-
-                // store data so the calendar knows to render an event upon drop
-                $(this).data('event', {
-                    title: $.trim($(this).text()), // use the element's text as the event title
-                    stick: true // maintain when user navigates (see docs on the renderEvent method)
-                });
-
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex: 1111999,
-                    revert: true,      // will cause the event to go back to its
-                    revertDuration: 0  //  original position after the drag
-                });
-
-            });
-
-
-            /* initialize the calendar
-            -----------------------------------------------------------------*/
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getFullYear();
-
             var task = [];
             var tasks = {};
             var allTaskArray = [];
@@ -90,12 +69,17 @@
             var tmp = "";
             var val1 = 0;
             task.map((item, index) => {
+                // console.log(item);
                 tasks['start'] = item.start_date;
                 tasks['id'] = ''+item.id+'';
                 tasks['title'] = item.taskname;
                 tasks['end'] = item.due_date;
                 tasks['index'] = index;
-                //console.log('index: ', index);
+
+                // item.handler.map(user => {
+                //     console.log('user: ', user);
+                // }) 
+
                 if(index==0)
                 {
                     val1=item.id;
@@ -105,6 +89,7 @@
                             start: tasks['start'],
                             end: tasks['end'],
                             progress: 60,
+                            handler: item.handler.get_user,
                             dependencies: '0'
                             
                             
@@ -122,118 +107,47 @@
                             start: tasks['start'],
                             end: tasks['end'],
                             progress: 60,
+                            handler: item.handler,
                             dependencies: ''+ tmp + ''
                             
                     });
 
                 }
-                
-           
             })
 
-            /*if(allTaskArray.dependencies == 0) {
-                delete allTaskArray.dependencies;
-            }*/
+            console.log('all task: ', allTaskArray);
+            var gantt = new Gantt("#gantt", allTaskArray, {
+            header_height: 50,
+            column_width: 30,
+            step: 24,
+            view_modes: ['Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
+            bar_height: 20,
+            bar_corner_radius: 3,
+            arrow_curve: 5,
+            padding: 18,
+            view_mode: 'Day',   
+            date_format: 'YYYY-MM-DD',
+            language: 'en',
+            custom_popup_html: function(task) {
+                // the task object will contain the updated
+                // dates and progress value
+                //const end_date = task.end.format('MMM D');
+                
+                return `
+                    <div class="details-container" style="width:200px; padding: 10px 15px; background:#fff; box-shadow:0px 0px 3px #eee;">
+                    <h5>${task.name}</h5>
+                    <hr/>
+                    <p>Start: ${new Date(task.start).toLocaleDateString('en-GB')}  </p>
+                    <p>End: ${new Date(task.end).toLocaleDateString('en-GB')} </p>
+                    <p>${task.progress}% completed!</p>
+                    ${task.handler.map(user => {
+                        return ('<img title="'+user.get_user.name+'" class="userProfile" src="<?php echo asset('') ?>images/'+ user.get_user.img +'"/>');
+                    })} 
 
-            console.log('allTaskArray: ', allTaskArray);
-
-            var tasks = [
-			{
-				start: '2018-10-01',
-				end: '2018-10-08',
-				name: 'Redesign website',
-				id: "Task 0",
-				progress: 20
-			},
-			{
-				start: '2018-10-03',
-				end: '2018-10-06',
-				name: 'Write new content',
-				id: "Task 1",
-				progress: 5,
-				dependencies: 'Task 0'
-			},
-			{
-				start: '2018-10-04',
-				end: '2018-10-08',
-				name: 'Apply new styles',
-				id: "Task 2",
-				progress: 10,
-				dependencies: 'Task 1'
-			},
-			{
-				start: '2018-10-08',
-				end: '2018-10-09',
-				name: 'Review',
-				id: "Task 3",
-				progress: 5,
-				dependencies: 'Task 2'
-			},
-			{
-				start: '2018-10-08',
-				end: '2018-10-10',
-				name: 'Deploy',
-				id: "Task 4",
-				progress: 0,
-				dependencies: 'Task 2'
-			},
-			{
-				start: '2018-10-11',
-				end: '2018-10-11',
-				name: 'Go Live!',
-				id: "Task 5",
-				progress: 0,
-				dependencies: 'Task 4',
-				custom_class: 'bar-milestone'
-			},
-		];
-                var gantt = new Gantt("#gantt", allTaskArray, {
-                header_height: 50,
-                column_width: 30,
-                step: 24,
-                view_modes: ['Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
-                bar_height: 20,
-                bar_corner_radius: 3,
-                arrow_curve: 5,
-                padding: 18,
-                view_mode: 'Day',   
-                date_format: 'YYYY-MM-DD',
-                custom_popup_html: null,
-			    language: 'en'
-            });
-
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                views: {
-                    timeGridFourDay: {
-                    type: 'timeGrid',
-                    duration: { days: 4 },
-                    buttonText: '4 day'
-                    }
-                },
-                editable: false,
-                droppable: false, // this allows things to be dropped onto the calendar
-                drop: function() {
-                    // is the "remove after drop" checkbox checked?
-                    if ($('#drop-remove').is(':checked')) {
-                        // if so, remove the element from the "Draggable Events" list
-                        $(this).remove();
-                    }
-                },
-                events: allTaskArray,
-                eventRender: function(event, eventElement) {
-                    if (event.imageurl) {
-                        eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='16' height='16'>");
-                    }
-                },
-                 
-            });
-
-
+                    </div>
+                `;
+            }
+        });
         });
 
     </script>
@@ -246,7 +160,6 @@
     <!-- iCheck -->
     <script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Full Calendar -->
-    <script src="{{asset('js/plugins/fullcalendar/fullcalendar.min.js')}}"></script>
     <!-- frapp.io -->
-    <script src="{{asset('js/plugins/frappe-gantt.min.js')}}" />
+    <script src="{{asset('js/plugins/frappe-gantt.min.js')}}" ></script>
 @endsection

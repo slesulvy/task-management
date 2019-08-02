@@ -508,9 +508,9 @@
                     url: "{{ url('board/date_permission')}}/"+project_id,
                     dataType:'json',
                     success: function(data){
-                        if({{ Auth::user()->id }}==Auth::user()->id){
-                          alert("hi");
-                        }
+                        // if({{ Auth::user()->id }}==Auth::user()->id){
+                        //   alert("hi");
+                        // }
                        
                     }
                 });
