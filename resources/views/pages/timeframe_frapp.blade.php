@@ -20,6 +20,9 @@
             height: 20px;
             border-radius: 50%;
         }
+        .gantt .today-highlight {
+            fill: #ff000c7d; 
+        }
     </style> 
 @endsection
 
@@ -40,6 +43,7 @@
 
     
     <!-- @foreach($tasktodo as $item)
+    {{$item}}
         @foreach($item->handler as $v)
             {{$v->getUser->img}}
         @endforeach
@@ -69,17 +73,12 @@
             var tmp = "";
             var val1 = 0;
             task.map((item, index) => {
-                // console.log(item);
                 tasks['start'] = item.start_date;
                 tasks['id'] = ''+item.id+'';
                 tasks['title'] = item.taskname;
                 tasks['end'] = item.due_date;
                 tasks['index'] = index;
                 tasks['progress'] = item.progress;
-
-                // item.handler.map(user => {
-                //     console.log('user: ', user);
-                // }) 
 
                 if(index==0)
                 {
@@ -90,7 +89,7 @@
                             start: tasks['start'],
                             end: tasks['end'],
                             progress: tasks['progress'],
-                            handler: item.handler.get_user,
+                            handler: item.handler,
                             dependencies: '0'
                             
                             
