@@ -20,6 +20,31 @@
             height: 20px;
             border-radius: 50%;
         }
+        .gantt-container{
+            min-height: 55vh;
+        }
+
+        .gantt-container::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        .gantt-container::-webkit-scrollbar
+        {
+            width: 4px;
+            height: 8px;
+            background-color: #fff;
+        }
+
+        .gantt-container::-webkit-scrollbar-thumb
+        {
+            border-radius: 8px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: #eee;
+        }
+
         .gantt .today-highlight {
             fill: #ff000c7d; 
         }
@@ -58,7 +83,7 @@
                         <h5>Project timeframe</h5>
                         <a class="pull-right" href="{{ route('timeframe',Request::segment(2))}}"><i class="fa fa-th-large"></i></a>
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content" style="min-height: 61vh; overflow-y: hidden;">
                         <svg id="gantt"></svg>
                     </div>
                 </div>

@@ -375,7 +375,6 @@
                                                        
                                                         <div style="padding:0px; display:none; margin-top:-5px;" id="move_take_step">
                                                                 <select data-placeholder="All Task..." id="all_step" onchange="mytaskupdate();" style="width: 100%;" title="All Task">
-                                                           
                                                                     @foreach ($results as $item)
                                                                     <option style="cursor: pointer;" value="{{$item->id}}">{{$item->title}}</option>
                                                                     @endforeach
@@ -503,16 +502,16 @@
         });
 
 
-        function userset(project_id,id){
+        function userset(project_id){
            $.ajax({
                 type:"get",
                 url: "{{ url('board/date_permission')}}/"+id+'/'+project_id,
                 dataType:'json',
                 success: function(data){
-                    console.log(data);
-                    
+                    //console.log(data);
                 }
             });
+        }    
 
         // END PROGRESS SLIDER
 
@@ -759,7 +758,7 @@
                         $('#setduedate').val('');
                         $('#start_dates').val('');
                         data['handler'].map(item =>{
-                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
+                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' height='25px;' style='margin-right:2px;' class='img img-circle' />");
                         });
 
                         $('.feed-activity-list .feed-element').remove();
@@ -918,7 +917,7 @@
                     var added = data['addedmember'].get_user.name;
                     var taskname = $('#tasktitle').text();
                     data['handler'].map(item =>{
-                        $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
+                        $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' height='25px;' style='margin-right:2px;' class='img img-circle' />");
                     });
                     NotifyAddTaskMember(addby,added,taskname);
                 }
