@@ -56,6 +56,7 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Project timeframe</h5>
+                        <a class="pull-right" href="{{ route('timeframe',Request::segment(2))}}"><i class="fa fa-th-large"></i></a>
                     </div>
                     <div class="ibox-content">
                         <svg id="gantt"></svg>
