@@ -64,7 +64,8 @@ class TaskController extends Controller
             SELECT 3 AS id, 'Done' title
             UNION
             SELECT list_id id, list_title title  FROM project_lists WHERE status =1 AND project_id = '$id'"));
-        $board = Board::where('project_id','=', $id)->first();            
+        $board = Board::where('project_id','=', $id)->first();       
+         //echo json_encode($board);exit();     
         return view('pages.task',compact('tasktodo', 'board','projectmember','list','results'));
     }
 
@@ -166,10 +167,16 @@ class TaskController extends Controller
     function updateDue(Request $request, $id)
     {
         $task = Task::where('id','=', $id)->first();
-        $task->start_date = date_format(date_create($request->start_date),'Y-m-d');
         $task->due_date = date_format(date_create($request->due_date),'Y-m-d');
         $task->save();
         echo json_encode(array('user'=>Auth::user()->name,'taskname'=>$task->taskname,'duedate'=>date_format(date_create($request->due_date),'Y-m-d')));
+    }
+     function updatestart(Request $request, $id)
+    {
+        $task = Task::where('id','=', $id)->first();
+        $task->start_date = date_format(date_create($request->start_date),'Y-m-d');
+        $task->save();
+        echo json_encode(array('user'=>Auth::user()->name,'taskname'=>$task->taskname,'startdate'=>date_format(date_create($request->start_date),'Y-m-d')));
     }
 
     function moveStep(Request $request)
@@ -208,17 +215,17 @@ class TaskController extends Controller
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
-        $task->status = 0;
+        $task->status = 2;
         $task->save();
         return back(); 
     }
 
-    public function restore($id)
+    public function restore($id, $status)
     {
         $task = Task::where('id','=', $id)
                     ->where('created_by','=',Auth::user()->id)
                     ->first();
-        $task->status = 1;
+        $task->status = $status;
         $task->save();
         return back(); 
     }

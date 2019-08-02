@@ -19,12 +19,15 @@ Route::group(['middleware'=>'auth'], function () {
     Route::post('board/addnew',[ 'as' => 'board/addnew','uses' => 'ProjectController@store']);
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'ProjectController@tasks']);
     Route::get('board/close/{id}',[ 'as' => 'board/close/{id}','uses' => 'ProjectController@close']);
-    Route::get('board/restore/{id}',[ 'as' => 'board/restore/{id}','uses' => 'ProjectController@restore']);
+    Route::get('board/restore/{id}/{status}',[ 'as' => 'board/restore/{id}/{status}','uses' => 'ProjectController@restore']);
     Route::get('board/edittask/{id}','ProjectController@edittask');
     Route::get('board/updatetask/{id}',[ 'as' => 'board/updatetask/{id}','uses' => 'ProjectController@updatetask']);
     Route::get('board/destroy/{id}',[ 'as' => 'board/destroy/{id}','uses' => 'ProjectController@destroy']);
     Route::get('board/task_update_step/{id}',[ 'as' => 'board/task_update_step/{id}','uses' => 'ProjectController@task_update_step']);
-
+    Route::get('timeframe/{id}',[ 'as' => 'timeframe','uses' => 'ProjectController@timeframe']);
+    Route::get('board/date_permission/{id}/{project_id}',[ 'as' => 'board/date_permission/{id}','uses' => 'ProjectController@date_permission']);
+    Route::get('timeframe/{id}',[ 'as' => 'timeframe','uses' => 'ProjectController@timeframe']);
+    Route::get('timeframe_frapp/{id}',[ 'as' => 'timeframe_frapp','uses' => 'ProjectController@timeframeFrapp']);
 
     //PROJECT MEMBER
     Route::get('getboardmember/{id}',['as' => 'getboardmember/{id}', 'uses' =>'ProjectMemberController@get']);
@@ -84,14 +87,16 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('api/setPriorityTask', 'BotController@setPriorityTask');
     Route::get('api/taskComment', 'BotController@taskComment');
     Route::get('api/setduedate', '\App\Http\Controllers\BotController@setDueDate');
+    Route::get('api/setstartdate', '\App\Http\Controllers\BotController@setStartueDate');
     // task controller routing
     Route::get('board/{id}',[ 'as' => 'board/{id}','uses' => 'TaskController@list']);
     Route::get('gettask/{id}',[ 'as' => 'gettask/{id}','uses' => 'TaskController@get']);
     Route::get('task/close/{id}',[ 'as' => 'task/close/{id}','uses' => 'TaskController@archive']);
-    Route::get('task/restore/{id}',[ 'as' => 'task/restore/{id}','uses' => 'TaskController@restore']);
+    Route::get('task/restore/{id}/{status}',[ 'as' => 'task/restore/{id}/{status}','uses' => 'TaskController@restore']);
     Route::get('setpriority/{id}',['as'=>'setpriority/{id}','uses'=>'TaskController@updatePriority']);
     Route::get('setdescription/{id}',['as'=>'setdescription/{id}','uses'=>'TaskController@updateDescription']);
     Route::get('setduedate/{id}',['as'=>'setduedate/{id}','uses'=>'TasKController@updateDue']);
+    Route::get('setstartdate/{id}',['as'=>'setstartdate/{id}','uses'=>'TasKController@updatestart']);
     Route::get('movestep',['as'=>'movestep','uses'=>'TaskController@moveStep']);
     Route::get('newtask',[ 'as' => 'addtask','uses' => 'TaskController@add']);
     Route::get('board/edittask/{id}','TaskController@edit');

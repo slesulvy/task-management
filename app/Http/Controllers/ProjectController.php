@@ -27,6 +27,37 @@ class ProjectController extends Controller
 
         return view('pages.index', ['board'=>$board]);
     }
+    public function timeframe($id){
+        $tasktodo = Task::with('handler')
+            ->where([['project_id', $id],['status',1]])
+            ->where('project_id', $id)
+            ->whereNotNull('start_date')
+            ->whereNotNull('due_date')
+            ->orderBy('start_date', 'asc')
+            ->get();
+        $projectmember = DB::table('project_member')
+                ->join('users','users.id','=','project_member.user_id')
+                ->where('project_member.project_id',$id)->get();
+
+                
+        return view('pages.timeframe',['task'=>json_encode($tasktodo), 'tasktodo'=>$tasktodo]);
+    }
+
+    public function timeframeFrapp($id){
+        $tasktodo = Task::with('handler')
+                ->where([['project_id', $id],['status',1]])
+                ->where('project_id', $id)
+                ->whereNotNull('start_date')
+                ->whereNotNull('due_date')
+                ->orderBy('start_date', 'asc')
+                ->get();
+        $projectmember = DB::table('project_member')
+                ->join('users','users.id','=','project_member.user_id')
+                ->where('project_member.project_id',$id)->get();
+
+                
+        return view('pages.timeframe_frapp',['task'=>json_encode($tasktodo), 'tasktodo'=>$tasktodo]);
+    }
 
     function list()
     {
@@ -98,28 +129,37 @@ class ProjectController extends Controller
             UNION
             SELECT list_id id, list_title title  FROM project_lists WHERE status =1 AND project_id = '$id'") );
 
-        //echo json_encode($results);exit();
-       
+
+
         $board = Board::where('project_id','=', $id)->first();            
         return view('pages.task',compact('tasktodo', 'board','projectmember','list','results'));
     }
 
     public function close($id)
     {
-        $board = Board::where('project_id','=', $id)
-                        ->where('created_by','=',Auth::user()->id)
-                        ->first();
-            $board->status = 0;
+            $board = Board::where('project_id','=', $id)
+                    ->where('created_by','=',Auth::user()->id)
+                    ->first();
+            $board->status = 2;
             $board->closed_by = Auth::user()->id;
             $board->save();
         return back(); 
     }
-    public function restore($id)
+    public function date_permission($id,$project_id){
+        $data = DB::table('tasks')
+            ->join('projects', 'projects.project_id', '=', 'tasks.project_id')
+            ->select('projects.created_by AS pro_admin', 'tasks.created_by AS task_admin')
+            ->where([['tasks.project_id', $project_id],['tasks.id',$id]])
+            ->get();
+      return response()->json($data);
+    }
+
+    public function restore($id, $status)
     {
         $board = Board::where('project_id','=', $id)
                         ->where('created_by','=',Auth::user()->id)
                         ->first();
-            $board->status = 1;
+            $board->status = $status;
             $board->closed_by = Auth::user()->id;
             $board->save();
         return back(); 

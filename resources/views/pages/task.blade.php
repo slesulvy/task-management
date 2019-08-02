@@ -208,16 +208,17 @@
                                                             <a href="javascript:void(0)" style="font-size: 12px; color: #6b778c;" id="im_where" class="js-open-move-from-header">Done</a>
                                                         </span>
                                                     </div>
-
+                                                   
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
                                                             <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
+
                                                                 <div class="form-group">
                                                                    <div class="col-sm-7 font-bold">
                                                                      <i class="fa fa-calendar"></i> Start Date
                                                                    </div>
                                                                     <div class="col-sm-5">
-                                                                         <input type="text" style="border:none; font-size:12px;margin-left: -75px;" id="start_dates"data-mask="99/99/9999" placeholder="mm/dd/yyyy" > 
+                                                                         <input type="text" style="border:none; font-size:12px;margin-left: -75px;" id="start_dates"data-mask="99/99/9999" placeholder="mm/dd/yyyy" readonly="readonly" > 
                                                                     </div>
                                                                  </div>
                                                               </div>
@@ -248,17 +249,7 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                           <!--  <div class="col-sm-5">
-                                                                <div class="col-sm-12">
-                                                                    <div class="col-sm-3"> 
-                                                                        <span class="fa fa-calendar"></span>
-                                                                    </div>
-                                                                    <div class="date col-sm-8">
-                                                                        <input type="text" id="setduedate" style="border:none; font-size:12px;margin-left: -20px;" data-mask="99/99/9999" placeholder="mm/dd/yyyy"> 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                         -->
+                                                           
                                                         </label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px;">
                                                             <div class="col-sm-6" style="padding-left:0; padding-right:0;">
@@ -276,6 +267,7 @@
                                                         <label class="col-sm-12"><i class="fa fa-align-right"></i>&nbsp;&nbsp;Description &nbsp;<span style="color:#555; border-radius:0px;" class="btn btn-sm btn-white gray-bg btn-edit-desc">Edit</span></label>
                                                         <div class="col-sm-12" style="padding:7px 0 0 35px;">
                                                             <input type="hidden" id="e_task_id" value="">
+                                                           
                                                             <p id="avatar_description">Add a more detailed description...</p>
                                                             <textarea name="description" id="e_task_description" class="form-control" style="height:80px; overflow: hidden; overflow-wrap: break-word; resize: none; display:none; font-size:11px;" rows="3" required></textarea>
                                                         </div>
@@ -368,7 +360,14 @@
                                                             <span>Due Date</span>
                                                         </a>
 
-                                                        <a class="button-link" onclick="$('#move_take_step').toggle();" id="move_task" class="date" title="Move">
+                                                       
+
+                                                        <a class="button-link" id="memarchive" title="Archive">
+                                                            <span class="fa fa-archive"></span>&nbsp;
+                                                            <span>Archive</span>
+                                                        </a>
+
+                                                         <a class="button-link" onclick="$('#move_take_step').toggle();" id="move_task" class="date" title="Move">
                                                             <span class="fa fa-exchange"></span>&nbsp;
                                                             <span>Move</span>
                                                             
@@ -376,20 +375,13 @@
                                                        
                                                         <div style="padding:0px; display:none; margin-top:-5px;" id="move_take_step">
                                                                 <select data-placeholder="All Task..." id="all_step" onchange="mytaskupdate();" style="width: 100%;" title="All Task">
-                                                                    <option>All Task</option>
+                                                           
                                                                     @foreach ($results as $item)
                                                                     <option style="cursor: pointer;" value="{{$item->id}}">{{$item->title}}</option>
                                                                     @endforeach
                                                                 </select>
                                                         </div>
-                                                        <a class="button-link" id="memarchive" title="Archive">
-                                                            <span class="fa fa-archive"></span>&nbsp;
-                                                            <span>Archive</span>
-                                                        </a>
-                                                        <!--<a class="button-link" href="#" title="Attachment">
-                                                            <span class="fa fa-paperclip"></span>&nbsp;
-                                                            <span>Attachment</span>
-                                                        </a>-->
+                                                      
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -510,6 +502,18 @@
             });
         });
 
+
+        function userset(project_id,id){
+           $.ajax({
+                type:"get",
+                url: "{{ url('board/date_permission')}}/"+id+'/'+project_id,
+                dataType:'json',
+                success: function(data){
+                    console.log(data);
+                    
+                }
+            });
+
         // END PROGRESS SLIDER
 
         $('.popper').popover({
@@ -601,6 +605,8 @@
             }
 
         });
+
+
 
         $('.btn_add_task').click(function(){
             addtask();
@@ -1027,18 +1033,37 @@
             var task_id = $('#e_task_id').val();
             $.ajax({
                 type:"get",
-                url: "{{ url('setduedate')}}/"+task_id,
+                url: "{{ url('setstartdate')}}/"+task_id,
                 dataType:'text',
                 data:{
                     'start_date': $(this).val()
                 },
                 success: function(data){
-                    
+                    console.log(data);
+                    apiSetStartDate(data.user, data.taskname, data.startdate)
                 }
             });
         });
 
-        function apiSetDueDate(user, task, duedate)
+        function apiSetStartDate(user, task, startdate)
+        {
+            $.ajax({
+                type:"get",
+                url: "{{ url('api/setstartdate')}}",
+                dataType:'text',
+                data:{
+                    'user': user,
+                    'taskname' :task,
+                    'startdate':startdate,
+                    'projectName':'{{@$board->projectname}}'
+                },
+                success: function(data){
+                   
+                }
+            });
+        }
+
+         function apiSetDueDate(user, task, duedate)
         {
             $.ajax({
                 type:"get",

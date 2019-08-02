@@ -1,25 +1,25 @@
-.progress-bar-7 {
+.progress-bar-7, .fc-event.progress-bar-7 {
     background-color: #1cb393;
 }
-.progress-bar-6 {
+.progress-bar-6, .fc-event.progress-bar-6 {
     background-color: #49bb86;
 }
-.progress-bar-5 {
+.progress-bar-5, .fc-event.progress-bar-5 {
     background-color: #84c673;
 }
-.progress-bar-4 {
+.progress-bar-4, .fc-event.progress-bar-4 {
     background-color: #c0cb61;
 }
-.progress-bar-3 {
+.progress-bar-3, .fc-event.progress-bar-3{
     background-color: #eccb55;
 }
-.progress-bar-2 {
+.progress-bar-2, .fc-event.progress-bar-2 {
     background-color: #eda356;
 }
-.progress-bar-1 {
+.progress-bar-1, .fc-event.progress-bar-1 {
     background-color: #ed7b5e;
 }
-.progress-bar-0 {
+.progress-bar-0, .fc-event.progress-bar-0 {
     background-color: #ed5665;
 }
 .list-unstyled .progress-border-7, .progress-border-7  {
