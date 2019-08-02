@@ -9,6 +9,15 @@
         .fc-time {
             display: none;
         }
+        .fc-event, .fc-agenda .fc-event-time, .fc-event a {
+            border: none;
+            border-radius:0px;
+        }
+        .userProfile {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
     </style>
 @endsection
 
@@ -26,13 +35,20 @@
             </ol>
         </div>
     </div>
+  <!--@foreach($tasktodo as $item)
+    
+        @foreach($item->handler as $v)
+            {{$v->getUser->img}}
+        @endforeach
 
+    @endforeach -->
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInDown">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Project timeframe</h5>
+                        <a class="pull-right" href="{{ route('timeframe_frapp',Request::segment(2))}}"><i class="fa fa-list"></i></a>
                     </div>
                     <div class="ibox-content">
                         <div id="calendar"></div>
@@ -80,7 +96,7 @@
             var task = [];
             var tasks = {};
             var allTaskArray = [];
-            task = <?php echo $task ?>;
+            task = <?php echo $tasktodo ?>;
 
             task.map(item => {
                 tasks['start'] = item.start_date;
@@ -94,7 +110,10 @@
                         start: new Date(tasks['start']),
                         end: new Date(tasks['end']).setDate(new Date(tasks['end']).getDate() + 1),
                         allDay: false,
-                        displayEventTime: false
+                        displayEventTime: false,
+                        className: 'progress-bar-'+item.danger_level,
+                        handler: item.handler,
+                        imageurl:'https://pbs.twimg.com/profile_images/888432310504370176/mhoGA4uj.jpg',
                  })
            
             })
@@ -124,7 +143,15 @@
                         $(this).remove();
                     }
                 },
-                 events: allTaskArray
+                events: allTaskArray,
+                eventRender: function(event, eventElement) {
+                    if(event.handler) {
+                        event.handler.map(user => {
+                            return eventElement.find("div.fc-content").prepend("<img title='"+ user.get_user.name +"' class='userProfile' src='" + `<?php echo asset('') ?>images/` + user.get_user.img +"' width='16' height='16'>");
+                        })
+                    }
+                },
+                 
             });
 
 

@@ -502,6 +502,7 @@
             });
         });
 
+
         function userset(project_id,id){
            $.ajax({
                 type:"get",
@@ -512,8 +513,6 @@
                     
                 }
             });
-        }
-        
 
         // END PROGRESS SLIDER
 
