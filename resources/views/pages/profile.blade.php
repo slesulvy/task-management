@@ -96,7 +96,7 @@
                                         <h3>Task List</h3>
                                         <ul class="list-unstyled file-list">
                                             @foreach ($toptenurgenttask as $item)
-                                                <li class="progress-border-{{$item->danger_level}}" style="background: linear-gradient(to right, #f7f7f7 {{$item->progress}}%,white 0%,#f7f7f7 {{$item->progress}}%,white 0%,white 100%);"><a href="#"><i class="fa fa-tasks"></i>&nbsp;&nbsp; {{$item->taskname}}</a> <span class="pull-right">{{$item->progress}}%</span></li>
+                                                <li class="progress-border-{{$item->danger_level}}" style="background: linear-gradient(to right, #f7f7f7 {{$item->progress}}%,white 0%,#f7f7f7 {{$item->progress}}%,white 0%,white 100%);"><i class="fa fa-tasks"></i>&nbsp;&nbsp; {{$item->taskname}}<span class="pull-right">{{$item->progress}}%</span></li>
                                             @endforeach
                                             
                                         </ul>
