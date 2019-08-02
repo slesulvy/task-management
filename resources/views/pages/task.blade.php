@@ -208,7 +208,7 @@
                                                             <a href="javascript:void(0)" style="font-size: 12px; color: #6b778c;" id="im_where" class="js-open-move-from-header">Done</a>
                                                         </span>
                                                     </div>
-
+                                                   
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
                                                             <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
@@ -502,19 +502,16 @@
             });
         });
 
-        function userset(project_id){
-             $.ajax({
-                    type:"get",
-                    url: "{{ url('board/date_permission')}}/"+project_id,
-                    dataType:'json',
-                    success: function(data){
-                        if({{ Auth::user()->id }}==Auth::user()->id){
-                          alert("hi");
-                        }
-                       
-                    }
-                });
-
+        function userset(project_id,id){
+           $.ajax({
+                type:"get",
+                url: "{{ url('board/date_permission')}}/"+id+'/'+project_id,
+                dataType:'json',
+                success: function(data){
+                    console.log(data);
+                    
+                }
+            });
         }
         
 

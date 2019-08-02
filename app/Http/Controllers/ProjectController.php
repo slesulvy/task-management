@@ -117,20 +117,21 @@ class ProjectController extends Controller
 
     public function close($id)
     {
-        $board = Board::where('project_id','=', $id)
-                        ->where('created_by','=',Auth::user()->id)
-                        ->first();
+            $board = Board::where('project_id','=', $id)
+                    ->where('created_by','=',Auth::user()->id)
+                    ->first();
             $board->status = 2;
             $board->closed_by = Auth::user()->id;
             $board->save();
         return back(); 
     }
-    public function date_permission($id){
-        $data = DB::table('projects')
-            ->join('tasks', 'projects.project_id', '=', 'tasks.project_id')
-            ->select('projects.created_by', 'tasks.created_by')
+    public function date_permission($id,$project_id){
+        $data = DB::table('tasks')
+            ->join('projects', 'projects.project_id', '=', 'tasks.project_id')
+            ->select('projects.created_by AS pro_admin', 'tasks.created_by AS task_admin')
+            ->where([['tasks.project_id', $project_id],['tasks.id',$id]])
             ->get();
-       return response()->json($data);
+      return response()->json($data);
     }
 
     public function restore($id, $status)
