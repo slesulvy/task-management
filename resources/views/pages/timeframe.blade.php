@@ -31,12 +31,6 @@
         </div>
     </div>
 
-    @foreach ($tasktodo as $item)
-        @foreach($item->handler as $v1)
-              {{$v1->getUser->img}}    
-              @endforeach             
-    @endforeach
-
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInDown">
             <div class="col-lg-12">
@@ -97,8 +91,6 @@
                 tasks['id'] = item.id;
                 tasks['title'] = item.taskname;
                 tasks['end'] = (item.due_date);
-
-                console.log(item.danger_level);
           
                 allTaskArray.push({
                         id: tasks['id'], 
@@ -112,8 +104,6 @@
                  })
            
             })
-
-            console.log(allTaskArray);
             
 
             $('#calendar').fullCalendar({

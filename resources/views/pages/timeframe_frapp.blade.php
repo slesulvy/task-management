@@ -39,12 +39,12 @@
     </div>
 
     
-    @foreach($tasktodo as $item)
+    <!-- @foreach($tasktodo as $item)
         @foreach($item->handler as $v)
             {{$v->getUser->img}}
         @endforeach
 
-    @endforeach
+    @endforeach -->
 
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInDown">
@@ -75,6 +75,7 @@
                 tasks['title'] = item.taskname;
                 tasks['end'] = item.due_date;
                 tasks['index'] = index;
+                tasks['progress'] = item.progress;
 
                 // item.handler.map(user => {
                 //     console.log('user: ', user);
@@ -88,7 +89,7 @@
                             name: tasks['title'],
                             start: tasks['start'],
                             end: tasks['end'],
-                            progress: 60,
+                            progress: tasks['progress'],
                             handler: item.handler.get_user,
                             dependencies: '0'
                             
@@ -106,8 +107,8 @@
                             name: tasks['title'],
                             start: tasks['start'],
                             end: tasks['end'],
-                            progress: 60,
                             handler: item.handler,
+                            progress: tasks['progress'],
                             dependencies: ''+ tmp + ''
                             
                     });
