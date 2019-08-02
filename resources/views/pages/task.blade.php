@@ -508,10 +508,10 @@
                     url: "{{ url('board/date_permission')}}/"+project_id,
                     dataType:'json',
                     success: function(data){
-                        // if({{ Auth::user()->id }}==data.p_id){
-                        //    alert("hi");
-                        // }
-                        console.log(data.created_by);
+                        if({{ Auth::user()->id }}==Auth::user()->id){
+                          alert("hi");
+                        }
+                       
                     }
                 });
 
