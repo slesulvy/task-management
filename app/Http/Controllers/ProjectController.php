@@ -30,15 +30,35 @@ class ProjectController extends Controller
     public function timeframe($id){
         $tasktodo = Task::with('handler')
                 ->where([['project_id', $id],['status',1]])
-                
                 ->where('project_id', $id)
                 ->whereNotNull('start_date')
                 ->whereNotNull('due_date')
                 ->orderBy('id', 'desc')
                 ->get();
-               // dd($tasktodo);
-        return view('pages.timeframe',['task'=>json_encode($tasktodo)]);
+        $projectmember = DB::table('project_member')
+                ->join('users','users.id','=','project_member.user_id')
+                ->where('project_member.project_id',$id)->get();
+
+                
+        return view('pages.timeframe',['task'=>json_encode($tasktodo), 'tasktodo'=>$tasktodo]);
     }
+
+    public function timeframeFrapp($id){
+        $tasktodo = Task::with('handler')
+                ->where([['project_id', $id],['status',1]])
+                ->where('project_id', $id)
+                ->whereNotNull('start_date')
+                ->whereNotNull('due_date')
+                ->orderBy('start_date', 'asc')
+                ->get();
+        $projectmember = DB::table('project_member')
+                ->join('users','users.id','=','project_member.user_id')
+                ->where('project_member.project_id',$id)->get();
+
+                
+        return view('pages.timeframe_frapp',['task'=>json_encode($tasktodo), 'tasktodo'=>$tasktodo]);
+    }
+
     function list()
     {
         $board = DB::table('projects')
