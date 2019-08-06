@@ -93,7 +93,7 @@ class ProjectController extends Controller
         return back()->with('success', 'Your images has been successfully');
     }
  
-   public function tasks($id)
+    public function tasks($id)
     {
         DB::enableQueryLog();
         $board = DB::table('projects')
@@ -218,4 +218,44 @@ class ProjectController extends Controller
         }
         return response()->json($project);
     }
+    function test($id){
+        $tasktodo = Task::with('handler')
+                ->where([['project_id', $id],['status',1]])
+                ->orderBy('id', 'desc')
+                ->where('project_id', $id);
+                return $tasktodo;
+    }
+    public function overView($id)
+    {
+        //DB::enableQueryLog();
+        $board = DB::table('projects')
+            ->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
+            ->where([['projects.status',1],['project_member.user_id', Auth::user()->id],['project_member.status',1],['project_member.project_id',$id]])
+            ->get();
+
+        $projectmember = DB::table('project_member')
+                            ->join('users','users.id','=','project_member.user_id')
+                            ->where('project_member.project_id',$id)->get();
+
+        $list = DB::table('project_lists')
+                            ->join('projects','projects.project_id','=','project_lists.project_id')
+                            ->where([['projects.project_id',$id],['project_lists.status',1]])->get();
+
+        if(count($board)<1)
+        {
+            return redirect('board');
+        }   
+
+        $tasktodo = $this->test($id)->get();
+        $tasklate = $this->test($id)->where('due_date','<', date('Y-m-d 00:00:00'))->where('progress','<',100)->get();
+        $upcoming = $this->test($id)->where('due_date','>', date('Y-m-d 00:00:00'))->where('progress','<',100)->get();
+        $nodate = $this->test($id)->whereNull('due_date')->where('progress','<',100)->get();
+        $starttask = $this->test($id)->where('start_date','<>', 'null')->where('progress','<',100)->get();
+        $tastdone = $this->test($id)->where('progress','=',100)->get();
+                
+            
+        $board = Board::where('project_id','=', $id)->first();            
+        return view('pages.overview',compact('tasktodo', 'board','projectmember','list','results','tasklate','upcoming','nodate','starttask','tastdone'));
+    }
+
 }

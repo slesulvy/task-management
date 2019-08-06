@@ -55,11 +55,12 @@
                                 @endif
                             </h4>
                             <small>
-                                There are many variations of passages of Lorem Ipsum available, but the majority
-                                have suffered alteration in some form Ipsum available.
+                                Start from: {{date('d-m-Y',strtotime($profile->created_at))}}
                             </small>
+                            
                             <p>
-                                <a href="{{route('edit.profile',$profile->id)}}" class="badge badge-success" style="padding: 8px;"><i class="fa fa-edit"></i> Update profile</a>
+                                <br>
+                                <a href="{{route('edit.profile',$profile->id)}}" class=" badge-success" style="padding: 8px;"><i class="fa fa-edit"></i> Update profile</a>
                             </p>
                         </div>
                     </div>
@@ -69,9 +70,9 @@
                 <table class="table small m-b-xs">
                     <tbody>
                     <tr>
-                        <td>
-                            <strong>{{count($profile->board)}}</strong> Projects
-                        </td>
+                        <!--<td>
+                            <strong></strong> Projects
+                        </td>-->
                         <td>
                             <strong>Top 10</strong>  Urgent Tasks
                         </td>
@@ -79,26 +80,19 @@
                     </tr>
 
                     <tr>
-                        <td>
+                        <!--<td>
                                 <div class="ibox-content">
                                         <h3>Project List</h3>
-                                        <ul class="list-unstyled file-list">
-                                            @foreach ($profile->board as $item)
-                                            <li><a href="#"><i class="fa fa-folder-o"></i>&nbsp;&nbsp; {{$item->board->projectname}}</a></li>
-                                            @endforeach
-                                            
-                                            
-                                        </ul>
+                                        
                                     </div>
-                        </td>
+                        </td>-->
                         <td>
                                 <div class="ibox-content">
                                         <h3>Task List</h3>
                                         <ul class="list-unstyled file-list">
                                             @foreach ($toptenurgenttask as $item)
                                                 <li class="progress-border-{{$item->danger_level}}" style="background: linear-gradient(to right, #f7f7f7 {{$item->progress}}%,white 0%,#f7f7f7 {{$item->progress}}%,white 0%,white 100%);"><i class="fa fa-tasks"></i>&nbsp;&nbsp; {{$item->taskname}}<span class="pull-right">{{$item->progress}}%</span></li>
-                                            @endforeach
-                                            
+                                            @endforeach              
                                         </ul>
                                     </div>
                         </td>
