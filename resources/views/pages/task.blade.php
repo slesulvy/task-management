@@ -22,13 +22,13 @@
             <h2></h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="">Task Manager</a>
+                    <a href="">Task Manager</a>{{@$board->project_id}}
                 </li>
                 <li>
                     <a href="{{url('board')}}">Project</a>
                 </li>
                 <li class="active">
-                <strong>{{@$board->projectname}} </strong>
+                <strong>{{@$board->projectname}}</strong>
                 </li>
                 <li class="pull-right">
                     
@@ -218,7 +218,7 @@
                                                                      <i class="fa fa-calendar"></i> Start Date
                                                                    </div>
                                                                     <div class="col-sm-5">
-                                                                         <input type="text" style="border:none; font-size:12px;margin-left: -75px;" id="start_dates"data-mask="99/99/9999" placeholder="mm/dd/yyyy" readonly="readonly" > 
+                                                                         <input type="text" style="border:none; font-size:12px;margin-left: -75px;" id="start_dates"data-mask="99/99/9999" placeholder="mm/dd/yyyy"> 
                                                                     </div>
                                                                  </div>
                                                               </div>
@@ -508,11 +508,21 @@
                 type:"get",
                 url: "{{ url('board/date_permission')}}/"+id+'/'+project_id,
                 dataType:'json',
-                success: function(data){
-                    console.log(data);
+                success: function(data){                    
+                    console.log(data.results[0].admin_project ); 
+                                    
+                        if (data.results[0].admin_task=={{Auth::user()->id}}) { 
+                           $('#start_dates').prop("disabled", false);
+                           $('#setduedate').prop("disabled", false);
+                        }else{
+                            $('#start_dates').prop("disabled", true);
+                            $('#setduedate').prop("disabled", true);
+                        }
                     
-                }
+                 }
             });
+       }
+
 
         // END PROGRESS SLIDER
 

@@ -146,12 +146,16 @@ class ProjectController extends Controller
         return back(); 
     }
     public function date_permission($id,$project_id){
-        $data = DB::table('tasks')
+        $data['results'] = DB::table('tasks')
             ->join('projects', 'projects.project_id', '=', 'tasks.project_id')
-            ->select('projects.created_by AS pro_admin', 'tasks.created_by AS task_admin')
+            ->select('projects.project_id','projects.created_by AS admin_project','tasks.created_by AS admin_task')
             ->where([['tasks.project_id', $project_id],['tasks.id',$id]])
             ->get();
-      return response()->json($data);
+
+          
+        return response()->json($data);
+           
+     
     }
 
     public function restore($id, $status)
