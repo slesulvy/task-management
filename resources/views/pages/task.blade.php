@@ -212,7 +212,7 @@
                                                     </div>
                                                     
                                                     
-                                                    <div class="form-group" style="<?php echo ($board->created_by != Auth::user()->id)?'display:none;':''?>">
+                                                    <div class="form-group" >
                                                         <div class="col-sm-12">
                                                             <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
 
@@ -505,7 +505,7 @@
         });
 
 
-        function userset(project_id){
+        function userset(project_id, id){
            $.ajax({
                 type:"get",
                 url: "{{ url('board/date_permission')}}/"+id+'/'+project_id,

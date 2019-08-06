@@ -47,7 +47,7 @@
                         <div class="text-right">
                             @if($item->created_by == Auth::user()->id)
                             
-                                <a href="{{route('timeframe_frapp',$item->project_id)}}" title="Project Overview" class="btn btn-xs btn-default" style="border-radius:0px;"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
+                                <a href="{{route('overview',$item->project_id)}}" title="Project Overview" class="btn btn-xs btn-default" style="border-radius:0px;"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
                                 <a href="{{route('timeframe_frapp',$item->project_id)}}" title="Project timeframe" class="btn btn-xs btn-default" style="border-radius:0px;"><i class="fa fa-clock-o"></i></a>
                                 <a href="javascript:void(0);" title="Archive" onclick="archive({{$item->project_id}})" class="btn btn-xs btn-default" style="border-radius:0px;">&nbsp;<i class="fa fa-archive"></i>&nbsp;</a>
                                 <a href="javascript:void(0)" title="Project Member" data-toggle="modal" data-target="#addmember" data-Id="{{$item->project_id}}" class="btn btn-xs btn-default btn-addmember-project" style="border-radius:0px;"><!--<i class="fa fa-plus"></i>&nbsp;-->&nbsp;<i class="fa fa-user-o"></i>&nbsp;</a>

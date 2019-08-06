@@ -57,13 +57,12 @@ class TaskController extends Controller
 
        
 
-        $results = DB::select( DB::raw(" SELECT 1 AS id, 'Thing To-do' title 
-            UNION 
+        $results = DB::select("
             SELECT 2 AS id, 'In Progress' title
             UNION
             SELECT 3 AS id, 'Done' title
             UNION
-            SELECT list_id id, list_title title  FROM project_lists WHERE status =1 AND project_id = '$id'"));
+            SELECT list_id id, list_title title  FROM project_lists WHERE status =1 AND project_id = '$id'");
         $board = Board::where('project_id','=', $id)->first();       
          //echo json_encode($board);exit();     
         return view('pages.task',compact('tasktodo', 'board','projectmember','list','results'));

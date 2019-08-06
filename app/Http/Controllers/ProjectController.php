@@ -121,8 +121,7 @@ class ProjectController extends Controller
                 //->orderBy('id', 'desc')
                 ->get();
 
-        $results = DB::select( DB::raw(" SELECT 1 AS id, 'Thing To-do' title 
-            UNION 
+        $results = DB::select( DB::raw("
             SELECT 2 AS id, 'In Progress' title
             UNION
             SELECT 3 AS id, 'Done' title

@@ -1,5 +1,5 @@
 
-        <li progres_id="{{$item->id}}" class="{{$item->id}} default-element ui-sortable-handle btn-update-task" onclick="userset({{$item->project_id}})" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
+        <li progres_id="{{$item->id}}" class="{{$item->id}} default-element ui-sortable-handle btn-update-task" onclick="userset({{$item->project_id}},{{$item->id}})" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
          <div class="agile-status">
                 <div class="task-priority">
                     <?php $j=3;?>
