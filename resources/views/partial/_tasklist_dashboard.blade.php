@@ -1,5 +1,5 @@
 
-        <li progres_id="{{$item->id}}" class="{{$item->id}} default-element ui-sortable-handle btn-update-task" onclick="userset({{$item->project_id}},{{$item->id}})" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
+        <li progres_id="{{$item->id}}" class="{{$item->id}} default-element ui-sortable-handle btn-update-task" onclick="userset({{$item->project_id}})" id="_{{$item->id}}" style="" data-Id="{{$item->id}}" data-toggle="modal" data-target="#taskmodal">
          <div class="agile-status">
                 <div class="task-priority">
                     <?php $j=3;?>
@@ -24,7 +24,7 @@
                     <?php $inc_member=0;?>
                     @foreach ($item->handler as $val)
                         @if($inc_member<5)
-                            <img title="{{$val->getUser->name}}" src="<?php echo asset("images/".$val->getUser->img."")?>" width="17px;" class="img img-circle">
+                            <img title="{{$val->getUser->name}}" src="<?php echo asset("images/".$val->getUser->img."")?>" width="17px" height="17px" class="img img-circle">
                         @endif
                         <?php $inc_member++;?>
                     @endforeach

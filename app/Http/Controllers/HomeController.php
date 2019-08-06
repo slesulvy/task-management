@@ -30,9 +30,10 @@ class HomeController extends Controller
     function boards()
     {
         $board = DB::table('projects')
-            ->select('projects.*', 'project_member.user_id')
-            ->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
-            ->where([['project_member.user_id', Auth::user()->id],['project_member.status',1], ['projects.status', '!=', 2]])
+            ->select('projects.*')
+            //->join('project_member', 'project_member.project_id', '=', 'projects.project_id')
+            //->where([['project_member.user_id', Auth::user()->id],['project_member.status',1], ['projects.status', '!=', 2]])
+            ->where([['projects.created_by', Auth::user()->id],['projects.status', '!=', 2]])
             ->get();
         /*$board = Board::orderBy('project_id', 'desc')
                         ->get();*/

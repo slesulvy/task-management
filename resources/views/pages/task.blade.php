@@ -8,6 +8,9 @@
     <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <link href="{{asset('css/pages/dashboard.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/nouslider/jquery.nouislider.css')}}" rel="stylesheet">
+     <!-- Gritter -->
+    <link href="{{asset('js/plugins/gritter/jquery.gritter.css')}}" rel="stylesheet">
+
     <style>
         .project-head-color{
             border-bottom: 1px solid {{$board->back_color}} !important;
@@ -125,7 +128,6 @@
                                     @include('partial._tasklist_dashboard')
                                 @endif
                             @endforeach
-
                         </ul>
                     </div>
                 </div>
@@ -208,8 +210,9 @@
                                                             <a href="javascript:void(0)" style="font-size: 12px; color: #6b778c;" id="im_where" class="js-open-move-from-header">Done</a>
                                                         </span>
                                                     </div>
-                                                   
-                                                    <div class="form-group">
+                                                    
+                                                    
+                                                    <div class="form-group" style="<?php echo ($board->created_by != Auth::user()->id)?'display:none;':''?>">
                                                         <div class="col-sm-12">
                                                             <div class="col-sm-6" style="padding-left:0px;padding-right:0px;">
 
@@ -375,7 +378,6 @@
                                                        
                                                         <div style="padding:0px; display:none; margin-top:-5px;" id="move_take_step">
                                                                 <select data-placeholder="All Task..." id="all_step" onchange="mytaskupdate();" style="width: 100%;" title="All Task">
-                                                           
                                                                     @foreach ($results as $item)
                                                                     <option style="cursor: pointer;" value="{{$item->id}}">{{$item->title}}</option>
                                                                     @endforeach
@@ -503,7 +505,7 @@
         });
 
 
-        function userset(project_id,id){
+        function userset(project_id){
            $.ajax({
                 type:"get",
                 url: "{{ url('board/date_permission')}}/"+id+'/'+project_id,
@@ -769,7 +771,7 @@
                         $('#setduedate').val('');
                         $('#start_dates').val('');
                         data['handler'].map(item =>{
-                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
+                            $('#e_member').append("<img title='"+item.get_user.name+"' src='<?php echo asset('images/"+item.get_user.img+"')?>' width='25px;' height='25px;' style='margin-right:2px;' class='img img-circle' />");
                         });
 
                         $('.feed-activity-list .feed-element').remove();
@@ -928,7 +930,7 @@
                     var added = data['addedmember'].get_user.name;
                     var taskname = $('#tasktitle').text();
                     data['handler'].map(item =>{
-                        $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' style='margin-right:2px;' class='img img-circle' />");
+                        $('#e_member').append("<img title='"+item.get_user.img+"' src='<?php echo asset('img/"+item.get_user.img+"')?>' width='25px;' height='25px;' style='margin-right:2px;' class='img img-circle' />");
                     });
                     NotifyAddTaskMember(addby,added,taskname);
                 }
